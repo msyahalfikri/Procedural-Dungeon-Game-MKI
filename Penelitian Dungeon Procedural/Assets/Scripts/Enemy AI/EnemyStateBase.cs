@@ -44,7 +44,7 @@ namespace EnemyAI.FSM
         {
             base.OnEnter();
             requestedExit = false;
-            onEnter?.Invoke(this);
+            // onEnter?.Invoke(this);
         }
 
         public override void OnLogic()
@@ -56,17 +56,17 @@ namespace EnemyAI.FSM
             }
         }
 
-        public override void OnExitRequest()
-        {
-            if (!needsExitTime || canExit != null && canExit(this))
-            {
-                fsm.StateCanExit();
-            }
-            else
-            {
-                requestedExit = true;
-            }
-        }
+        // public override void OnExitRequest()
+        // {
+        //     if (!needsExitTime || canExit != null && canExit(this))
+        //     {
+        //         fsm.StateCanExit();
+        //     }
+        //     else
+        //     {
+        //         requestedExit = true;
+        //     }
+        // }
 
 
     }
