@@ -19,9 +19,9 @@ namespace EnemyAI.FSM
             animator = GetComponent<Animator>();
             enemyFSM = new StateMachine<EnemyState, StateEvent>();
 
-            // enemyFSM.AddState(EnemyState.Idle, new IdleState(false, this));
-            // enemyFSM.AddState(EnemyState.Chase, new IdleState(false, this));
-            // enemyFSM.AddState(EnemyState.AttackPunch, new IdleState(false, this));
+            enemyFSM.AddState(EnemyState.Idle, new IdleState(false, this));
+            enemyFSM.AddState(EnemyState.Chase, new IdleState(false, this));
+            enemyFSM.AddState(EnemyState.AttackPunch, new IdleState(false, this));
 
             enemyFSM.SetStartState(EnemyState.Idle);
             enemyFSM.Init();

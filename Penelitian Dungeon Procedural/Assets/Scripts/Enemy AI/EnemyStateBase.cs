@@ -8,7 +8,7 @@ using System;
 
 namespace EnemyAI.FSM
 {
-    public abstract class EnemyStateBase : State<EnemyStateBase, StateEvent>
+    public abstract class EnemyStateBase : State<EnemyState, StateEvent>
     {
         protected readonly Enemy enemy;
         protected readonly NavMeshAgent agent;
@@ -56,17 +56,17 @@ namespace EnemyAI.FSM
             }
         }
 
-        // public override void OnExitRequest()
-        // {
-        //     if (!needsExitTime || canExit != null && canExit(this))
-        //     {
-        //         fsm.StateCanExit();
-        //     }
-        //     else
-        //     {
-        //         requestedExit = true;
-        //     }
-        // }
+        public override void OnExitRequest()
+        {
+            if (!needsExitTime || canExit != null && canExit(this))
+            {
+                fsm.StateCanExit();
+            }
+            else
+            {
+                requestedExit = true;
+            }
+        }
 
 
     }
