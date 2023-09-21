@@ -44,7 +44,7 @@ namespace EnemyAI.FSM
         {
             base.OnEnter();
             requestedExit = false;
-            // onEnter?.Invoke(this);
+            onEnter?.Invoke(this);
         }
 
         public override void OnLogic()

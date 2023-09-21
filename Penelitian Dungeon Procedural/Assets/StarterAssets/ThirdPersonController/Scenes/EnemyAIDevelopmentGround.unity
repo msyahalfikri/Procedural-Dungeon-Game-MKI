@@ -1241,11 +1241,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fd16ed20c1b86b4586f5eb8e51d438f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerTransform: {fileID: 1762682262}
-  maxTime: 0.5
-  maxDistance: 3
-  turnDetectionThreshold: 30
-  isTurning: 0
 --- !u!195 &926638790
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -5185,8 +5180,8 @@ GameObject:
   - component: {fileID: 5515791198341950752}
   - component: {fileID: 1903942967007655770}
   - component: {fileID: 5515791198341950754}
-  - component: {fileID: 5515791198341950755}
   - component: {fileID: 5515791198341950756}
+  - component: {fileID: 5515791198341950757}
   m_Layer: 0
   m_Name: TrollEnemy/Ragdoll
   m_TagString: Untagged
@@ -5382,23 +5377,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 0
---- !u!114 &5515791198341950755
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5172338483831093146}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4fd16ed20c1b86b4586f5eb8e51d438f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerTransform: {fileID: 1762682262}
-  maxTime: 2
-  maxDistance: 3
-  turnDetectionThreshold: 30
-  isTurning: 0
 --- !u!114 &5515791198341950756
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5414,6 +5392,19 @@ MonoBehaviour:
   velocity: 0
   desiredVelocity: 0
   path: 0
+--- !u!114 &5515791198341950757
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5172338483831093146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 945a08ee9f34fcf4c98dc795f7ff302b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 1762682262}
 --- !u!4 &5625653182881651364
 Transform:
   m_ObjectHideFlags: 0

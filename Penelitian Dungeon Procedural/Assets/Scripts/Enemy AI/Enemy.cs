@@ -12,6 +12,7 @@ namespace EnemyAI.FSM
         private StateMachine<EnemyState, StateEvent> enemyFSM;
         private Animator animator;
         private NavMeshAgent agent;
+        public Transform player;
 
         private void Awake()
         {
@@ -20,10 +21,10 @@ namespace EnemyAI.FSM
             enemyFSM = new StateMachine<EnemyState, StateEvent>();
 
             enemyFSM.AddState(EnemyState.Idle, new IdleState(false, this));
-            enemyFSM.AddState(EnemyState.Chase, new IdleState(false, this));
-            enemyFSM.AddState(EnemyState.AttackPunch, new IdleState(false, this));
+            enemyFSM.AddState(EnemyState.Chase, new ChaseState(false, this, player));
+            enemyFSM.AddState(EnemyState.AttackPunch, new AttackPunchState(false, this, player));
 
-            enemyFSM.SetStartState(EnemyState.Idle);
+            enemyFSM.SetStartState(EnemyState.Chase);
             enemyFSM.Init();
         }
         private void Update()
