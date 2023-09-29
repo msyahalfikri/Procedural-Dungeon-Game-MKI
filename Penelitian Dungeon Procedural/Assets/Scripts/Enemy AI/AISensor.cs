@@ -10,6 +10,7 @@ public class AISensor : MonoBehaviour
     public float height = 1.0f;
     public Color meshColor = Color.red;
     public int scanFrequency = 30;
+    private bool isPlayerInSight = false;
     public LayerMask layers;
     public LayerMask occlusionLayers;
     public List<GameObject> objects
@@ -47,25 +48,14 @@ public class AISensor : MonoBehaviour
             scanTimer += scanInterval;
             Scan();
         }
+
     }
-    // private void Scan()
-    // {
-    //     count = Physics.OverlapSphereNonAlloc(transform.position, distance, colliders, layers, QueryTriggerInteraction.Collide);
-    //     objectsList.Clear();
-    //     for (int i = 0; i < count; ++i)
-    //     {
-    //         GameObject obj = colliders[i].gameObject; ;
-    //         if (IsInSight(obj))
-    //         {
-    //             objectsList.Add(obj);
-    //         }
-    //     }
-    // }
 
     private void Scan()
     {
         count = Physics.OverlapSphereNonAlloc(transform.position, distance, colliders, layers, QueryTriggerInteraction.Collide);
         objectsList.Clear();
+        isPlayerInSight = false; // Reset the flag
 
         foreach (var collider in colliders)
         {
@@ -79,27 +69,16 @@ public class AISensor : MonoBehaviour
                 if (!objectsList.Contains(obj))
                 {
                     objectsList.Add(obj);
-                    // Invoke the onPlayerEnter event with the object's transform
+                    // Update the last known position if the object is the player
                     if (obj.CompareTag("Player"))
                     {
-                        onPlayerEnter?.Invoke(obj.transform);
-                    }
-                }
-            }
-            else
-            {
-                // If the object is not in sight and was in the list, remove it
-                if (objectsList.Contains(obj))
-                {
-                    objectsList.Remove(obj);
-                    // Invoke the onPlayerExit event with the object's last known position
-                    if (obj.CompareTag("Player"))
-                    {
-                        onPlayerExit?.Invoke(obj.transform.position);
+                        // onPlayerEnter?.Invoke(obj.transform);
+                        isPlayerInSight = true;
                     }
                 }
             }
         }
+
     }
 
 
@@ -124,6 +103,7 @@ public class AISensor : MonoBehaviour
         {
             return false;
         }
+
         return true;
     }
     Mesh CreateWedgeMesh()

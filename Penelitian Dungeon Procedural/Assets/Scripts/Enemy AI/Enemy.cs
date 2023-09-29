@@ -15,7 +15,7 @@ namespace EnemyAI.FSM
         public Transform player;
         public AiAgentConfig agentConfig;
 
-        private bool isInAttackrange;
+        private bool isInAttackRange;
         private bool isInChaseRange;
 
         private AISensor aiSensor;
@@ -34,22 +34,24 @@ namespace EnemyAI.FSM
 
             //Add Transitions
             enemyFSM.AddTriggerTransition(StateEvent.DetectPlayer, new Transition<EnemyState>(EnemyState.Idle, EnemyState.Chase));
+            enemyFSM.AddTriggerTransition(StateEvent.LostPlayer, new Transition<EnemyState>(EnemyState.Chase, EnemyState.Idle));
 
+            //Initial State
             enemyFSM.SetStartState(EnemyState.Idle);
             enemyFSM.Init();
         }
         private void Start()
         {
-            aiSensor.onPlayerEnter += FolllowPlayerSensor_OnPlayerEnter;
-            aiSensor.onPlayerExit += FolllowPlayerSensor_OnPlayerExit; ;
+            aiSensor.onPlayerEnter += FollowPlayerSensor_OnPlayerEnter;
+            aiSensor.onPlayerExit += FollowPlayerSensor_OnPlayerExit;
         }
 
-        private void FolllowPlayerSensor_OnPlayerExit(Vector3 lastKnownPosition)
+        private void FollowPlayerSensor_OnPlayerExit(Vector3 lastKnownPosition)
         {
             enemyFSM.Trigger(StateEvent.LostPlayer);
             isInChaseRange = false;
         }
-        private void FolllowPlayerSensor_OnPlayerEnter(Transform player)
+        private void FollowPlayerSensor_OnPlayerEnter(Transform player)
         {
             enemyFSM.Trigger(StateEvent.DetectPlayer);
             isInChaseRange = true;
