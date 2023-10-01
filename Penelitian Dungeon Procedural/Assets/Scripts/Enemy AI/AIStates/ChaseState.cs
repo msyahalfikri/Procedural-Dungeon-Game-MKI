@@ -37,7 +37,6 @@ namespace EnemyAI.FSM
                     }
                     chaseTimer = enemy.agentConfig.maxTime;
                 }
-                animator.SetFloat("Speed", agent.velocity.magnitude);
             }
             else if (agent.remainingDistance <= agent.stoppingDistance)
             {

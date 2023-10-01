@@ -29,11 +29,7 @@ public class AISensor : MonoBehaviour
     Mesh mesh;
 
     public delegate void PlayerEnterEvent(Transform player);
-    public delegate void PlayerExitEvent(Vector3 lastKnowPosition);
-
     public event PlayerEnterEvent onPlayerEnter;
-    public event PlayerExitEvent onPlayerExit;
-
     void Start()
     {
         scanInterval = 1.0f / scanFrequency;
@@ -72,8 +68,7 @@ public class AISensor : MonoBehaviour
                     // Update the last known position if the object is the player
                     if (obj.CompareTag("Player"))
                     {
-                        // onPlayerEnter?.Invoke(obj.transform);
-                        isPlayerInSight = true;
+                        onPlayerEnter?.Invoke(obj.transform);
                     }
                 }
             }

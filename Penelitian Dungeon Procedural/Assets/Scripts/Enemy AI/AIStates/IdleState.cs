@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using FSM;
-using System;
 
 namespace EnemyAI.FSM
 {
@@ -13,7 +11,7 @@ namespace EnemyAI.FSM
         public override void OnEnter()
         {
             base.OnEnter();
-            agent.isStopped = true;
+            // agent.isStopped = true;
 
             Vector3 playerDirection = enemy.player.position - agent.transform.position;
             if (playerDirection.magnitude > enemy.agentConfig.mightSightDistance)

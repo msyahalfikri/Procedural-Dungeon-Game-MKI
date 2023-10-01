@@ -5,6 +5,7 @@ namespace EnemyAI.FSM
     {
         Idle,
         Patrol,
+        GoToLastKnownLocation,
         Chase,
         AttackPunch,
         AttackSwipe,

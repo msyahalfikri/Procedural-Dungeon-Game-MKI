@@ -980,6 +980,7 @@ GameObject:
   m_Component:
   - component: {fileID: 804695983}
   - component: {fileID: 804695984}
+  - component: {fileID: 804695985}
   m_Layer: 0
   m_Name: ChaseRangeSensor
   m_TagString: Untagged
@@ -1021,8 +1022,20 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.1
+  m_Radius: 0.24
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &804695985
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 804695982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f8d503b56da6b84d886725c390f3581, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &835722458
 GameObject:
   m_ObjectHideFlags: 0
@@ -2206,7 +2219,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8944336655422409503, guid: f6d148d888ffbf54b9afe9936dfaec1f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -3.34
+      value: -33.82
       objectReference: {fileID: 0}
     - target: {fileID: 8944336655422409503, guid: f6d148d888ffbf54b9afe9936dfaec1f, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2432,7 +2445,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2070925441746177912, guid: a1a802ecaf6775746bb2a929fb554ad8, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -3.34
+      value: -33.82
       objectReference: {fileID: 0}
     - target: {fileID: 2070925441746177912, guid: a1a802ecaf6775746bb2a929fb554ad8, type: 3}
       propertyPath: m_LocalRotation.w
@@ -3027,7 +3040,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3893294197879345259, guid: 64dce48905ffd9b4293e595fa6941544, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.66
+      value: -29.82
       objectReference: {fileID: 0}
     - target: {fileID: 3893294197879345259, guid: 64dce48905ffd9b4293e595fa6941544, type: 3}
       propertyPath: m_LocalRotation.w
@@ -3946,7 +3959,7 @@ GameObject:
   - component: {fileID: 2097853422}
   - component: {fileID: 2097853421}
   m_Layer: 0
-  m_Name: DebugTarget
+  m_Name: initialPost
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3973,7 +3986,7 @@ Transform:
   m_GameObject: {fileID: 2097853420}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.625, y: 3.53, z: 2.877336}
+  m_LocalPosition: {x: -6.49, y: 0.56, z: 10.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4477,7 +4490,7 @@ SkinnedMeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
+  m_DynamicOccludee: 0
   m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
@@ -4509,8 +4522,8 @@ SkinnedMeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   serializedVersion: 2
-  m_Quality: 0
-  m_UpdateWhenOffscreen: 0
+  m_Quality: 4
+  m_UpdateWhenOffscreen: 1
   m_SkinnedMotionVectors: 1
   m_Mesh: {fileID: 6137162438459922096, guid: de53e7858d59ee945875247abff5d171, type: 3}
   m_Bones:
@@ -4917,7 +4930,7 @@ SkinnedMeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
+  m_DynamicOccludee: 0
   m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
@@ -4949,8 +4962,8 @@ SkinnedMeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   serializedVersion: 2
-  m_Quality: 0
-  m_UpdateWhenOffscreen: 0
+  m_Quality: 4
+  m_UpdateWhenOffscreen: 1
   m_SkinnedMotionVectors: 1
   m_Mesh: {fileID: -1420598792203545270, guid: de53e7858d59ee945875247abff5d171, type: 3}
   m_Bones:
@@ -5074,7 +5087,7 @@ SkinnedMeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
+  m_DynamicOccludee: 0
   m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
@@ -5106,8 +5119,8 @@ SkinnedMeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   serializedVersion: 2
-  m_Quality: 0
-  m_UpdateWhenOffscreen: 0
+  m_Quality: 4
+  m_UpdateWhenOffscreen: 1
   m_SkinnedMotionVectors: 1
   m_Mesh: {fileID: -1785395569342919480, guid: de53e7858d59ee945875247abff5d171, type: 3}
   m_Bones:
@@ -5699,7 +5712,7 @@ SkinnedMeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
+  m_DynamicOccludee: 0
   m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
@@ -5731,8 +5744,8 @@ SkinnedMeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   serializedVersion: 2
-  m_Quality: 0
-  m_UpdateWhenOffscreen: 0
+  m_Quality: 4
+  m_UpdateWhenOffscreen: 1
   m_SkinnedMotionVectors: 1
   m_Mesh: {fileID: 2119043273961515921, guid: de53e7858d59ee945875247abff5d171, type: 3}
   m_Bones:
@@ -5774,6 +5787,7 @@ GameObject:
   - component: {fileID: 5515791198341950757}
   - component: {fileID: 5515791198341950758}
   - component: {fileID: 5515791198341950759}
+  - component: {fileID: 5515791198341950760}
   m_Layer: 0
   m_Name: TrollEnemy/Ragdoll
   m_TagString: Player
@@ -5999,6 +6013,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1762682262}
   agentConfig: {fileID: 11400000, guid: 76a0eb3adc6dbf149b3e619f43ee7942, type: 2}
+  initialPost: {fileID: 2097853422}
+  waitTimer: 3
 --- !u!114 &5515791198341950758
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6047,6 +6063,18 @@ MonoBehaviour:
   occlusionLayers:
     serializedVersion: 2
     m_Bits: 55
+--- !u!114 &5515791198341950760
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5172338483831093146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1fddbe397bb28640aea6e5202756804, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &5625653182881651364
 Transform:
   m_ObjectHideFlags: 0
