@@ -10,28 +10,37 @@ public class AIAgent : MonoBehaviour
     public AIStateID initialState;
     public NavMeshAgent navMeshAgent;
     public AiAgentConfig config;
-    public Transform playerTransform;
+    [HideInInspector] public GameObject playerTransform;
+    [HideInInspector] public AIRagdoll ragdoll;
+    [HideInInspector] public UIHealthBar healthBar;
+    [HideInInspector] public BodyIK bodyIK;
+    [HideInInspector] public SkinnedMeshRenderer mesh;
+    [HideInInspector] public AISensor sightSensor;
+
 
     private void Start()
     {
+        ragdoll = GetComponent<AIRagdoll>();
+        mesh = GetComponentInChildren<SkinnedMeshRenderer>();
         navMeshAgent = GetComponent<NavMeshAgent>();
+        healthBar = GetComponentInChildren<UIHealthBar>();
+        playerTransform = GameObject.FindGameObjectWithTag("Player");
+        bodyIK = GetComponent<BodyIK>();
+        sightSensor = GetComponent<AISensor>();
+
         stateMachine = new AIStateMachine(this);
 
         //Register All States
         stateMachine.RegisterState(new ChaseState());
         stateMachine.RegisterState(new IdleState());
+        stateMachine.RegisterState(new DeathState());
 
         //Initialize Initial State
         stateMachine.ChangeState(initialState);
-
-        //Look For Player Game Object and It's Transform
-        if (playerTransform == null)
-        {
-            playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
-        }
     }
     private void Update()
     {
         stateMachine.Update();
+        Debug.Log(stateMachine.currentState);
     }
 }

@@ -5,13 +5,15 @@ using UnityEngine;
 public class AIHealth : MonoBehaviour
 {
     public float maxHealth;
-    public float currentHealth;
-    AIRagdoll ragdoll;
+    public UIHealthBar healthBar;
+    [HideInInspector] public float currentHealth;
+    AIAgent agent;
     // Start is called before the first frame update
     void Start()
     {
-        ragdoll = GetComponent<AIRagdoll>();
+        agent = GetComponent<AIAgent>();
         currentHealth = maxHealth;
+        healthBar = GetComponentInChildren<UIHealthBar>();
     }
 
     // Update is called once per frame
@@ -22,6 +24,7 @@ public class AIHealth : MonoBehaviour
     public void Takedamage(float amount)
     {
         currentHealth -= amount;
+        healthBar.SetHealthBarPercentage(currentHealth / maxHealth);
         if (currentHealth <= 0.0f)
         {
             Die();
@@ -29,6 +32,7 @@ public class AIHealth : MonoBehaviour
     }
     public void Die()
     {
-        ragdoll.ActivateRagdoll();
+        DeathState deathState = agent.stateMachine.GetState(AIStateID.DeathState) as DeathState;
+        agent.stateMachine.ChangeState(AIStateID.DeathState);
     }
 }

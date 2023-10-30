@@ -1,18 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
-public class DeathState : MonoBehaviour
+public class DeathState : AIState
 {
-    // Start is called before the first frame update
-    void Start()
+    public Vector3 direction;
+    public AIStateID GetID()
     {
-        
+        return AIStateID.DeathState;
     }
-
-    // Update is called once per frame
-    void Update()
+    public void Enter(AIAgent agent)
     {
-        
+        agent.ragdoll.ActivateRagdoll();
+        // agent.gameObject.SetActive(false);
+        // agent.gameObject.SetActive(true);
+        direction.y = 1;
+        agent.mesh.updateWhenOffscreen = true;
+        agent.healthBar.gameObject.SetActive(false);
+        agent.bodyIK.enabled = false;
+    }
+    public void Update(AIAgent agent)
+    {
+
+    }
+    public void Exit(AIAgent agent)
+    {
+
     }
 }

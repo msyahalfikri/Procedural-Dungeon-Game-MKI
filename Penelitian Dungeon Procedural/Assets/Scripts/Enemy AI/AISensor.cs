@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [ExecuteInEditMode]
+// WARNING THERE IS A BUG WITH THE SIZE OF THE SENSOR; THE SENSOR CONE DOESN'T REPRESENT THE TRUE DISTANCE  CORRECTLY
 public class AISensor : MonoBehaviour
 {
     public float distance = 10f;
@@ -10,7 +11,7 @@ public class AISensor : MonoBehaviour
     public float height = 1.0f;
     public Color meshColor = Color.red;
     public int scanFrequency = 30;
-    private bool isPlayerInSight = false;
+    public bool isPlayerInSight = false;
     public LayerMask layers;
     public LayerMask occlusionLayers;
     public List<GameObject> objects
@@ -49,9 +50,10 @@ public class AISensor : MonoBehaviour
 
     private void Scan()
     {
+        isPlayerInSight = false; // Reset the flag
         count = Physics.OverlapSphereNonAlloc(transform.position, distance, colliders, layers, QueryTriggerInteraction.Collide);
         objectsList.Clear();
-        isPlayerInSight = false; // Reset the flag
+
 
         foreach (var collider in colliders)
         {
@@ -68,7 +70,7 @@ public class AISensor : MonoBehaviour
                     // Update the last known position if the object is the player
                     if (obj.CompareTag("Player"))
                     {
-                        onPlayerEnter?.Invoke(obj.transform);
+                        isPlayerInSight = true;
                     }
                 }
             }
