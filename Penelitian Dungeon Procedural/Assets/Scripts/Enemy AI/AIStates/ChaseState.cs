@@ -3,46 +3,48 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace EnemyAI.FSM
+public class ChaseState : AIState
 {
-    public class ChaseState : EnemyStateBase
+
+    float chaseTimer = 0.0f;
+    public AIStateID GetID()
+    {
+        return AIStateID.ChasePlayer;
+    }
+    public void Enter(AIAgent agent)
     {
 
-        float chaseTimer = 0.0f;
-        private Transform target;
-        public ChaseState(bool needsExitTime, Enemy enemy, Transform target) : base(needsExitTime, enemy)
+    }
+    public void Update(AIAgent agent)
+    {
+        if (!agent.enabled)
         {
-            this.target = target;
+            return;
         }
-        public override void OnEnter()
+        chaseTimer -= Time.deltaTime;
+        if (!agent.navMeshAgent.hasPath)
         {
-            base.OnEnter();
-            agent.enabled = true;
-            agent.isStopped = false;
-            // animator.Play(stateName: Walk);
+            agent.navMeshAgent.destination = agent.playerTransform.position;
         }
-
-        public override void OnLogic()
+        if (chaseTimer < 0.0f)
         {
-            base.OnLogic();
-            if (!requestedExit)
+            Vector3 direction = (agent.playerTransform.position - agent.navMeshAgent.destination);
+            direction.y = 0;
+            if (direction.sqrMagnitude > agent.config.maxDistance * agent.config.maxDistance)
             {
-                chaseTimer -= Time.deltaTime;
-                if (chaseTimer < 0.0f)
+                if (agent.navMeshAgent.pathStatus != NavMeshPathStatus.PathPartial)
                 {
-                    float sqrDistance = (target.position - agent.destination).sqrMagnitude;
-                    if (sqrDistance > enemy.agentConfig.maxDistance * enemy.agentConfig.maxDistance)
-                    {
-                        agent.destination = target.position;
-                    }
-                    chaseTimer = enemy.agentConfig.maxTime;
+                    agent.navMeshAgent.destination = agent.playerTransform.position;
                 }
             }
-            else if (agent.remainingDistance <= agent.stoppingDistance)
-            {
-                fsm.StateCanExit();
-            }
+            chaseTimer = agent.config.maxTime;
         }
+
+
+    }
+    public void Exit(AIAgent agent)
+    {
+
     }
 
 }
