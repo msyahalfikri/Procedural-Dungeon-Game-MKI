@@ -16,9 +16,10 @@ public class AIAgent : MonoBehaviour
     [HideInInspector] public BodyIK bodyIK;
     [HideInInspector] public SkinnedMeshRenderer mesh;
     [HideInInspector] public AISensor sightSensor;
+    [HideInInspector] public ChaseRangeSphere chaseRangeSphere;
+    public LayerMask PlayerLayer, GroundLayer;
 
-
-    private void Start()
+    private void Awake()
     {
         ragdoll = GetComponent<AIRagdoll>();
         mesh = GetComponentInChildren<SkinnedMeshRenderer>();
@@ -27,13 +28,17 @@ public class AIAgent : MonoBehaviour
         playerTransform = GameObject.FindGameObjectWithTag("Player");
         bodyIK = GetComponent<BodyIK>();
         sightSensor = GetComponent<AISensor>();
-
+        chaseRangeSphere = GetComponentInChildren<ChaseRangeSphere>();
+    }
+    private void Start()
+    {
         stateMachine = new AIStateMachine(this);
 
         //Register All States
         stateMachine.RegisterState(new ChaseState());
         stateMachine.RegisterState(new IdleState());
         stateMachine.RegisterState(new DeathState());
+        stateMachine.RegisterState(new PatrolState());
 
         //Initialize Initial State
         stateMachine.ChangeState(initialState);
@@ -43,4 +48,6 @@ public class AIAgent : MonoBehaviour
         stateMachine.Update();
         Debug.Log(stateMachine.currentState);
     }
+
+
 }

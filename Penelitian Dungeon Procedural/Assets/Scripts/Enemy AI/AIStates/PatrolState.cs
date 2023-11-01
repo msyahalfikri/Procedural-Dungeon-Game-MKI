@@ -1,50 +1,50 @@
-// using UnityEngine;
-// using System.Collections.Generic;
-// using EnemyAI.FSM;
+using UnityEngine;
+using System.Collections.Generic;
 
-// public class PatrolState : EnemyStateBase
-// {
-//     bool walkPointSet;
-//     private Vector3 walkPoint;
+public class PatrolState : AIState
+{
+    bool walkPointSet = false;
+    private Vector3 walkPoint;
 
-//     public PatrolState(bool needsExitTime, Enemy enemy) : base(needsExitTime, enemy) { }
+    public AIStateID GetID()
+    {
+        return AIStateID.PatrolState;
+    }
 
-//     public override void OnEnter()
-//     {
-//         base.OnEnter();
-//         agent.enabled = true;
-//         agent.isStopped = false;
+    public void Enter(AIAgent agent)
+    {
+        agent.enabled = true;
+        agent.navMeshAgent.isStopped = false;
+        agent.bodyIK.enabled = false;
+        walkPointSet = false;
+    }
 
-//     }
+    public void Update(AIAgent agent)
+    {
+        //Patrolling
+        if (!walkPointSet)
+        {
+            //Search for WalkPoint
+            float randomZ = Random.Range(-agent.config.walkPointRange, agent.config.walkPointRange);
+            float randomX = Random.Range(-agent.config.walkPointRange, agent.config.walkPointRange);
+            walkPoint = new Vector3(agent.transform.position.x + randomX, agent.transform.position.y, agent.transform.position.z + randomZ);
 
-//     public override void OnLogic()
-//     {
-//         base.OnLogic();
-//         Patrolling();
-//     }
+            if (Physics.Raycast(walkPoint, -agent.transform.up, 2f, agent.GroundLayer))
+            {
+                walkPointSet = true;
 
+            }
 
-//     private void SearchWalkPoint()
-//     {
-//         float randomZ = Random.Range(-enemy.walkPointRange, enemy.walkPointRange);
-//         float randomX = Random.Range(-enemy.walkPointRange, enemy.walkPointRange);
-//         walkPoint = new Vector3(agent.transform.position.x + randomX, agent.transform.position.y, agent.transform.position.z + randomZ);
+        }
 
-//         if (Physics.Raycast(walkPoint, -agent.transform.up, 2f, enemy.Ground))
-//         {
-//             walkPointSet = true;
-//         }
-//     }
+        if (walkPointSet) agent.navMeshAgent.SetDestination(walkPoint);
 
-//     private void Patrolling()
-//     {
-//         Debug.Log(walkPointSet);
-//         if (!walkPointSet) SearchWalkPoint();
+        Vector3 distanceToWalkPoint = agent.transform.position - walkPoint;
 
-//         if (walkPointSet) agent.SetDestination(walkPoint);
+        if (distanceToWalkPoint.magnitude < 1f) walkPointSet = false;
+    }
 
-//         Vector3 distanceToWalkPoint = agent.transform.position - walkPoint;
-
-//         if (distanceToWalkPoint.magnitude < 1f) walkPointSet = false;
-//     }
-// }
+    public void Exit(AIAgent agent)
+    {
+    }
+}

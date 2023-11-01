@@ -4,30 +4,34 @@
 
 // namespace EnemyAI.FSM
 // {
-//     public class LastKnowLocationState : EnemyStateBase
+//     public class LastKnowLocationState : AIState
 //     {
 //         private Vector3 playerLastKnownLocation;
-//         public delegate void PlayerExitEvent();
-//         public event PlayerExitEvent onPlayerExit;
 //         private bool lastKnownLocationArrived;
 //         float chaseTimer = 0.0f;
 //         bool waiting = false;
 
-//         public LastKnowLocationState(bool needsExitTime, Enemy enemy, Vector3 lastKnownLocation) : base(needsExitTime, enemy)
+//         public void ToInitialPost()
 //         {
-//             this.playerLastKnownLocation = lastKnownLocation;
+//             agent.navMeshAgent.speed = 2f;
+//             agent.destination = enemy.initialPost.position;
 //         }
-//         public override void OnEnter()
+
+//         public AIStateID GetID()
 //         {
-//             base.OnEnter();
+//             throw new System.NotImplementedException();
+//         }
+
+//         public void Enter(AIAgent agent)
+//         {
 //             agent.enabled = true;
-//             agent.isStopped = false;
+//             agent.navMeshAgent.isStopped = false;
 //             this.playerLastKnownLocation = enemy.playerLastKnowLocation;
 //             lastKnownLocationArrived = false;
 //         }
-//         public override void OnLogic()
+
+//         public void Update(AIAgent agent)
 //         {
-//             base.OnLogic();
 //             if (!requestedExit)
 //             {
 //                 chaseTimer -= Time.deltaTime;
@@ -59,13 +63,11 @@
 //                 ToInitialPost();
 //             }
 
-
 //         }
 
-//         public void ToInitialPost()
+//         public void Exit(AIAgent agent)
 //         {
-//             agent.speed = 2f;
-//             agent.destination = enemy.initialPost.position;
+//             throw new System.NotImplementedException();
 //         }
 //     }
 // }
