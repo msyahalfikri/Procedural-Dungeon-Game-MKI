@@ -1,9 +1,8 @@
 using UnityEngine;
-using System.Collections.Generic;
 
 public class PatrolState : AIState
 {
-    bool walkPointSet = false;
+    private bool walkPointSet = false;
     private Vector3 walkPoint;
 
     public AIStateID GetID()
@@ -13,35 +12,39 @@ public class PatrolState : AIState
 
     public void Enter(AIAgent agent)
     {
-        agent.enabled = true;
         agent.navMeshAgent.isStopped = false;
         agent.bodyIK.enabled = false;
         walkPointSet = false;
+        agent.navMeshAgent.speed = 2.0f;
     }
 
     public void Update(AIAgent agent)
     {
-        //Patrolling
+        // Patrolling
         if (!walkPointSet)
         {
-            //Search for WalkPoint
+            // Search for a walk point
             float randomZ = Random.Range(-agent.config.walkPointRange, agent.config.walkPointRange);
             float randomX = Random.Range(-agent.config.walkPointRange, agent.config.walkPointRange);
             walkPoint = new Vector3(agent.transform.position.x + randomX, agent.transform.position.y, agent.transform.position.z + randomZ);
 
-            if (Physics.Raycast(walkPoint, -agent.transform.up, 2f, agent.GroundLayer))
+            if (Physics.Raycast(walkPoint, -Vector3.up, 2f, agent.GroundLayer))
             {
                 walkPointSet = true;
-
             }
-
         }
 
-        if (walkPointSet) agent.navMeshAgent.SetDestination(walkPoint);
+        if (walkPointSet)
+        {
+            agent.navMeshAgent.SetDestination(walkPoint); // Use SetDestination to navigate to the walk point
 
-        Vector3 distanceToWalkPoint = agent.transform.position - walkPoint;
-
-        if (distanceToWalkPoint.magnitude < 1f) walkPointSet = false;
+            // Optionally, you can add a stopping distance check to ensure the AI doesn't stop too early
+            if (Vector3.Distance(agent.transform.position, walkPoint) < agent.navMeshAgent.stoppingDistance)
+            {
+                walkPointSet = false;
+            }
+            Debug.Log(agent.navMeshAgent.pathStatus);
+        }
     }
 
     public void Exit(AIAgent agent)

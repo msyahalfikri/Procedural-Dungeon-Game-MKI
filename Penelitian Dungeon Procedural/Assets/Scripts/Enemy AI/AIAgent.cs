@@ -10,7 +10,7 @@ public class AIAgent : MonoBehaviour
     public AIStateID initialState;
     public NavMeshAgent navMeshAgent;
     public AiAgentConfig config;
-    [HideInInspector] public GameObject playerTransform;
+    public GameObject playerTransform;
     [HideInInspector] public AIRagdoll ragdoll;
     [HideInInspector] public UIHealthBar healthBar;
     [HideInInspector] public BodyIK bodyIK;
@@ -21,7 +21,7 @@ public class AIAgent : MonoBehaviour
 
     private void Awake()
     {
-        ragdoll = GetComponent<AIRagdoll>();
+        ragdoll = GetComponentInChildren<AIRagdoll>();
         mesh = GetComponentInChildren<SkinnedMeshRenderer>();
         navMeshAgent = GetComponent<NavMeshAgent>();
         healthBar = GetComponentInChildren<UIHealthBar>();

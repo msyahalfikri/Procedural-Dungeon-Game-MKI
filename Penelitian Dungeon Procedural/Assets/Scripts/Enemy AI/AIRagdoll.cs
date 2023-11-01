@@ -9,8 +9,8 @@ public class AIRagdoll : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        rigidBodies = GetComponentsInChildren<Rigidbody>();
-        animator = GetComponent<Animator>();
+        rigidBodies = GetComponentsInParent<Rigidbody>();
+        animator = GetComponentInParent<Animator>();
 
         DeactivateRagdoll();
     }
