@@ -903,14 +903,23 @@ MonoBehaviour:
   mouseColliderMask:
     serializedVersion: 2
     m_Bits: 4194305
-  sword: {fileID: 0}
-  blocksword: {fileID: 0}
-  swordCollider: {fileID: 0}
+  sword: {fileID: 1762682264}
+  blocksword: {fileID: 1762682263}
   cooldownTime: 2
   attackRange: 0.5
   enemyLayers:
     serializedVersion: 2
     m_Bits: 0
+--- !u!1 &1762682263 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4419340719311264948, guid: 64dce48905ffd9b4293e595fa6941544, type: 3}
+  m_PrefabInstance: {fileID: 1762682258}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1762682264 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3690658159538453975, guid: 64dce48905ffd9b4293e595fa6941544, type: 3}
+  m_PrefabInstance: {fileID: 1762682258}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1764214107
 GameObject:
   m_ObjectHideFlags: 0
