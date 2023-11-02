@@ -43,7 +43,7 @@ public class PatrolState : AIState
             {
                 walkPointSet = false;
             }
-            Debug.Log(agent.navMeshAgent.pathStatus);
+
         }
     }
 

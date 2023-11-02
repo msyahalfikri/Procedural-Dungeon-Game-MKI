@@ -1544,6 +1544,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fd16ed20c1b86b4586f5eb8e51d438f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  agent: {fileID: 0}
+  animator: {fileID: 0}
 --- !u!195 &926638790
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -6411,7 +6413,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 307c018b39058244ea1012b370fe1d69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialState: 4
+  initialState: 1
   navMeshAgent: {fileID: 0}
   config: {fileID: 11400000, guid: 76a0eb3adc6dbf149b3e619f43ee7942, type: 2}
   playerTransform: {fileID: 0}
