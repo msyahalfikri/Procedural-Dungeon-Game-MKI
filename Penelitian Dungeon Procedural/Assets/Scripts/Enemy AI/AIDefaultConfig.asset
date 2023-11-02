@@ -16,3 +16,5 @@ MonoBehaviour:
   maxDistance: 1
   maxSightDistance: 5
   walkPointRange: 40
+  IdleWaitTime: 3
+  deathAnimationWaitTime: 20

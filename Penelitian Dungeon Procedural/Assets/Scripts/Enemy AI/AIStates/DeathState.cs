@@ -5,25 +5,32 @@ using UnityEngine;
 
 public class DeathState : AIState
 {
+    float animationWaitTime;
     public AIStateID GetID()
     {
         return AIStateID.DeathState;
     }
     public void Enter(AIAgent agent)
     {
-        agent.ragdoll.ActivateRagdoll();
-        // agent.gameObject.SetActive(false);
-        // agent.gameObject.SetActive(true);
-        agent.mesh.updateWhenOffscreen = true;
+        animationWaitTime = agent.config.deathAnimationWaitTime;
         agent.healthBar.gameObject.SetActive(false);
         agent.bodyIK.enabled = false;
+        agent.isDying = true;
     }
     public void Update(AIAgent agent)
     {
+        agent.animator.SetBool("IsDying", agent.isDying);
+        animationWaitTime -= Time.deltaTime;
+        if (animationWaitTime < 0.0f)
+        {
+            agent.ragdoll.ActivateRagdoll();
+            agent.mesh.updateWhenOffscreen = true;
+        }
 
     }
     public void Exit(AIAgent agent)
     {
+        agent.isDying = false;
 
     }
 }

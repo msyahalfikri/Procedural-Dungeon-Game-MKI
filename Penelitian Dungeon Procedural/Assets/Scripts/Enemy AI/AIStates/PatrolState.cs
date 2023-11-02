@@ -41,7 +41,7 @@ public class PatrolState : AIState
             // Optionally, you can add a stopping distance check to ensure the AI doesn't stop too early
             if (Vector3.Distance(agent.transform.position, walkPoint) < agent.navMeshAgent.stoppingDistance)
             {
-                walkPointSet = false;
+                agent.stateMachine.ChangeState(AIStateID.IdleState);
             }
 
         }

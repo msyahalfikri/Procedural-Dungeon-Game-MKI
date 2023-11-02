@@ -5,16 +5,19 @@ using UnityEngine.AI;
 
 public class AIAnimations : MonoBehaviour
 {
-    private NavMeshAgent agent;
+    private NavMeshAgent navMeshAgent;
     private Animator animator;
+    private AIAgent agent;
     private void Awake()
     {
-        agent = GetComponent<NavMeshAgent>();
+        navMeshAgent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
+        agent = GetComponent<AIAgent>();
     }
     private void Update()
     {
-        animator.SetFloat("Speed", agent.velocity.magnitude);
+        animator.SetFloat("Speed", navMeshAgent.velocity.magnitude);
+        // animator.SetBool("IsDying", agent.isDying);
     }
 
 

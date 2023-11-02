@@ -17,6 +17,8 @@ public class AIAgent : MonoBehaviour
     [HideInInspector] public SkinnedMeshRenderer mesh;
     [HideInInspector] public AISensor sightSensor;
     [HideInInspector] public ChaseRangeSphere chaseRangeSphere;
+    [HideInInspector] public bool isDying;
+    public Animator animator;
     public LayerMask PlayerLayer, GroundLayer;
 
     private void Awake()
@@ -29,6 +31,7 @@ public class AIAgent : MonoBehaviour
         bodyIK = GetComponent<BodyIK>();
         sightSensor = GetComponent<AISensor>();
         chaseRangeSphere = GetComponentInChildren<ChaseRangeSphere>();
+        animator = GetComponent<Animator>();
     }
     private void Start()
     {

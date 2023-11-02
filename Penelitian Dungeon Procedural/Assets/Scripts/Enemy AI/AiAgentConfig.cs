@@ -10,4 +10,5 @@ public class AiAgentConfig : ScriptableObject
     public float maxSightDistance = 5.0f;
     public float walkPointRange = 10.0f;
     public float IdleWaitTime = 3.0f;
+    public float deathAnimationWaitTime = 3.0f;
 }

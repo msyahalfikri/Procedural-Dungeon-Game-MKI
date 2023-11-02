@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class AttackState : AIState
+public class AttackPunchState : AIState
 {
     public AIStateID GetID()
     {
@@ -16,10 +16,13 @@ public class AttackState : AIState
 
     public void Exit(AIAgent agent)
     {
+        throw new NotImplementedException();
     }
+
 
     public void Update(AIAgent agent)
     {
+        throw new NotImplementedException();
     }
 }
 
