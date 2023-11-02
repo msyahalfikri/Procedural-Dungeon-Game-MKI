@@ -15,7 +15,6 @@ public class CombatController : MonoBehaviour
     private Animator animator;
     public GameObject sword;
     public GameObject blocksword;
-    public BoxCollider swordCollider;
 
     // combat combo animation
     public float cooldownTime = 2f;
