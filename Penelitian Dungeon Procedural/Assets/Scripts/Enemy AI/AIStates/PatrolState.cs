@@ -15,7 +15,7 @@ public class PatrolState : AIState
         agent.navMeshAgent.isStopped = false;
         agent.bodyIK.enabled = false;
         walkPointSet = false;
-        agent.navMeshAgent.speed = 2.0f;
+        agent.navMeshAgent.speed = agent.config.agentWalkSpeed;
     }
 
     public void Update(AIAgent agent)
@@ -44,6 +44,11 @@ public class PatrolState : AIState
                 agent.stateMachine.ChangeState(AIStateID.IdleState);
             }
 
+        }
+
+        if (agent.sightSensor.isPlayerInSight == true)
+        {
+            agent.stateMachine.ChangeState(AIStateID.ChasePlayer);
         }
     }
 

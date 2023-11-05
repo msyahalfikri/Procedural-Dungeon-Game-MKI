@@ -17,7 +17,9 @@ public class AIAnimations : MonoBehaviour
     private void Update()
     {
         animator.SetFloat("Speed", navMeshAgent.velocity.magnitude);
-        // animator.SetBool("IsDying", agent.isDying);
+        animator.SetBool("IsDying", agent.isDying);
+        animator.SetBool("IsInAttackRange", agent.IsInAttackRange);
+        animator.SetBool("AlreadyAttacked", agent.alreadyAttacked);
     }
 
 

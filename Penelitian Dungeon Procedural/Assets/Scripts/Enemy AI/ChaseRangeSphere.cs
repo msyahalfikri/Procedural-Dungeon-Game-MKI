@@ -15,22 +15,15 @@ public class ChaseRangeSphere : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
-        {
-            Debug.Log("Player detected");
-        }
+
 
     }
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            if (agent.stateMachine.currentState == AIStateID.ChasePlayer)
-            {
-                Debug.Log("Player left");
-                lastKnownPlayerPosition = other.transform.position;
-            }
-
+            Debug.Log("Player left");
+            agent.stateMachine.ChangeState(AIStateID.PatrolState);
         }
 
     }

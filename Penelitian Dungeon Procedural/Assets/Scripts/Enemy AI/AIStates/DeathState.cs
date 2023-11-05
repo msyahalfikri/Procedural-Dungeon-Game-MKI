@@ -19,18 +19,15 @@ public class DeathState : AIState
     }
     public void Update(AIAgent agent)
     {
-        agent.animator.SetBool("IsDying", agent.isDying);
         animationWaitTime -= Time.deltaTime;
         if (animationWaitTime < 0.0f)
         {
             agent.ragdoll.ActivateRagdoll();
             agent.mesh.updateWhenOffscreen = true;
         }
-
     }
     public void Exit(AIAgent agent)
     {
         agent.isDying = false;
-
     }
 }

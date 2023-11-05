@@ -18,7 +18,9 @@ public class AIAgent : MonoBehaviour
     [HideInInspector] public AISensor sightSensor;
     [HideInInspector] public ChaseRangeSphere chaseRangeSphere;
     [HideInInspector] public bool isDying;
-    public Animator animator;
+    [HideInInspector] public bool alreadyAttacked;
+    [HideInInspector] public bool IsInAttackRange;
+    [HideInInspector] public Animator animator;
     public LayerMask PlayerLayer, GroundLayer;
 
     private void Awake()
@@ -42,6 +44,7 @@ public class AIAgent : MonoBehaviour
         stateMachine.RegisterState(new IdleState());
         stateMachine.RegisterState(new DeathState());
         stateMachine.RegisterState(new PatrolState());
+        stateMachine.RegisterState(new AttackState());
 
         //Initialize Initial State
         stateMachine.ChangeState(initialState);
