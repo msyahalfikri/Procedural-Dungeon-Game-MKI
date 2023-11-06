@@ -12,5 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab8a7710fdb4abc41a6c5bb6c95136b2, type: 3}
   m_Name: AIDefaultConfig
   m_EditorClassIdentifier: 
+  agentWalkSpeed: 2
+  agentRunSpeed: 4.5
   maxTime: 1
   maxDistance: 1
+  maxSightDistance: 5
+  walkPointRange: 40
+  IdleWaitTime: 3
+  deathAnimationWaitTime: 2.05
+  timeBetweenAttacks: 2

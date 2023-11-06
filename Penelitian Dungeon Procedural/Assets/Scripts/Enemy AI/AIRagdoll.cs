@@ -4,28 +4,29 @@ using UnityEngine;
 
 public class AIRagdoll : MonoBehaviour
 {
-    Rigidbody[] rigidbodies;
+    Rigidbody[] rigidBodies;
     Animator animator;
     // Start is called before the first frame update
     void Start()
     {
-        rigidbodies = GetComponentsInChildren<Rigidbody>();
-        animator = GetComponent<Animator>();
+        rigidBodies = GetComponentsInParent<Rigidbody>();
+        animator = GetComponentInParent<Animator>();
 
         DeactivateRagdoll();
     }
 
     public void DeactivateRagdoll()
     {
-        foreach (var rigidBody in rigidbodies)
+        foreach (var rigidBody in rigidBodies)
         {
             rigidBody.isKinematic = true;
         }
+        animator.enabled = true;
     }
 
     public void ActivateRagdoll()
     {
-        foreach (var rigidBody in rigidbodies)
+        foreach (var rigidBody in rigidBodies)
         {
             rigidBody.isKinematic = false;
         }

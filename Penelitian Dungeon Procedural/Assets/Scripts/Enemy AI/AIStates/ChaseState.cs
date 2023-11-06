@@ -3,47 +3,50 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace EnemyAI.FSM
+public class ChaseState : AIState
 {
-    public class ChaseState : EnemyStateBase
+
+    float chaseTimer = 0.0f;
+    public AIStateID GetID()
+    {
+        return AIStateID.ChasePlayer;
+    }
+    public void Enter(AIAgent agent)
+    {
+        agent.navMeshAgent.isStopped = false;
+        agent.navMeshAgent.speed = agent.config.agentRunSpeed;
+        agent.bodyIK.enabled = true;
+    }
+    public void Update(AIAgent agent)
+    {
+        if (!agent.enabled)
+        {
+            return;
+        }
+        chaseTimer -= Time.deltaTime;
+        if (!agent.navMeshAgent.hasPath)
+        {
+            agent.navMeshAgent.destination = agent.playerTransform.transform.position;
+        }
+        if (chaseTimer < 0.0f)
+        {
+            Vector3 direction = (agent.playerTransform.transform.position - agent.navMeshAgent.destination);
+            direction.y = 0;
+            if (direction.sqrMagnitude > agent.config.maxDistance * agent.config.maxDistance)
+            {
+                if (agent.navMeshAgent.pathStatus != NavMeshPathStatus.PathPartial)
+                {
+                    agent.navMeshAgent.destination = agent.playerTransform.transform.position;
+                }
+            }
+            chaseTimer = agent.config.maxTime;
+        }
+
+
+    }
+    public void Exit(AIAgent agent)
     {
 
-        float chaseTimer = 0.0f;
-        private Transform target;
-        public ChaseState(bool needsExitTime, Enemy enemy, Transform target) : base(needsExitTime, enemy)
-        {
-            this.target = target;
-        }
-        public override void OnEnter()
-        {
-            base.OnEnter();
-            agent.enabled = true;
-            agent.isStopped = false;
-            // animator.Play(stateName: Walk);
-        }
-
-        public override void OnLogic()
-        {
-            base.OnLogic();
-            if (!requestedExit)
-            {
-                chaseTimer -= Time.deltaTime;
-                if (chaseTimer < 0.0f)
-                {
-                    float sqrDistance = (target.position - agent.destination).sqrMagnitude;
-                    if (sqrDistance > enemy.agentConfig.maxDistance * enemy.agentConfig.maxDistance)
-                    {
-                        agent.destination = target.position;
-                    }
-                    chaseTimer = enemy.agentConfig.maxTime;
-                }
-                animator.SetFloat("Speed", agent.velocity.magnitude);
-            }
-            else if (agent.remainingDistance <= agent.stoppingDistance)
-            {
-                fsm.StateCanExit();
-            }
-        }
     }
 
 }

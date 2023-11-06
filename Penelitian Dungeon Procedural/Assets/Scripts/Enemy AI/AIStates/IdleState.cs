@@ -1,34 +1,36 @@
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using UnityEngine;
-using FSM;
-using System;
 
-namespace EnemyAI.FSM
+public class IdleState : AIState
 {
-    public class IdleState : EnemyStateBase
+    public float waitTime;
+    public AIStateID GetID()
     {
-        public IdleState(bool needsExitTime, Enemy enemy) : base(needsExitTime, enemy) { }
-
-        public override void OnEnter()
+        return AIStateID.IdleState;
+    }
+    public void Enter(AIAgent agent)
+    {
+        agent.navMeshAgent.isStopped = true;
+        agent.bodyIK.enabled = false;
+        waitTime = agent.config.IdleWaitTime;
+    }
+    public void Update(AIAgent agent)
+    {
+        if (agent.sightSensor.isPlayerInSight == true)
         {
-            base.OnEnter();
-            agent.isStopped = true;
+            agent.stateMachine.ChangeState(AIStateID.ChasePlayer);
+        }
 
-            Vector3 playerDirection = enemy.player.position - agent.transform.position;
-            if (playerDirection.magnitude > enemy.agentConfig.mightSightDistance)
-            {
-                return;
-            }
-
-            Vector3 agentDirection = agent.transform.forward;
-            playerDirection.Normalize();
-            float dotProduct = Vector3.Dot(playerDirection, agentDirection);
-            if (dotProduct > 0.0f)
-            {
-                //change to chaseplayer state
-            }
+        waitTime -= Time.deltaTime;
+        if (waitTime <= 0.0f)
+        {
+            agent.stateMachine.ChangeState(AIStateID.PatrolState);
         }
     }
+    public void Exit(AIAgent agent)
+    {
 
+    }
 }

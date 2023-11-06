@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [ExecuteInEditMode]
+// WARNING THERE IS A BUG WITH THE SIZE OF THE SENSOR; THE SENSOR CONE DOESN'T REPRESENT THE TRUE DISTANCE  CORRECTLY
 public class AISensor : MonoBehaviour
 {
     public float distance = 10f;
@@ -10,6 +11,7 @@ public class AISensor : MonoBehaviour
     public float height = 1.0f;
     public Color meshColor = Color.red;
     public int scanFrequency = 30;
+    public bool isPlayerInSight = false;
     public LayerMask layers;
     public LayerMask occlusionLayers;
     public List<GameObject> objects
@@ -28,11 +30,7 @@ public class AISensor : MonoBehaviour
     Mesh mesh;
 
     public delegate void PlayerEnterEvent(Transform player);
-    public delegate void PlayerExitEvent(Vector3 lastKnowPosition);
-
     public event PlayerEnterEvent onPlayerEnter;
-    public event PlayerExitEvent onPlayerExit;
-
     void Start()
     {
         scanInterval = 1.0f / scanFrequency;
@@ -47,25 +45,15 @@ public class AISensor : MonoBehaviour
             scanTimer += scanInterval;
             Scan();
         }
+
     }
-    // private void Scan()
-    // {
-    //     count = Physics.OverlapSphereNonAlloc(transform.position, distance, colliders, layers, QueryTriggerInteraction.Collide);
-    //     objectsList.Clear();
-    //     for (int i = 0; i < count; ++i)
-    //     {
-    //         GameObject obj = colliders[i].gameObject; ;
-    //         if (IsInSight(obj))
-    //         {
-    //             objectsList.Add(obj);
-    //         }
-    //     }
-    // }
 
     private void Scan()
     {
+        isPlayerInSight = false; // Reset the flag
         count = Physics.OverlapSphereNonAlloc(transform.position, distance, colliders, layers, QueryTriggerInteraction.Collide);
         objectsList.Clear();
+
 
         foreach (var collider in colliders)
         {
@@ -79,27 +67,15 @@ public class AISensor : MonoBehaviour
                 if (!objectsList.Contains(obj))
                 {
                     objectsList.Add(obj);
-                    // Invoke the onPlayerEnter event with the object's transform
+                    // Update the last known position if the object is the player
                     if (obj.CompareTag("Player"))
                     {
-                        onPlayerEnter?.Invoke(obj.transform);
-                    }
-                }
-            }
-            else
-            {
-                // If the object is not in sight and was in the list, remove it
-                if (objectsList.Contains(obj))
-                {
-                    objectsList.Remove(obj);
-                    // Invoke the onPlayerExit event with the object's last known position
-                    if (obj.CompareTag("Player"))
-                    {
-                        onPlayerExit?.Invoke(obj.transform.position);
+                        isPlayerInSight = true;
                     }
                 }
             }
         }
+
     }
 
 
@@ -124,6 +100,7 @@ public class AISensor : MonoBehaviour
         {
             return false;
         }
+
         return true;
     }
     Mesh CreateWedgeMesh()
