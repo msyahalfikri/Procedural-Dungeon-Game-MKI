@@ -6,9 +6,12 @@ using UnityEditor.AnimatedValues;
 
 public class AttackState : AIState
 {
-    private bool leftHook = false, rightHook = false, heavyAttackReady = false;
+    private bool leftHook = false, rightHook = false;
+    float heavyAttackTimer;
+    bool heavyAttackReady;
     float attackInterval = 0.0f;
-    float heavyAttackCooldown = 0.0f;
+    bool walkingBackward = false;
+
     public AIStateID GetID()
     {
         return AIStateID.AttackState;
@@ -18,6 +21,7 @@ public class AttackState : AIState
         // agent.navMeshAgent.speed = 0.0f;
         agent.alreadyAttacked = false;
         attackInterval = agent.config.timeBetweenAttacks;
+        heavyAttackTimer = agent.config.heavyAttackCooldownMaxTime;
     }
 
     public void Exit(AIAgent agent)
@@ -25,16 +29,13 @@ public class AttackState : AIState
 
     }
 
-
     public void Update(AIAgent agent)
     {
-        agent.navMeshAgent.transform.LookAt(agent.playerTransform.transform);
-
-        heavyAttackCooldown -= Time.deltaTime;
-        if (heavyAttackCooldown <= 0)
+        heavyAttackTimer -= Time.deltaTime;
+        if (heavyAttackTimer <= 0f)
         {
             heavyAttackReady = true;
-            heavyAttackCooldown = agent.config.heavyAttackCooldownMaxTime;
+
         }
         else
         {
@@ -44,34 +45,37 @@ public class AttackState : AIState
         if (agent.alreadyAttacked)
         {
             // If already attacked, check if it's time to reset
+            agent.alreadyAttacked = false;
             attackInterval -= Time.deltaTime;
             if (attackInterval <= 0.0f)
             {
-                if (heavyAttackReady == true)
+                if (heavyAttackReady)
                 {
-                    agent.alreadyAttacked = false;
-                    leftHook = false; rightHook = false;
+                    heavyAttackTimer = agent.config.heavyAttackCooldownMaxTime;
+                    agent.attackLeft = false;
+                    agent.attackRight = false;
                     agent.heavyAttack = true;
                 }
-                else if (heavyAttackReady == false)
+                else
                 {
-                    agent.heavyAttack = false;
-                    agent.alreadyAttacked = false;
-                    performLightAttack();
+                    PerformLightAttack();
                     if (leftHook)
                     {
                         agent.attackLeft = true;
                         agent.attackRight = false;
+                        agent.heavyAttack = false;
                     }
                     else if (rightHook)
                     {
                         agent.attackLeft = false;
                         agent.attackRight = true;
+                        agent.heavyAttack = false;
                     }
                 }
 
             }
             attackInterval = agent.config.timeBetweenAttacks;
+            Debug.Log("LeftHook: " + agent.attackLeft + " || RightHook: " + agent.attackRight + " || HeavyAttack: " + agent.heavyAttack);
         }
         else
         {
@@ -81,10 +85,34 @@ public class AttackState : AIState
             {
                 agent.alreadyAttacked = true;
             }
+
         }
-        Debug.Log("LeftHook: " + agent.attackLeft + " || RightHook: " + agent.attackRight + " || HeavyAttackCooldown: " + heavyAttackCooldown);
+        // Debug.Log("LeftHook: " + agent.attackLeft + " || RightHook: " + agent.attackRight + " || AttackTimer: " + attackInterval);
+        // Debug.Log("HeavyAttack Timer: " + heavyAttackTimer + " || heavyAttackReady?: " + heavyAttackReady);
+
+        // //=====Calculate Walking Backwards========
+        // Vector3 directionToPlayer = agent.playerTransform.transform.position - agent.transform.position;
+        // // Calculate the distance to the player
+        // float distanceToPlayer = directionToPlayer.magnitude;
+
+        // // Get the NavMesh agent to navigate
+        // if (distanceToPlayer < agent.navMeshAgent.stoppingDistance)
+        // {
+        //     // If the player is too close, move backward to maintain the stopping distance
+        //     Vector3 moveDirection = -directionToPlayer.normalized;
+        //     agent.navMeshAgent.Move(moveDirection * agent.navMeshAgent.speed * Time.deltaTime);
+        //     walkingBackward = true;
+        // }
+        // else
+        // {
+        //     // If the player is outside the stopping distance, stop moving
+        //     agent.navMeshAgent.velocity = Vector3.zero;
+        //     walkingBackward = false;
+        // }
+        // agent.IsWalkingBackward = walkingBackward;
+        // Debug.Log(walkingBackward);
     }
-    private void performLightAttack()
+    private void PerformLightAttack()
     {
         int randomAttack = UnityEngine.Random.Range(0, 2);
         if (randomAttack == 0)

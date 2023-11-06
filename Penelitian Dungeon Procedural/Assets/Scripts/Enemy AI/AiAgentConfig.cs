@@ -15,5 +15,7 @@ public class AiAgentConfig : ScriptableObject
     public float deathAnimationWaitTime = 3.0f;
     public float timeBetweenAttacks = 4.0f;
     public float heavyAttackCooldownMaxTime = 10.0f;
+    public float observingRange = 8.0f;
+    public float attackRange = 8.0f;
 
 }

@@ -21,6 +21,8 @@ public class AIAgent : MonoBehaviour
     [HideInInspector] public bool attackLeft, attackRight, heavyAttack;
     [HideInInspector] public bool alreadyAttacked;
     [HideInInspector] public bool IsInAttackRange;
+    [HideInInspector] public bool turnedLeft, turnedRight, hasTurned;
+    [HideInInspector] public bool IsWalkingBackward;
     [HideInInspector] public Animator animator;
     public LayerMask PlayerLayer, GroundLayer;
 
@@ -41,11 +43,13 @@ public class AIAgent : MonoBehaviour
         stateMachine = new AIStateMachine(this);
 
         //Register All States
+        stateMachine.RegisterState(new TestingState());
         stateMachine.RegisterState(new ChaseState());
         stateMachine.RegisterState(new IdleState());
         stateMachine.RegisterState(new DeathState());
         stateMachine.RegisterState(new PatrolState());
         stateMachine.RegisterState(new AttackState());
+        stateMachine.RegisterState(new HeavyAttackState());
 
         //Initialize Initial State
         stateMachine.ChangeState(initialState);

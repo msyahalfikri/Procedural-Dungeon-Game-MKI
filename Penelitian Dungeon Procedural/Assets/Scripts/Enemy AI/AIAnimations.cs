@@ -20,15 +20,22 @@ public class AIAnimations : MonoBehaviour
         animator.SetBool("IsDying", agent.isDying);
         animator.SetBool("IsInAttackRange", agent.IsInAttackRange);
         animator.SetBool("AlreadyAttacked", agent.alreadyAttacked);
-        if (agent.attackLeft)
+
+
+        animator.SetBool("AttackLeft", agent.attackLeft);
+        animator.SetBool("AttackRight", agent.attackRight);
+        animator.SetBool("HeavyAttack", agent.heavyAttack);
+
+        //Turned Animation
+        animator.SetBool("HasTurned", agent.hasTurned);
+        if (agent.hasTurned)
         {
-            animator.SetTrigger("AttackLeft");
+            animator.SetBool("TurnRight", agent.turnedRight);
+            animator.SetBool("TurnLeft", agent.turnedLeft);
         }
-        else if (agent.attackRight)
-        {
-            animator.SetTrigger("AttackRight");
-        }
-        if (agent.heavyAttack) animator.SetTrigger("HeavyAttack");
+
+        animator.SetBool("IsWalkingBackward", agent.IsWalkingBackward);
+
     }
 
 

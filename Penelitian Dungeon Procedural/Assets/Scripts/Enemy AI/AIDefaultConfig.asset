@@ -21,4 +21,6 @@ MonoBehaviour:
   IdleWaitTime: 3
   deathAnimationWaitTime: 2.05
   timeBetweenAttacks: 3
-  heavyAttackCooldownMaxTime: 10
+  heavyAttackCooldownMaxTime: 12
+  observingRange: 15
+  attackRange: 15
