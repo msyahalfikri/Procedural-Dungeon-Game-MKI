@@ -20,4 +20,5 @@ MonoBehaviour:
   walkPointRange: 40
   IdleWaitTime: 3
   deathAnimationWaitTime: 2.05
-  timeBetweenAttacks: 2
+  timeBetweenAttacks: 3
+  heavyAttackCooldownMaxTime: 10

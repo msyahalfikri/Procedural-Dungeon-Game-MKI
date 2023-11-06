@@ -20,6 +20,15 @@ public class AIAnimations : MonoBehaviour
         animator.SetBool("IsDying", agent.isDying);
         animator.SetBool("IsInAttackRange", agent.IsInAttackRange);
         animator.SetBool("AlreadyAttacked", agent.alreadyAttacked);
+        if (agent.attackLeft)
+        {
+            animator.SetTrigger("AttackLeft");
+        }
+        else if (agent.attackRight)
+        {
+            animator.SetTrigger("AttackRight");
+        }
+        if (agent.heavyAttack) animator.SetTrigger("HeavyAttack");
     }
 
 

@@ -2,10 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEditor.AnimatedValues;
 
 public class AttackState : AIState
 {
+    private bool leftHook = false, rightHook = false, heavyAttackReady = false;
     float attackInterval = 0.0f;
+    float heavyAttackCooldown = 0.0f;
     public AIStateID GetID()
     {
         return AIStateID.AttackState;
@@ -26,15 +29,49 @@ public class AttackState : AIState
     public void Update(AIAgent agent)
     {
         agent.navMeshAgent.transform.LookAt(agent.playerTransform.transform);
+
+        heavyAttackCooldown -= Time.deltaTime;
+        if (heavyAttackCooldown <= 0)
+        {
+            heavyAttackReady = true;
+            heavyAttackCooldown = agent.config.heavyAttackCooldownMaxTime;
+        }
+        else
+        {
+            heavyAttackReady = false;
+        }
+
         if (agent.alreadyAttacked)
         {
             // If already attacked, check if it's time to reset
             attackInterval -= Time.deltaTime;
             if (attackInterval <= 0.0f)
             {
-                agent.alreadyAttacked = false;
-                attackInterval = agent.config.timeBetweenAttacks;
+                if (heavyAttackReady == true)
+                {
+                    agent.alreadyAttacked = false;
+                    leftHook = false; rightHook = false;
+                    agent.heavyAttack = true;
+                }
+                else if (heavyAttackReady == false)
+                {
+                    agent.heavyAttack = false;
+                    agent.alreadyAttacked = false;
+                    performLightAttack();
+                    if (leftHook)
+                    {
+                        agent.attackLeft = true;
+                        agent.attackRight = false;
+                    }
+                    else if (rightHook)
+                    {
+                        agent.attackLeft = false;
+                        agent.attackRight = true;
+                    }
+                }
+
             }
+            attackInterval = agent.config.timeBetweenAttacks;
         }
         else
         {
@@ -45,24 +82,21 @@ public class AttackState : AIState
                 agent.alreadyAttacked = true;
             }
         }
-        Debug.Log(attackInterval);
+        Debug.Log("LeftHook: " + agent.attackLeft + " || RightHook: " + agent.attackRight + " || HeavyAttackCooldown: " + heavyAttackCooldown);
     }
-    private void PerformPunchAttack()
+    private void performLightAttack()
     {
-        // Implement your punch attack logic here
-        Debug.Log("Punch attack!");
-    }
-
-    private void PerformHeavyAttack()
-    {
-        // Implement your heavy attack logic here
-        Debug.Log("Heavy attack!");
-    }
-
-    private void PerformJumpAttack()
-    {
-        // Implement your jump attack logic here
-        Debug.Log("Jump attack!");
+        int randomAttack = UnityEngine.Random.Range(0, 2);
+        if (randomAttack == 0)
+        {
+            leftHook = true;
+            rightHook = false;
+        }
+        else
+        {
+            leftHook = false;
+            rightHook = true;
+        }
     }
 
 }

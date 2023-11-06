@@ -18,6 +18,7 @@ public class AIAgent : MonoBehaviour
     [HideInInspector] public AISensor sightSensor;
     [HideInInspector] public ChaseRangeSphere chaseRangeSphere;
     [HideInInspector] public bool isDying;
+    [HideInInspector] public bool attackLeft, attackRight, heavyAttack;
     [HideInInspector] public bool alreadyAttacked;
     [HideInInspector] public bool IsInAttackRange;
     [HideInInspector] public Animator animator;
