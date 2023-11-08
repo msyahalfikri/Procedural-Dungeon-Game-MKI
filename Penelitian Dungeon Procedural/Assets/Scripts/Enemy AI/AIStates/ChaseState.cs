@@ -42,7 +42,6 @@ public class ChaseState : AIState
             chaseTimer = agent.config.maxTime;
         }
 
-
     }
     public void Exit(AIAgent agent)
     {

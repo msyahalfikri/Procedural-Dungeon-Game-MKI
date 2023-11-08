@@ -8,7 +8,7 @@ public enum AIStateID
     ChasePlayer,
     IdleState,
     AttackState,
-    HeavyAttackState,
+    BlockingState,
     DeathState,
     PatrolState,
     FleeState

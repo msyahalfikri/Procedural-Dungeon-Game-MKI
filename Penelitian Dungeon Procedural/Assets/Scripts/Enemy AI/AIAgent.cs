@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-
 public class AIAgent : MonoBehaviour
 {
     public AIStateMachine stateMachine;
@@ -23,6 +22,7 @@ public class AIAgent : MonoBehaviour
     [HideInInspector] public bool IsInAttackRange;
     [HideInInspector] public bool turnedLeft, turnedRight, hasTurned;
     [HideInInspector] public bool IsWalkingBackward;
+    [HideInInspector] public bool isBlocking;
     [HideInInspector] public Animator animator;
     public LayerMask PlayerLayer, GroundLayer;
 
@@ -49,7 +49,7 @@ public class AIAgent : MonoBehaviour
         stateMachine.RegisterState(new DeathState());
         stateMachine.RegisterState(new PatrolState());
         stateMachine.RegisterState(new AttackState());
-        stateMachine.RegisterState(new HeavyAttackState());
+        stateMachine.RegisterState(new BlockingState());
 
         //Initialize Initial State
         stateMachine.ChangeState(initialState);

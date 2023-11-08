@@ -17,6 +17,7 @@ public class AttackSphereCollider : MonoBehaviour
         {
             Debug.Log("Player in Attack Range");
             agent.IsInAttackRange = true;
+
             agent.stateMachine.ChangeState(AIStateID.AttackState);
         }
 

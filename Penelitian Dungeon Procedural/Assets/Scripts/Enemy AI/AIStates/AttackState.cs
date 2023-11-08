@@ -10,7 +10,6 @@ public class AttackState : AIState
     float heavyAttackTimer;
     bool heavyAttackReady;
     float attackInterval = 0.0f;
-    bool walkingBackward = false;
 
     public AIStateID GetID()
     {
@@ -89,28 +88,6 @@ public class AttackState : AIState
         }
         // Debug.Log("LeftHook: " + agent.attackLeft + " || RightHook: " + agent.attackRight + " || AttackTimer: " + attackInterval);
         // Debug.Log("HeavyAttack Timer: " + heavyAttackTimer + " || heavyAttackReady?: " + heavyAttackReady);
-
-        // //=====Calculate Walking Backwards========
-        // Vector3 directionToPlayer = agent.playerTransform.transform.position - agent.transform.position;
-        // // Calculate the distance to the player
-        // float distanceToPlayer = directionToPlayer.magnitude;
-
-        // // Get the NavMesh agent to navigate
-        // if (distanceToPlayer < agent.navMeshAgent.stoppingDistance)
-        // {
-        //     // If the player is too close, move backward to maintain the stopping distance
-        //     Vector3 moveDirection = -directionToPlayer.normalized;
-        //     agent.navMeshAgent.Move(moveDirection * agent.navMeshAgent.speed * Time.deltaTime);
-        //     walkingBackward = true;
-        // }
-        // else
-        // {
-        //     // If the player is outside the stopping distance, stop moving
-        //     agent.navMeshAgent.velocity = Vector3.zero;
-        //     walkingBackward = false;
-        // }
-        // agent.IsWalkingBackward = walkingBackward;
-        // Debug.Log(walkingBackward);
     }
     private void PerformLightAttack()
     {

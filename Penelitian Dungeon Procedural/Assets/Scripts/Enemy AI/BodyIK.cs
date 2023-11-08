@@ -27,7 +27,7 @@ public class BodyIK : MonoBehaviour
     public float rotationSpeed = 2.0f;
     bool turnLeft, turnRight, hasTurned;
     float crossProduct;
-    public AIAgent agent;
+    private AIAgent agent;
 
     // Start is called before the first frame update
     void Start()
@@ -93,8 +93,8 @@ public class BodyIK : MonoBehaviour
         float angleToPlayer = Vector3.Angle(transform.forward, directionToPlayer);
         float dotProduct = Vector3.Dot(transform.forward, directionToPlayer.normalized);
 
-        // Check if the angle is greater than 90 degrees
-        if (angleToPlayer > 75.0f && dotProduct < 0.5f && hasTurned == false)
+        // Check if the angle is greater than X degrees
+        if (angleToPlayer > 50.0f && dotProduct < 0.5f && hasTurned == false)
         {
             crossProduct = Vector3.Cross(transform.forward, directionToPlayer).y;
             Quaternion targetRotation = Quaternion.LookRotation(directionToPlayer);

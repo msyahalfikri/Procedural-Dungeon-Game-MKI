@@ -35,6 +35,7 @@ public class AIAnimations : MonoBehaviour
         }
 
         animator.SetBool("IsWalkingBackward", agent.IsWalkingBackward);
+        animator.SetBool("IsBlocking", agent.isBlocking);
 
     }
 
