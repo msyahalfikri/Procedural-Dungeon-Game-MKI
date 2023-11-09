@@ -33,6 +33,7 @@ public class BodyIK : MonoBehaviour
     void Start()
     {
         Animator animator = GetComponent<Animator>();
+        targetTransform = GameObject.Find("PlayerArmature").transform;
         agent = GetComponent<AIAgent>();
         boneTransforms = new Transform[humanoidBones.Length];
         for (int i = 0; i < boneTransforms.Length; i++)
@@ -94,7 +95,7 @@ public class BodyIK : MonoBehaviour
         float dotProduct = Vector3.Dot(transform.forward, directionToPlayer.normalized);
 
         // Check if the angle is greater than X degrees
-        if (angleToPlayer > 50.0f && dotProduct < 0.5f && hasTurned == false)
+        if (angleToPlayer > 60.0f && dotProduct < 0.5f && hasTurned == false)
         {
             crossProduct = Vector3.Cross(transform.forward, directionToPlayer).y;
             Quaternion targetRotation = Quaternion.LookRotation(directionToPlayer);
@@ -128,8 +129,6 @@ public class BodyIK : MonoBehaviour
         agent.turnedRight = turnRight;
         agent.hasTurned = hasTurned;
         // Debug.Log("Left: " + agent.turnedLeft + " || Right: " + agent.turnedRight + " || CrossProduct: " + agent.hasTurned);
-
-
     }
 
     private void AimAtTarget(Transform bone, Vector3 targetPosition, float weight)

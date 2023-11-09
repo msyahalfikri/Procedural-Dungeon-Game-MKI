@@ -7,6 +7,8 @@ TagManager:
   - CinemachineTarget
   - Weapon
   - Shield
+  - Enemy
+  - Debug
   layers:
   - Default
   - TransparentFX

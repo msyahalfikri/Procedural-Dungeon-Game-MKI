@@ -19,9 +19,10 @@ public class AIHealth : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Debug.Log(currentHealth);
 
     }
-    public void Takedamage(float amount)
+    public void TakeDamage(float amount)
     {
         currentHealth -= amount;
         healthBar.SetHealthBarPercentage(currentHealth / maxHealth);

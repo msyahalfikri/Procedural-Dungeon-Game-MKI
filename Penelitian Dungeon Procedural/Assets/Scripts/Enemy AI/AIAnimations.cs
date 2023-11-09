@@ -33,8 +33,6 @@ public class AIAnimations : MonoBehaviour
             animator.SetBool("TurnRight", agent.turnedRight);
             animator.SetBool("TurnLeft", agent.turnedLeft);
         }
-
-        animator.SetBool("IsWalkingBackward", agent.IsWalkingBackward);
         animator.SetBool("IsBlocking", agent.isBlocking);
 
     }

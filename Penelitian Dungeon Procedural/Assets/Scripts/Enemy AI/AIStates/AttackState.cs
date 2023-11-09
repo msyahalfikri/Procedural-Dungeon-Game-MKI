@@ -6,7 +6,7 @@ using UnityEditor.AnimatedValues;
 
 public class AttackState : AIState
 {
-    private bool leftHook = false, rightHook = false;
+    private bool leftHook = false, rightHook = false, blocking = false;
     float heavyAttackTimer;
     bool heavyAttackReady;
     float attackInterval = 0.0f;
@@ -57,7 +57,7 @@ public class AttackState : AIState
                 }
                 else
                 {
-                    PerformLightAttack();
+                    PerformAction(agent.config.blockChanceInPercent);
                     if (leftHook)
                     {
                         agent.attackLeft = true;
@@ -70,8 +70,8 @@ public class AttackState : AIState
                         agent.attackRight = true;
                         agent.heavyAttack = false;
                     }
+                    if (blocking) agent.stateMachine.ChangeState(AIStateID.BlockingState);
                 }
-
             }
             attackInterval = agent.config.timeBetweenAttacks;
             Debug.Log("LeftHook: " + agent.attackLeft + " || RightHook: " + agent.attackRight + " || HeavyAttack: " + agent.heavyAttack);
@@ -101,6 +101,21 @@ public class AttackState : AIState
         {
             leftHook = false;
             rightHook = true;
+        }
+    }
+    private void PerformAction(float blockChanceInPercent)
+    {
+        int blockChance = UnityEngine.Random.Range(0, 10);
+        if (blockChance < 3)
+        {
+            blocking = true;
+            leftHook = false;
+            rightHook = false;
+        }
+        else
+        {
+            PerformLightAttack();
+            blocking = false;
         }
     }
 
