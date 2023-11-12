@@ -18,7 +18,7 @@ public class AIAnimations : MonoBehaviour
     {
         animator.SetFloat("Speed", navMeshAgent.velocity.magnitude);
         animator.SetBool("IsDying", agent.isDying);
-        animator.SetBool("IsInAttackRange", agent.IsInAttackRange);
+        animator.SetBool("IsInAttackRange", agent.isInAttackRange);
         animator.SetBool("AlreadyAttacked", agent.alreadyAttacked);
 
 
@@ -34,6 +34,12 @@ public class AIAnimations : MonoBehaviour
             animator.SetBool("TurnLeft", agent.turnedLeft);
         }
         animator.SetBool("IsBlocking", agent.isBlocking);
+
+        if (agent.TakingDamage)
+        {
+            animator.SetTrigger("TakeDamage");
+            agent.TakingDamage = false;
+        }
 
     }
 

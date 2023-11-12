@@ -29,12 +29,10 @@ public class BlockingState : AIState
 
     public void Update(AIAgent agent)
     {
-        // blockTimer -= Time.deltaTime;
+        blockTimer -= Time.deltaTime;
         if (blockTimer <= 0f)
         {
             agent.stateMachine.ChangeState(AIStateID.AttackState);
-            // Vector3(-1.85716544e-05,-0.000559724867,5.86504211e-06)
-            // Vector3(16.6946545,19.4099503,10.260107)
         }
     }
 }

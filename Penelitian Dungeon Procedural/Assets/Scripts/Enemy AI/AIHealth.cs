@@ -26,6 +26,7 @@ public class AIHealth : MonoBehaviour
     {
         currentHealth -= amount;
         healthBar.SetHealthBarPercentage(currentHealth / maxHealth);
+        agent.TakingDamage = true;
         if (currentHealth <= 0.0f)
         {
             Die();

@@ -34,6 +34,7 @@ public class BodyIK : MonoBehaviour
     {
         Animator animator = GetComponent<Animator>();
         targetTransform = GameObject.Find("PlayerArmature").transform;
+        aimTransform = GameObject.Find("Raycast").transform;
         agent = GetComponent<AIAgent>();
         boneTransforms = new Transform[humanoidBones.Length];
         for (int i = 0; i < boneTransforms.Length; i++)

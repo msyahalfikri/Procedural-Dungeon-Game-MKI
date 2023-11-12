@@ -19,11 +19,14 @@ public class AIAgent : MonoBehaviour
     [HideInInspector] public bool isDying;
     [HideInInspector] public bool attackLeft, attackRight, heavyAttack;
     [HideInInspector] public bool alreadyAttacked;
-    [HideInInspector] public bool IsInAttackRange;
+    [HideInInspector] public bool isInAttackRange;
+    [HideInInspector] public bool isInChaseRange;
     [HideInInspector] public bool turnedLeft, turnedRight, hasTurned;
     [HideInInspector] public bool IsWalkingBackward;
     [HideInInspector] public bool isBlocking;
+    [HideInInspector] public bool TakingDamage;
     [HideInInspector] public Animator animator;
+
     public LayerMask PlayerLayer, GroundLayer;
 
     private void Awake()
@@ -59,6 +62,9 @@ public class AIAgent : MonoBehaviour
         stateMachine.Update();
         // Debug.Log(stateMachine.currentState);
     }
-
+    public void DestroyThisEnemy()
+    {
+        Destroy(this.gameObject);
+    }
 
 }

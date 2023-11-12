@@ -15,6 +15,10 @@ public class ChaseRangeSphere : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (other.CompareTag("Player"))
+        {
+            agent.isInChaseRange = true;
+        }
 
 
     }
@@ -22,7 +26,7 @@ public class ChaseRangeSphere : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("Player left");
+            agent.isInChaseRange = false;
             agent.stateMachine.ChangeState(AIStateID.PatrolState);
         }
 

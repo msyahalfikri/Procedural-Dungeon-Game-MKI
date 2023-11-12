@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Video;
 using UnityEngine.Windows;
 
 public class CombatController : MonoBehaviour
@@ -145,5 +146,14 @@ public class CombatController : MonoBehaviour
 
     private void Attack()
     {
+    }
+    public void StartDealDamage()
+    {
+        sword.GetComponentInChildren<DamageDealer>().StartDealDamage();
+    }
+
+    public void EndDealDamage()
+    {
+        sword.GetComponentInChildren<DamageDealer>().EndDealDamage();
     }
 }

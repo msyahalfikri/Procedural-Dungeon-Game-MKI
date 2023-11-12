@@ -19,8 +19,10 @@ MonoBehaviour:
   maxSightDistance: 5
   walkPointRange: 40
   IdleWaitTime: 3
-  deathAnimationWaitTime: 2.05
+  deathAnimationWaitTime: 5
   timeBetweenAttacks: 3
   heavyAttackCooldownMaxTime: 12
   observingRange: 15
   attackRange: 15
+  blockTimer: 10
+  blockChanceInPercent: 30
