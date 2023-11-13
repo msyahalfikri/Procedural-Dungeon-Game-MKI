@@ -25,6 +25,7 @@ public class AIAgent : MonoBehaviour
     [HideInInspector] public bool IsWalkingBackward;
     [HideInInspector] public bool isBlocking;
     [HideInInspector] public bool TakingDamage;
+    [HideInInspector] public bool isRoaring;
     [HideInInspector] public Animator animator;
 
     public LayerMask PlayerLayer, GroundLayer;
@@ -53,6 +54,7 @@ public class AIAgent : MonoBehaviour
         stateMachine.RegisterState(new PatrolState());
         stateMachine.RegisterState(new AttackState());
         stateMachine.RegisterState(new BlockingState());
+        stateMachine.RegisterState(new RoarState());
 
         //Initialize Initial State
         stateMachine.ChangeState(initialState);
@@ -60,7 +62,7 @@ public class AIAgent : MonoBehaviour
     private void Update()
     {
         stateMachine.Update();
-        // Debug.Log(stateMachine.currentState);
+        Debug.Log(stateMachine.currentState);
     }
     public void DestroyThisEnemy()
     {

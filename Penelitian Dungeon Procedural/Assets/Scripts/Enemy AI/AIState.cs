@@ -11,7 +11,8 @@ public enum AIStateID
     BlockingState,
     DeathState,
     PatrolState,
-    FleeState
+    FleeState,
+    RoarState
 }
 public interface AIState
 {

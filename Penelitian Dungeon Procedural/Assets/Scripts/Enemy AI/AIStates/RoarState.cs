@@ -1,0 +1,34 @@
+using System.Collections;
+using System.Collections.Generic;
+using JetBrains.Annotations;
+using UnityEngine;
+
+public class RoarState : AIState
+{
+    public float roarAnimationTimer;
+    public AIStateID GetID()
+    {
+        return AIStateID.RoarState;
+    }
+    public void Enter(AIAgent agent)
+    {
+        agent.isRoaring = true;
+        agent.navMeshAgent.isStopped = true;
+        agent.bodyIK.enabled = true;
+        roarAnimationTimer = agent.config.roarAnimationMaxTime;
+    }
+    public void Update(AIAgent agent)
+    {
+        roarAnimationTimer -= Time.deltaTime;
+        if (roarAnimationTimer <= 0.0f)
+        {
+            agent.isRoaring = false;
+            agent.stateMachine.ChangeState(AIStateID.ChasePlayer);
+        }
+
+    }
+    public void Exit(AIAgent agent)
+    {
+
+    }
+}

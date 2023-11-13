@@ -20,7 +20,7 @@ public class IdleState : AIState
     {
         if (agent.sightSensor.isPlayerInSight == true)
         {
-            agent.stateMachine.ChangeState(AIStateID.ChasePlayer);
+            agent.stateMachine.ChangeState(AIStateID.RoarState);
         }
 
         waitTime -= Time.deltaTime;

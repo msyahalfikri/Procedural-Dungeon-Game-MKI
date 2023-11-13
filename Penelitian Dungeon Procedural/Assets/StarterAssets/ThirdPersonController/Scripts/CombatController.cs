@@ -15,7 +15,7 @@ public class CombatController : MonoBehaviour
     private StarterAssetsInputs input;
     private Animator animator;
     public GameObject sword;
-    public GameObject blocksword;
+    public GameObject blockSword;
 
     // combat combo animation
     public float cooldownTime = 2f;
@@ -27,13 +27,15 @@ public class CombatController : MonoBehaviour
     // combat system
     public float attackRange = 0.5f;
     public LayerMask enemyLayers;
+    public bool isBlocking = false;
+    public bool isAttacking = false;
 
     // Start is called before the first frame update
     void Start()
     {
         input = GetComponent<StarterAssetsInputs>();
         sword = GameObject.FindGameObjectWithTag("Weapon");
-        blocksword = GameObject.FindGameObjectWithTag("Shield");
+        blockSword = GameObject.FindGameObjectWithTag("Shield");
         animator = GetComponent<Animator>();
     }
 
@@ -56,11 +58,10 @@ public class CombatController : MonoBehaviour
             mouseWorldPosition = raycastHit.point;
         }
 
-        if (input.block)
-        {
-            blockVirtualCamera.gameObject.SetActive(true);
-            blocksword.SetActive(true);
 
+        if (input.block && !input.attack)
+        {
+            sword.SetActive(false);
             animator.SetLayerWeight(2, Mathf.Lerp(animator.GetLayerWeight(2), 1f, Time.deltaTime * 10f));
 
             Vector3 worldAimTarget = mouseWorldPosition;
@@ -68,15 +69,16 @@ public class CombatController : MonoBehaviour
             Vector3 aimDirection = (worldAimTarget - transform.position).normalized;
 
             transform.forward = Vector3.Lerp(transform.forward, aimDirection, Time.deltaTime * 20f);
+            isBlocking = true;
         }
 
         else
         {
-            blockVirtualCamera.gameObject.SetActive(false);
-            blocksword.SetActive(false);
-
+            isBlocking = false;
             animator.SetLayerWeight(2, Mathf.Lerp(animator.GetLayerWeight(2), 0f, Time.deltaTime * 10f));
         }
+        blockVirtualCamera.gameObject.SetActive(isBlocking);
+        blockSword.SetActive(isBlocking);
     }
 
     private void CombatUpdate()
@@ -109,7 +111,7 @@ public class CombatController : MonoBehaviour
 
         if (Time.time > nextFireTime)
         {
-            if (input.attack)
+            if (input.attack && !input.block)
             {
                 animator.SetBool("IsAttacking", true);
                 OnClick();

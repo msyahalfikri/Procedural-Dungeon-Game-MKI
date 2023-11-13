@@ -26,3 +26,4 @@ MonoBehaviour:
   attackRange: 15
   blockTimer: 10
   blockChanceInPercent: 30
+  roarAnimationMaxTime: 3

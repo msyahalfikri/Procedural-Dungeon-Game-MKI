@@ -5,6 +5,7 @@ using UnityEngine;
 public class DamageDealer : MonoBehaviour
 {
     bool canDealDamage;
+    public bool hitRegistered;
     List<GameObject> hasDealtDamage;
 
     [SerializeField] float weaponLength;
@@ -25,14 +26,20 @@ public class DamageDealer : MonoBehaviour
             int layerMask = 1 << 9;
             if (Physics.Raycast(transform.position, -transform.up, out hit, weaponLength, layerMask))
             {
+                hitRegistered = true;
                 if (hit.transform.TryGetComponent(out AIHealth enemy) && !hasDealtDamage.Contains(hit.transform.gameObject))
                 {
                     enemy.TakeDamage(weaponDamage);
                     hasDealtDamage.Add(hit.transform.gameObject);
+
                 }
             }
+            else
+            {
+                hitRegistered = false;
+            }
         }
-
+        Debug.Log(hitRegistered);
     }
     public void StartDealDamage()
     {

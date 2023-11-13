@@ -19,5 +19,6 @@ public class AiAgentConfig : ScriptableObject
     public float attackRange = 8.0f;
     public float blockTimer = 10.0f;
     public float blockChanceInPercent = 30.0f;
+    public float roarAnimationMaxTime = 6.0f;
 
 }

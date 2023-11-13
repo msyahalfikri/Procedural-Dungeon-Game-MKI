@@ -41,6 +41,7 @@ public class AIAnimations : MonoBehaviour
             agent.TakingDamage = false;
         }
 
+        animator.SetBool("IsRoaring", agent.isRoaring);
     }
 
 
