@@ -963,7 +963,11 @@ MonoBehaviour:
 
   sword: {fileID: 1762682264}
   blocksword: {fileID: 1762682263}
+<<<<<<< Updated upstream
 
+=======
+  attackForce: 1.5
+>>>>>>> Stashed changes
   cooldownTime: 2
   attackRange: 0.5
   enemyLayers:

@@ -15,6 +15,9 @@ public class CombatController : MonoBehaviour
     private Animator animator;
     public GameObject sword;
     public GameObject blocksword;
+    bool inAttackAnimation;
+    private CharacterController characterController;
+    public float attackForce = 0.005f;
 
     // combat combo animation
     public float cooldownTime = 2f;
@@ -34,6 +37,8 @@ public class CombatController : MonoBehaviour
         sword = GameObject.FindGameObjectWithTag("Weapon");
         blocksword = GameObject.FindGameObjectWithTag("Shield");
         animator = GetComponent<Animator>();
+        inAttackAnimation = false;
+        characterController = GetComponent<CharacterController>();
     }
 
     // Update is called once per frame
@@ -41,6 +46,15 @@ public class CombatController : MonoBehaviour
     {
         Block();
         CombatUpdate();
+
+        if (inAttackAnimation == true)
+        {
+            sword.SetActive(true);
+        }
+        else
+        {
+            sword.SetActive(false);
+        }
     }
 
     private void Block()
@@ -103,7 +117,7 @@ public class CombatController : MonoBehaviour
             animator.SetBool("Attack2", false);
             animator.SetBool("Attack3", false);
             animator.SetBool("IsAttacking", false);
-            sword.SetActive(false);
+            inAttackAnimation = false;
         }
 
         if (Time.time > nextFireTime)
@@ -145,5 +159,7 @@ public class CombatController : MonoBehaviour
 
     private void Attack()
     {
+        Vector3 forwardMovement = transform.forward * attackForce;
+        characterController.Move(forwardMovement);
     }
 }
