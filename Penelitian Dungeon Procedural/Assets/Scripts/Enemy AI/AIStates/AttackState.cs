@@ -54,6 +54,7 @@ public class AttackState : AIState
                     agent.attackLeft = false;
                     agent.attackRight = false;
                     agent.heavyAttack = true;
+                    // MoveEnemyForward(agent, 2f);
                 }
                 else
                 {
@@ -70,11 +71,18 @@ public class AttackState : AIState
                         agent.attackRight = true;
                         agent.heavyAttack = false;
                     }
-                    if (blocking) agent.stateMachine.ChangeState(AIStateID.BlockingState);
+                    else if (blocking)
+                    {
+                        agent.attackLeft = false;
+                        agent.attackRight = false;
+                        agent.heavyAttack = false;
+                        agent.stateMachine.ChangeState(AIStateID.BlockingState);
+                    }
+
                 }
             }
             attackInterval = agent.config.timeBetweenAttacks;
-            Debug.Log("LeftHook: " + agent.attackLeft + " || RightHook: " + agent.attackRight + " || HeavyAttack: " + agent.heavyAttack);
+            // Debug.Log("LeftHook: " + agent.attackLeft + " || RightHook: " + agent.attackRight + " || HeavyAttack: " + agent.heavyAttack);
         }
         else
         {
@@ -105,18 +113,25 @@ public class AttackState : AIState
     }
     private void PerformAction(float blockChanceInPercent)
     {
-        int blockChance = UnityEngine.Random.Range(0, 10);
-        if (blockChance < 3)
+        int blockChance = UnityEngine.Random.Range(1, 101);
+        if (blockChance < blockChanceInPercent)
         {
-            blocking = true;
             leftHook = false;
             rightHook = false;
+            blocking = true;
+
         }
         else
         {
             PerformLightAttack();
             blocking = false;
         }
+    }
+    private void MoveEnemyForward(AIAgent agent, float distance)
+    {
+        // Move the enemy forward by a specified distance
+        Vector3 newPosition = agent.transform.position + agent.transform.forward * distance;
+        agent.navMeshAgent.SetDestination(newPosition);
     }
 
 }

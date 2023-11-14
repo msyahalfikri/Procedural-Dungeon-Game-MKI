@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,6 +14,29 @@ public class UIHealthBar : MonoBehaviour
     private void Start()
     {
         agent = GetComponentInParent<AIAgent>();
+        // target = FindDeepChild(transform.parent.parent, "HealthBarAnchor");
+        foregroundImage = transform.Find("Foreground").GetComponent<Image>();
+        backgroundImage = transform.Find("Background").GetComponent<Image>();
+    }
+    private Transform FindDeepChild(Transform parent, string name)
+    {
+        Transform result = parent.Find(name);
+
+        if (result != null)
+        {
+            return result;
+        }
+
+        foreach (Transform child in parent)
+        {
+            result = FindDeepChild(child, name);
+            if (result != null)
+            {
+                return result;
+            }
+        }
+
+        return null;
     }
     void LateUpdate()
     {

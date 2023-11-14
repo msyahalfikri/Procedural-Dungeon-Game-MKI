@@ -13,12 +13,15 @@ public class AttackSphereCollider : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && agent.stateMachine.currentState == AIStateID.ChasePlayer)
+        if (other.CompareTag("Player"))
         {
-            Debug.Log("Player in Attack Range");
-            agent.isInAttackRange = true;
+            if (agent.stateMachine.currentState == AIStateID.ChasePlayer)
+            {
+                Debug.Log("Player in Attack Range");
+                agent.isInAttackRange = true;
+                agent.stateMachine.ChangeState(AIStateID.AttackState);
+            }
 
-            agent.stateMachine.ChangeState(AIStateID.AttackState);
         }
 
     }

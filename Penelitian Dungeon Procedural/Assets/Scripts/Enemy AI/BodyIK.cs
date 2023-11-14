@@ -34,13 +34,33 @@ public class BodyIK : MonoBehaviour
     {
         Animator animator = GetComponent<Animator>();
         targetTransform = GameObject.Find("PlayerArmature").transform;
-        aimTransform = GameObject.Find("Raycast").transform;
+        aimTransform = FindDeepChild(transform, "Raycast").transform;
         agent = GetComponent<AIAgent>();
         boneTransforms = new Transform[humanoidBones.Length];
         for (int i = 0; i < boneTransforms.Length; i++)
         {
             boneTransforms[i] = animator.GetBoneTransform(humanoidBones[i].bone);
         }
+    }
+    private Transform FindDeepChild(Transform parent, string name)
+    {
+        Transform result = parent.Find(name);
+
+        if (result != null)
+        {
+            return result;
+        }
+
+        foreach (Transform child in parent)
+        {
+            result = FindDeepChild(child, name);
+            if (result != null)
+            {
+                return result;
+            }
+        }
+
+        return null;
     }
 
     Vector3 GetTargetPosition()

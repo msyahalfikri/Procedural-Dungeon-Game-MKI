@@ -71,7 +71,6 @@ public class CombatController : MonoBehaviour
             transform.forward = Vector3.Lerp(transform.forward, aimDirection, Time.deltaTime * 20f);
             isBlocking = true;
         }
-
         else
         {
             isBlocking = false;

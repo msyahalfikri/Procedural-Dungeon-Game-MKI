@@ -15,6 +15,7 @@ public class DamageDealer : MonoBehaviour
         canDealDamage = false;
         hasDealtDamage = new List<GameObject>();
 
+
     }
 
     // Update is called once per frame
@@ -31,7 +32,6 @@ public class DamageDealer : MonoBehaviour
                 {
                     enemy.TakeDamage(weaponDamage);
                     hasDealtDamage.Add(hit.transform.gameObject);
-
                 }
             }
             else
@@ -39,7 +39,6 @@ public class DamageDealer : MonoBehaviour
                 hitRegistered = false;
             }
         }
-        Debug.Log(hitRegistered);
     }
     public void StartDealDamage()
     {

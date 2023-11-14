@@ -16,6 +16,8 @@ public class AIAgent : MonoBehaviour
     [HideInInspector] public SkinnedMeshRenderer mesh;
     [HideInInspector] public AISensor sightSensor;
     [HideInInspector] public ChaseRangeSphere chaseRangeSphere;
+    [HideInInspector] public AttackSphereCollider attackSphereCollider;
+    [HideInInspector] public EnemyDamageDealer enemyDamageDealer;
     [HideInInspector] public bool isDying;
     [HideInInspector] public bool attackLeft, attackRight, heavyAttack;
     [HideInInspector] public bool alreadyAttacked;
@@ -41,6 +43,7 @@ public class AIAgent : MonoBehaviour
         sightSensor = GetComponent<AISensor>();
         chaseRangeSphere = GetComponentInChildren<ChaseRangeSphere>();
         animator = GetComponent<Animator>();
+        enemyDamageDealer = GetComponentInChildren<EnemyDamageDealer>();
     }
     private void Start()
     {
@@ -62,11 +65,19 @@ public class AIAgent : MonoBehaviour
     private void Update()
     {
         stateMachine.Update();
-        Debug.Log(stateMachine.currentState);
+        // Debug.Log(stateMachine.currentState);
     }
     public void DestroyThisEnemy()
     {
         Destroy(this.gameObject);
     }
 
+    public void EnemyStartDealDamage()
+    {
+        enemyDamageDealer.EnemyStartDealDamage();
+    }
+    public void EnemyEndDealDamage()
+    {
+        enemyDamageDealer.EnemyEndDealDamage();
+    }
 }

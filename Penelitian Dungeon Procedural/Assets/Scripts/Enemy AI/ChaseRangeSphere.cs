@@ -18,6 +18,7 @@ public class ChaseRangeSphere : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             agent.isInChaseRange = true;
+            Debug.Log("In Chase Range");
         }
 
 
@@ -27,7 +28,12 @@ public class ChaseRangeSphere : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             agent.isInChaseRange = false;
-            agent.stateMachine.ChangeState(AIStateID.PatrolState);
+            if (agent.stateMachine.currentState == AIStateID.ChasePlayer)
+            {
+                agent.stateMachine.ChangeState(AIStateID.IdleState);
+                Debug.Log("Out of Chase Range");
+            }
+
         }
 
     }
