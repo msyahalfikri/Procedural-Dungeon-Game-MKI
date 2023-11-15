@@ -24,7 +24,6 @@ public class AIAgent : MonoBehaviour
     [HideInInspector] public bool isInAttackRange;
     [HideInInspector] public bool isInChaseRange;
     [HideInInspector] public bool turnedLeft, turnedRight, hasTurned;
-    [HideInInspector] public bool IsWalkingBackward;
     [HideInInspector] public bool isBlocking;
     [HideInInspector] public bool TakingDamage;
     [HideInInspector] public bool isRoaring;

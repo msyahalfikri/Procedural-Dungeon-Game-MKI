@@ -23,7 +23,15 @@ public class RoarState : AIState
         if (roarAnimationTimer <= 0.0f)
         {
             agent.isRoaring = false;
-            agent.stateMachine.ChangeState(AIStateID.ChasePlayer);
+            if (!agent.isInAttackRange)
+            {
+                agent.stateMachine.ChangeState(AIStateID.ChasePlayer);
+            }
+            else
+            {
+                agent.stateMachine.ChangeState(AIStateID.AttackState);
+            }
+
         }
 
     }

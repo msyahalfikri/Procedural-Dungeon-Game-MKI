@@ -126,6 +126,7 @@ public class AttackState : AIState
             PerformLightAttack();
             blocking = false;
         }
+        Debug.Log(blockChance);
     }
     private void MoveEnemyForward(AIAgent agent, float distance)
     {

@@ -15,10 +15,10 @@ public class AttackSphereCollider : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            agent.isInAttackRange = true;
             if (agent.stateMachine.currentState == AIStateID.ChasePlayer)
             {
                 Debug.Log("Player in Attack Range");
-                agent.isInAttackRange = true;
                 agent.stateMachine.ChangeState(AIStateID.AttackState);
             }
 
@@ -27,11 +27,15 @@ public class AttackSphereCollider : MonoBehaviour
     }
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player") && agent.stateMachine.currentState == AIStateID.AttackState)
+        if (other.CompareTag("Player"))
         {
-            Debug.Log("Player not in Attack Range");
             agent.isInAttackRange = false;
-            agent.stateMachine.ChangeState(AIStateID.ChasePlayer);
+            if (agent.stateMachine.currentState == AIStateID.AttackState || agent.stateMachine.currentState == AIStateID.BlockingState)
+            {
+                Debug.Log("Player not in Attack Range");
+                agent.stateMachine.ChangeState(AIStateID.ChasePlayer);
+            }
+
         }
 
     }

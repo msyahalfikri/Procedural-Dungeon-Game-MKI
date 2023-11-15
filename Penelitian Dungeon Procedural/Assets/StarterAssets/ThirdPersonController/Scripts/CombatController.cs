@@ -13,7 +13,7 @@ public class CombatController : MonoBehaviour
     [SerializeField] private LayerMask mouseColliderMask = new LayerMask();
 
     private StarterAssetsInputs input;
-    private Animator animator;
+    [HideInInspector] public Animator animator;
     public GameObject sword;
     public GameObject blockSword;
 

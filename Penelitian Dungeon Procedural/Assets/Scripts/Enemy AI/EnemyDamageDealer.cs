@@ -9,8 +9,6 @@ public class EnemyDamageDealer : MonoBehaviour
     List<GameObject> hasDealtDamage;
 
     [SerializeField] float weaponLength;
-    [SerializeField] float NormalWeaponDamage;
-    [SerializeField] float HeavyWeaponDamage;
     AIAgent agent;
     void Start()
     {
@@ -33,12 +31,11 @@ public class EnemyDamageDealer : MonoBehaviour
                 {
                     if (agent.attackLeft || agent.attackRight)
                     {
-                        Debug.Log("Normal damage to Player Registered");
+                        player.TakeDamage(agent.config.normalAttackDamage);
                     }
                     else if (agent.heavyAttack)
                     {
-                        Debug.Log("Heavy damage to Player Registered");
-
+                        player.TakeDamage(agent.config.heavyAttackDamage);
                     }
                     hasDealtDamage.Add(hit.transform.gameObject);
                 }
@@ -62,13 +59,5 @@ public class EnemyDamageDealer : MonoBehaviour
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawLine(transform.position, transform.position - transform.up * weaponLength);
-    }
-    public void DealNormalDamage()
-    {
-
-    }
-    public void DealHeavyDamage()
-    {
-
     }
 }
