@@ -221,6 +221,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3d88c319821b89f4086eb24c6b2faee2, type: 3}
+--- !u!1 &533178271 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100002, guid: 3d88c319821b89f4086eb24c6b2faee2, type: 3}
+  m_PrefabInstance: {fileID: 236756073}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &533178272 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400002, guid: 3d88c319821b89f4086eb24c6b2faee2, type: 3}
@@ -1186,7 +1191,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4416926081852918490, guid: 64dce48905ffd9b4293e595fa6941544, type: 3}
       propertyPath: GroundLayers.m_Bits
-      value: 257
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1248,16 +1253,13 @@ MonoBehaviour:
   mouseColliderMask:
     serializedVersion: 2
     m_Bits: 4194305
-  animator: {fileID: 0}
   sword: {fileID: 2140178475}
-  blockSword: {fileID: 0}
+  blocksword: {fileID: 533178271}
   cooldownTime: 2
   attackRange: 0.5
   enemyLayers:
     serializedVersion: 2
     m_Bits: 0
-  isBlocking: 0
-  isAttacking: 0
 --- !u!114 &1762682263
 MonoBehaviour:
   m_ObjectHideFlags: 0
