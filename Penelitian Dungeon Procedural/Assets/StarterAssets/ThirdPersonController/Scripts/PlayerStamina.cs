@@ -9,6 +9,7 @@ public class PlayerStamina : MonoBehaviour
     public float staminaDecay = 2.0f;
     public float staminaRegen = 4.0f;
     public float staminaRegenDelay = 2.0f;
+    public bool staminaIsFull = false;
     CombatController combatController;
     PlayerUI playerUI;
     // Start is called before the first frame update
@@ -31,11 +32,13 @@ public class PlayerStamina : MonoBehaviour
         if (combatController.isBlocking)
         {
             // Decrease stamina while blocking
+            staminaIsFull = false;
             currentStamina -= staminaDecay * Time.deltaTime;
 
             if (currentStamina <= 0)
             {
                 currentStamina = 0;
+                combatController.isExhausted = true;
                 Debug.Log("Stamina Depleted!");
             }
 
@@ -46,6 +49,11 @@ public class PlayerStamina : MonoBehaviour
             // If not blocking, wait for the regen delay to pass before starting stamina regenerate
             StartCoroutine(StartStaminaRegenDelay());
         }
+        if (staminaIsFull)
+        {
+            combatController.isExhausted = false;
+        }
+
     }
 
     IEnumerator StartStaminaRegenDelay()
@@ -53,6 +61,11 @@ public class PlayerStamina : MonoBehaviour
         yield return new WaitForSeconds(staminaRegenDelay);
         currentStamina += staminaRegen * Time.deltaTime;
         currentStamina = Mathf.Clamp(currentStamina, 0, maxStamina);
+        if (currentStamina >= maxStamina)
+        {
+            staminaIsFull = true;
+        }
+
 
     }
 }

@@ -28,7 +28,7 @@ public class PlayerUI : MonoBehaviour
         playerHealthBarParentGameObject = transform.Find("PlayerHealthBar").gameObject;
         PlayerStaminaBarParentGameObject = transform.Find("PlayerStaminaBar").gameObject;
         healthBarInitialWidth = playerHealthBarParentGameObject.transform.Find("PlayerHealthBarForeground").GetComponent<RectTransform>().rect.width;
-        staminaBarInitialWidth = PlayerStaminaBarParentGameObject.transform.Find("PlayerStaminaBarForeground").GetComponent<RectTransform>().rect.width;
+        staminaBarInitialWidth = PlayerStaminaBarParentGameObject.transform.GetComponent<RectTransform>().rect.width;
     }
     void LateUpdate()
     {
@@ -44,7 +44,7 @@ public class PlayerUI : MonoBehaviour
     }
     public void SetBlockStaminaBar(float currentStamina, float maxStamina)
     {
-        float width = healthBarInitialWidth * (currentStamina / maxStamina);
+        float width = staminaBarInitialWidth * (currentStamina / maxStamina);
         staminaBarForegroundImage.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, width);
     }
 }

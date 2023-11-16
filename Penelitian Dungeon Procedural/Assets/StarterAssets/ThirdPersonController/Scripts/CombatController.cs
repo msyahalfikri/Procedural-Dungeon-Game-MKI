@@ -45,31 +45,31 @@ public class CombatController : MonoBehaviour
     {
 
         Block();
-
-
         CombatUpdate();
     }
 
     private void Block()
     {
-        if (isExhausted)
+
+
+        Vector3 mouseWorldPosition = Vector3.zero;
+
+        Vector2 screenCenterPoint = new Vector2(Screen.width / 2f, Screen.height / 2f);
+
+        Ray ray = Camera.main.ScreenPointToRay(screenCenterPoint);
+        if (Physics.Raycast(ray, out RaycastHit raycastHit, 999f, mouseColliderMask))
         {
-            return;
+            mouseWorldPosition = raycastHit.point;
         }
-        else
+
+
+        if (input.block && !input.attack)
         {
-            Vector3 mouseWorldPosition = Vector3.zero;
-
-            Vector2 screenCenterPoint = new Vector2(Screen.width / 2f, Screen.height / 2f);
-
-            Ray ray = Camera.main.ScreenPointToRay(screenCenterPoint);
-            if (Physics.Raycast(ray, out RaycastHit raycastHit, 999f, mouseColliderMask))
+            if (isExhausted)
             {
-                mouseWorldPosition = raycastHit.point;
+                return;
             }
-
-
-            if (input.block && !input.attack)
+            else
             {
                 sword.SetActive(false);
                 animator.SetLayerWeight(2, Mathf.Lerp(animator.GetLayerWeight(2), 1f, Time.deltaTime * 10f));
@@ -81,14 +81,15 @@ public class CombatController : MonoBehaviour
                 transform.forward = Vector3.Lerp(transform.forward, aimDirection, Time.deltaTime * 20f);
                 isBlocking = true;
             }
-            else
-            {
-                isBlocking = false;
-                animator.SetLayerWeight(2, Mathf.Lerp(animator.GetLayerWeight(2), 0f, Time.deltaTime * 10f));
-            }
-            blockVirtualCamera.gameObject.SetActive(isBlocking);
-            blockSword.SetActive(isBlocking);
         }
+        else
+        {
+            isBlocking = false;
+            animator.SetLayerWeight(2, Mathf.Lerp(animator.GetLayerWeight(2), 0f, Time.deltaTime * 10f));
+        }
+        blockVirtualCamera.gameObject.SetActive(isBlocking);
+        blockSword.SetActive(isBlocking);
+
     }
 
     private void CombatUpdate()
