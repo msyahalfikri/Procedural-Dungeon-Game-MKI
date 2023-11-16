@@ -3,28 +3,14 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags:
-  - CinemachineTarget
-  - Weapon
-  - Shield
-  - Enemy
-  - Debug
+  tags: []
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Player
+  - 
   - Water
   - UI
-  - Weapon
-  - 
-<<<<<<< Updated upstream
-  - Ground
-  - Enemy
-  - 
-=======
-  - Controller
->>>>>>> Stashed changes
   - 
   - 
   - 
@@ -36,8 +22,13 @@ TagManager:
   - 
   - 
   - 
-  - Environment
-  - GroundCheck
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
   - 
   - 
   - 
