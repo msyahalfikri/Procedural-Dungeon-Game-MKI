@@ -15,14 +15,17 @@ public class UIHealthBar : MonoBehaviour
     public string enemyName;
     AIAgent agent;
     [HideInInspector] float InitialWidth;
-    private void Start()
+    private void Awake()
     {
-        agent = GetComponentInParent<AIAgent>();
-        // target = FindDeepChild(transform.parent.parent, "HealthBarAnchor");
         foregroundImage = transform.Find("Foreground").GetComponent<Image>();
         backgroundImage = transform.Find("Background").GetComponent<Image>();
         enemyNameUI = transform.Find("EnemyName").GetComponent<TextMeshProUGUI>();
         InitialWidth = transform.Find("Foreground").GetComponent<RectTransform>().rect.width;
+    }
+    private void Start()
+    {
+        agent = GetComponentInParent<AIAgent>();
+        enemyNameUI.text = enemyName;
     }
 
     void LateUpdate()

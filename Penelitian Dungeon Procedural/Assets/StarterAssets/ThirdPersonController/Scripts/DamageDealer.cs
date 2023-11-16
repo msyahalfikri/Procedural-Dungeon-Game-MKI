@@ -24,7 +24,7 @@ public class DamageDealer : MonoBehaviour
         if (canDealDamage)
         {
             RaycastHit hit;
-            int layerMask = 1 << 9;
+            int layerMask = 1 << 7;
             if (Physics.Raycast(transform.position, -transform.up, out hit, weaponLength, layerMask))
             {
                 hitRegistered = true;
