@@ -157,13 +157,18 @@ namespace StarterAssets
 
         private void Update()
         {
+            bool isAttacking = _animator.GetBool("IsAttacking");
             _hasAnimator = TryGetComponent(out _animator);
 
             JumpAndGravity();
             GroundedCheck();
             if (!_input.block && !_input.attack)
             {
-                Move();
+                if (!isAttacking)
+                {
+                    Move();
+                }
+
             }
         }
 

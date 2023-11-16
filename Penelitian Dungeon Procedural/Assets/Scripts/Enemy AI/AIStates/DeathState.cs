@@ -22,8 +22,9 @@ public class DeathState : AIState
         animationWaitTime -= Time.deltaTime;
         if (animationWaitTime < 0.0f)
         {
-            agent.ragdoll.ActivateRagdoll();
-            agent.mesh.updateWhenOffscreen = true;
+            // agent.ragdoll.ActivateRagdoll();
+            // agent.mesh.updateWhenOffscreen = true;
+            agent.DestroyThisEnemy();
         }
     }
     public void Exit(AIAgent agent)

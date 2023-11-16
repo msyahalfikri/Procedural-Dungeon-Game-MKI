@@ -14,13 +14,13 @@ public class IdleState : AIState
     {
         agent.navMeshAgent.isStopped = true;
         agent.bodyIK.enabled = false;
-        waitTime = agent.config.IdleWaitTime;
+        waitTime = agent.config.idleWaitTime;
     }
     public void Update(AIAgent agent)
     {
-        if (agent.sightSensor.isPlayerInSight == true)
+        if (agent.sightSensor.playerIsInSight)
         {
-            agent.stateMachine.ChangeState(AIStateID.ChasePlayer);
+            agent.stateMachine.ChangeState(AIStateID.RoarState);
         }
 
         waitTime -= Time.deltaTime;

@@ -24,15 +24,43 @@ public class BodyIK : MonoBehaviour
     public HumanoidBone[] humanoidBones;
     Transform[] boneTransforms;
 
+    public float rotationSpeed = 2.0f;
+    bool turnLeft, turnRight, hasTurned;
+    float crossProduct;
+    private AIAgent agent;
+
     // Start is called before the first frame update
     void Start()
     {
         Animator animator = GetComponent<Animator>();
+        targetTransform = GameObject.Find("PlayerArmature").transform;
+        aimTransform = FindDeepChild(transform, "Raycast").transform;
+        agent = GetComponent<AIAgent>();
         boneTransforms = new Transform[humanoidBones.Length];
         for (int i = 0; i < boneTransforms.Length; i++)
         {
             boneTransforms[i] = animator.GetBoneTransform(humanoidBones[i].bone);
         }
+    }
+    private Transform FindDeepChild(Transform parent, string name)
+    {
+        Transform result = parent.Find(name);
+
+        if (result != null)
+        {
+            return result;
+        }
+
+        foreach (Transform child in parent)
+        {
+            result = FindDeepChild(child, name);
+            if (result != null)
+            {
+                return result;
+            }
+        }
+
+        return null;
     }
 
     Vector3 GetTargetPosition()
@@ -61,6 +89,7 @@ public class BodyIK : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
+        //========Upper Body Rotation===========
         if (aimTransform == null)
         {
             return;
@@ -78,6 +107,49 @@ public class BodyIK : MonoBehaviour
             float boneWeight = humanoidBones[b].weight * weight;
             AimAtTarget(bone, targetPosition, boneWeight);
         }
+
+        //========Lower Body Rotation========
+        Vector3 directionToPlayer = targetTransform.transform.position - transform.position;
+
+        // Calculate the angle between the enemy's forward direction and the direction to the player
+        float angleToPlayer = Vector3.Angle(transform.forward, directionToPlayer);
+        float dotProduct = Vector3.Dot(transform.forward, directionToPlayer.normalized);
+
+        // Check if the angle is greater than X degrees
+        if (angleToPlayer > 60.0f && dotProduct < 0.5f && hasTurned == false)
+        {
+            crossProduct = Vector3.Cross(transform.forward, directionToPlayer).y;
+            Quaternion targetRotation = Quaternion.LookRotation(directionToPlayer);
+
+            // Smoothly interpolate the enemy's rotation towards the target rotation
+            if (crossProduct > 0)
+            {
+                transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSpeed * 1 * Time.deltaTime);
+                turnLeft = false;
+                turnRight = true;
+            }
+            else if (crossProduct < 0)
+            {
+                agent.transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSpeed * -1 * Time.deltaTime);
+                turnLeft = true;
+                turnRight = false;
+            }
+            hasTurned = true;
+        }
+        else
+        {
+            crossProduct = 0f;
+            if (crossProduct == 0)
+            {
+                turnLeft = false;
+                turnRight = false;
+                hasTurned = false;
+            }
+        }
+        agent.turnedLeft = turnLeft;
+        agent.turnedRight = turnRight;
+        agent.hasTurned = hasTurned;
+        // Debug.Log("Left: " + agent.turnedLeft + " || Right: " + agent.turnedRight + " || CrossProduct: " + agent.hasTurned);
     }
 
     private void AimAtTarget(Transform bone, Vector3 targetPosition, float weight)
@@ -98,4 +170,5 @@ public class BodyIK : MonoBehaviour
     {
         aimTransform = aim;
     }
+
 }

@@ -19,16 +19,21 @@ public class AIHealth : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        // Debug.Log(currentHealth);
     }
-    public void Takedamage(float amount)
+    public void TakeDamage(float amount)
     {
-        currentHealth -= amount;
-        healthBar.SetHealthBarPercentage(currentHealth / maxHealth);
-        if (currentHealth <= 0.0f)
+        if (agent.stateMachine.currentState != AIStateID.BlockingState)
         {
-            Die();
+            currentHealth -= amount;
+            healthBar.SetHealthBarPercentage(currentHealth / maxHealth);
+            agent.TakingDamage = true;
+            if (currentHealth <= 0.0f)
+            {
+                Die();
+            }
         }
+
     }
     public void Die()
     {

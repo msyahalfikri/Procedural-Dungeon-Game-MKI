@@ -46,9 +46,9 @@ public class PatrolState : AIState
 
         }
 
-        if (agent.sightSensor.isPlayerInSight == true)
+        if (agent.sightSensor.playerIsInSight)
         {
-            agent.stateMachine.ChangeState(AIStateID.ChasePlayer);
+            agent.stateMachine.ChangeState(AIStateID.RoarState);
         }
     }
 

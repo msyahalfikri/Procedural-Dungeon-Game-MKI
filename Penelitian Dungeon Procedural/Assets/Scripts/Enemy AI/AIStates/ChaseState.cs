@@ -39,9 +39,8 @@ public class ChaseState : AIState
                     agent.navMeshAgent.destination = agent.playerTransform.transform.position;
                 }
             }
-            chaseTimer = agent.config.maxTime;
+            chaseTimer = agent.config.ChaseTimerMaxTime;
         }
-
 
     }
     public void Exit(AIAgent agent)

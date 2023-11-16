@@ -4,12 +4,15 @@ using UnityEngine;
 
 public enum AIStateID
 {
+    TestingState,
     ChasePlayer,
     IdleState,
     AttackState,
+    BlockingState,
     DeathState,
     PatrolState,
-    FleeState
+    FleeState,
+    RoarState
 }
 public interface AIState
 {
