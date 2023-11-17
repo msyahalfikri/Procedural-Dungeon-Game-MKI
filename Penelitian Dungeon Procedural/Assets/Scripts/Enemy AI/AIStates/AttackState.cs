@@ -147,21 +147,5 @@ public class AttackState : AIState
             agent.alreadyAttacked = true;
         }
     }
-
-    //Game even subscription
-    void OnEnable()
-    {
-        GameEventHandler.onPlayerDeath += StopAttacking;
-    }
-
-    void OnDisable()
-    {
-        GameEventHandler.onPlayerDeath -= StopAttacking;
-    }
-
-    void StopAttacking()
-    {
-
-    }
 }
 

@@ -21,12 +21,15 @@ public class AIAgent : MonoBehaviour
     [HideInInspector] public bool isDying;
     [HideInInspector] public bool attackLeft, attackRight, heavyAttack;
     [HideInInspector] public bool alreadyAttacked;
+    [HideInInspector] public bool isAttacking;
     [HideInInspector] public bool isInAttackRange;
     [HideInInspector] public bool isInChaseRange;
     [HideInInspector] public bool turnedLeft, turnedRight, hasTurned;
     [HideInInspector] public bool isBlocking;
     [HideInInspector] public bool TakingDamage;
     [HideInInspector] public bool isRoaring;
+    [HideInInspector] public bool isCheering;
+
 
 
     public LayerMask PlayerLayer, GroundLayer;
@@ -57,6 +60,7 @@ public class AIAgent : MonoBehaviour
         stateMachine.RegisterState(new AttackState());
         stateMachine.RegisterState(new BlockingState());
         stateMachine.RegisterState(new RoarState());
+        stateMachine.RegisterState(new CheeringState());
 
         //Initialize Initial State
         stateMachine.ChangeState(initialState);
@@ -78,5 +82,22 @@ public class AIAgent : MonoBehaviour
     public void EnemyEndDealDamage()
     {
         enemyDamageDealer.EnemyEndDealDamage();
+    }
+
+
+    //Game event subscription
+    void OnEnable()
+    {
+        GameEventHandler.onPlayerDeath += StopAttacking;
+    }
+
+    void OnDisable()
+    {
+        GameEventHandler.onPlayerDeath -= StopAttacking;
+    }
+
+    void StopAttacking()
+    {
+        stateMachine.ChangeState(AIStateID.CheeringState);
     }
 }
