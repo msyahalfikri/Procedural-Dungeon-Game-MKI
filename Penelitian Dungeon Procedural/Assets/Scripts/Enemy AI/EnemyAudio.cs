@@ -46,4 +46,10 @@ public class EnemyAudio : MonoBehaviour
         }
     }
 
+    //TO BE IMPLEMENTED
+    public void PlayPunchSound()
+    {
+        //play punching sounds. 
+    }
+
 }

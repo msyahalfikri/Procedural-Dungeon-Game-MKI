@@ -11,7 +11,6 @@ public class CombatController : MonoBehaviour
 {
     [SerializeField] private CinemachineVirtualCamera blockVirtualCamera;
     [SerializeField] private LayerMask mouseColliderMask = new LayerMask();
-
     private StarterAssetsInputs input;
     [HideInInspector] public Animator animator;
     public GameObject sword;
@@ -28,7 +27,6 @@ public class CombatController : MonoBehaviour
     public float attackRange = 0.5f;
     public LayerMask enemyLayers;
     public bool isBlocking = false;
-    public bool isAttacking = false;
     public bool isExhausted = false;
 
     // Start is called before the first frame update
@@ -50,8 +48,6 @@ public class CombatController : MonoBehaviour
 
     private void Block()
     {
-
-
         Vector3 mouseWorldPosition = Vector3.zero;
 
         Vector2 screenCenterPoint = new Vector2(Screen.width / 2f, Screen.height / 2f);
@@ -67,7 +63,8 @@ public class CombatController : MonoBehaviour
         {
             if (isExhausted)
             {
-                return;
+                isBlocking = false;
+                animator.SetLayerWeight(2, Mathf.Lerp(animator.GetLayerWeight(2), 0f, Time.deltaTime * 10f));
             }
             else
             {

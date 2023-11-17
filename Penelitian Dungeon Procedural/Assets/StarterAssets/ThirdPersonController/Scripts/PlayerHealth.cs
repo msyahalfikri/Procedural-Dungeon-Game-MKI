@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +10,8 @@ public class PlayerHealth : MonoBehaviour
     [HideInInspector] public float currentHealth;
     [HideInInspector] public CombatController combatController;
     public bool TakingDamage;
+    public bool playerIsDead = false;
+    public event EventHandler onPlayerDeath;
     // Start is called before the first frame update
     void Awake()
     {
@@ -20,7 +23,6 @@ public class PlayerHealth : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Debug.Log(currentHealth);
     }
     public void TakeDamage(float amount)
     {
@@ -31,13 +33,9 @@ public class PlayerHealth : MonoBehaviour
             playerUI.SetHealthBarPercentage(currentHealth, maxHealth);
             if (currentHealth <= 0.0f)
             {
-                Die();
+                GameEventHandler.PlayerDied();
+                playerIsDead = true;
             }
         }
     }
-    public void Die()
-    {
-        Debug.Log("Player Dead");
-    }
-
 }

@@ -7,23 +7,20 @@ using Unity.VisualScripting;
 
 public class BlockingState : AIState
 {
-    bool isBlocking;
-    float blockTimer = 0f;// You can adjust this value as needed
+    float blockTimer = 0f;
     public AIStateID GetID()
     {
         return AIStateID.BlockingState;
     }
     public void Enter(AIAgent agent)
     {
-        isBlocking = true;
-        agent.isBlocking = isBlocking;
+        agent.isBlocking = true;
         blockTimer = agent.config.blockTimer;
     }
 
     public void Exit(AIAgent agent)
     {
-        isBlocking = false;
-        agent.isBlocking = isBlocking;
+        agent.isBlocking = false;
     }
 
 
@@ -34,6 +31,7 @@ public class BlockingState : AIState
         {
             agent.stateMachine.ChangeState(AIStateID.AttackState);
         }
+
     }
 }
 

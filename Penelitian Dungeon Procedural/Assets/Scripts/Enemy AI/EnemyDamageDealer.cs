@@ -7,7 +7,6 @@ public class EnemyDamageDealer : MonoBehaviour
     bool canDealDamage;
     public bool hitRegistered;
     List<GameObject> hasDealtDamage;
-
     [SerializeField] float weaponLength;
     AIAgent agent;
     void Start()
@@ -27,34 +26,59 @@ public class EnemyDamageDealer : MonoBehaviour
             if (Physics.Raycast(transform.position, -transform.up, out hit, weaponLength, layerMask))
             {
                 hitRegistered = true;
-                if (hit.transform.TryGetComponent(out PlayerHealth player) && !hasDealtDamage.Contains(hit.transform.gameObject))
+
+                //Deal damage to player
+                if (hit.transform.TryGetComponent(out PlayerHealth playerHealth) && !hasDealtDamage.Contains(hit.transform.gameObject))
                 {
-                    if (agent.attackLeft || agent.attackRight)
-                    {
-                        player.TakeDamage(agent.config.normalAttackDamage);
-                    }
-                    else if (agent.heavyAttack)
-                    {
-                        player.TakeDamage(agent.config.heavyAttackDamage);
-                    }
-                    hasDealtDamage.Add(hit.transform.gameObject);
+                    DecideDamageDealt(playerHealth);
                 }
-            }
-            else
-            {
-                hitRegistered = false;
+
+                //Decrease player stamina when the player is blocking
+                if (hit.transform.TryGetComponent(out PlayerStamina playerStamina) && !hasDealtDamage.Contains(hit.transform.gameObject))
+                {
+
+                    DecideStaminaDamageDealt(playerStamina);
+                }
+
+                hasDealtDamage.Add(hit.transform.gameObject);
             }
         }
     }
+    public void DecideDamageDealt(PlayerHealth playerHealthComponent)
+    {
+        if (agent.attackLeft || agent.attackRight)
+        {
+            playerHealthComponent.TakeDamage(agent.config.normalAttackDamage);
+        }
+        else if (agent.heavyAttack)
+        {
+            playerHealthComponent.TakeDamage(agent.config.heavyAttackDamage);
+        }
+    }
+
+    public void DecideStaminaDamageDealt(PlayerStamina playerStaminaComponent)
+    {
+        if (agent.attackLeft || agent.attackRight)
+        {
+            playerStaminaComponent.DecreaseCurrentStamina(agent.config.normalAttackDamage);
+        }
+        else if (agent.heavyAttack)
+        {
+            playerStaminaComponent.DecreaseCurrentStamina(agent.config.heavyAttackDamage);
+        }
+    }
+
     public void EnemyStartDealDamage()
     {
         canDealDamage = true;
         hasDealtDamage.Clear();
     }
+
     public void EnemyEndDealDamage()
     {
         canDealDamage = false;
     }
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;

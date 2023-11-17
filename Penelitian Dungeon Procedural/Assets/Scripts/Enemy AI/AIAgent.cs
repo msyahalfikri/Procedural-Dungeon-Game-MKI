@@ -16,8 +16,8 @@ public class AIAgent : MonoBehaviour
     [HideInInspector] public SkinnedMeshRenderer mesh;
     [HideInInspector] public AISensor sightSensor;
     [HideInInspector] public ChaseRangeSphere chaseRangeSphere;
-    [HideInInspector] public AttackSphereCollider attackSphereCollider;
     [HideInInspector] public EnemyDamageDealer enemyDamageDealer;
+    [HideInInspector] public Animator animator;
     [HideInInspector] public bool isDying;
     [HideInInspector] public bool attackLeft, attackRight, heavyAttack;
     [HideInInspector] public bool alreadyAttacked;
@@ -27,7 +27,7 @@ public class AIAgent : MonoBehaviour
     [HideInInspector] public bool isBlocking;
     [HideInInspector] public bool TakingDamage;
     [HideInInspector] public bool isRoaring;
-    [HideInInspector] public Animator animator;
+
 
     public LayerMask PlayerLayer, GroundLayer;
 

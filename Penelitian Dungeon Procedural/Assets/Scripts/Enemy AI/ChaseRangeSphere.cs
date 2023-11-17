@@ -20,8 +20,6 @@ public class ChaseRangeSphere : MonoBehaviour
             agent.isInChaseRange = true;
             Debug.Log("In Chase Range");
         }
-
-
     }
     private void OnTriggerExit(Collider other)
     {
@@ -33,7 +31,6 @@ public class ChaseRangeSphere : MonoBehaviour
                 agent.stateMachine.ChangeState(AIStateID.IdleState);
                 Debug.Log("Out of Chase Range");
             }
-
         }
 
     }

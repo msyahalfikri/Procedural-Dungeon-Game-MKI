@@ -65,7 +65,13 @@ public class PlayerStamina : MonoBehaviour
         {
             staminaIsFull = true;
         }
+    }
 
-
+    public void DecreaseCurrentStamina(float value)
+    {
+        if (combatController.isBlocking)
+        {
+            currentStamina -= value;
+        }
     }
 }

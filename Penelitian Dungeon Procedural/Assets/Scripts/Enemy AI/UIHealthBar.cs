@@ -45,7 +45,6 @@ public class UIHealthBar : MonoBehaviour
             enemyNameUI.enabled = !isBehind;
             transform.position = Camera.main.WorldToScreenPoint(target.position + offset);
         }
-
     }
 
     public void SetHealthBarPercentage(float percentage)

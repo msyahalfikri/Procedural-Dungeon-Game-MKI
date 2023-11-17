@@ -7,19 +7,17 @@ using UnityEditor.AnimatedValues;
 public class AttackState : AIState
 {
     private bool leftHook = false, rightHook = false, blocking = false;
-    float heavyAttackTimer;
-    bool heavyAttackReady;
-    float attackInterval = 0.0f;
-
+    private bool heavyAttackReady;
+    private float heavyAttackTimer;
+    private float attackIntervalTimer = 0.0f;
     public AIStateID GetID()
     {
         return AIStateID.AttackState;
     }
     public void Enter(AIAgent agent)
     {
-        // agent.navMeshAgent.speed = 0.0f;
         agent.alreadyAttacked = false;
-        attackInterval = agent.config.timeBetweenAttacks;
+        attackIntervalTimer = agent.config.timeBetweenAttacks;
         heavyAttackTimer = agent.config.heavyAttackCooldownMaxTime;
     }
 
@@ -30,73 +28,21 @@ public class AttackState : AIState
 
     public void Update(AIAgent agent)
     {
-        heavyAttackTimer -= Time.deltaTime;
-        if (heavyAttackTimer <= 0f)
-        {
-            heavyAttackReady = true;
-
-        }
-        else
-        {
-            heavyAttackReady = false;
-        }
+        UpdateHeavyAttackTimer();
 
         if (agent.alreadyAttacked)
         {
-            // If already attacked, check if it's time to reset
-            agent.alreadyAttacked = false;
-            attackInterval -= Time.deltaTime;
-            if (attackInterval <= 0.0f)
-            {
-                if (heavyAttackReady)
-                {
-                    heavyAttackTimer = agent.config.heavyAttackCooldownMaxTime;
-                    agent.attackLeft = false;
-                    agent.attackRight = false;
-                    agent.heavyAttack = true;
-                    // MoveEnemyForward(agent, 2f);
-                }
-                else
-                {
-                    PerformAction(agent.config.blockChanceInPercent);
-                    if (leftHook)
-                    {
-                        agent.attackLeft = true;
-                        agent.attackRight = false;
-                        agent.heavyAttack = false;
-                    }
-                    else if (rightHook)
-                    {
-                        agent.attackLeft = false;
-                        agent.attackRight = true;
-                        agent.heavyAttack = false;
-                    }
-                    else if (blocking)
-                    {
-                        agent.attackLeft = false;
-                        agent.attackRight = false;
-                        agent.heavyAttack = false;
-                        agent.stateMachine.ChangeState(AIStateID.BlockingState);
-                    }
-
-                }
-            }
-            attackInterval = agent.config.timeBetweenAttacks;
-            // Debug.Log("LeftHook: " + agent.attackLeft + " || RightHook: " + agent.attackRight + " || HeavyAttack: " + agent.heavyAttack);
+            ResetAttackIfNeeded(agent);
         }
         else
         {
-            // If not already attacked, check if it's time to attack
-            attackInterval -= Time.deltaTime;
-            if (attackInterval <= 0.0f)
-            {
-                agent.alreadyAttacked = true;
-            }
-
+            CheckTimeToAttack(agent);
         }
         // Debug.Log("LeftHook: " + agent.attackLeft + " || RightHook: " + agent.attackRight + " || AttackTimer: " + attackInterval);
         // Debug.Log("HeavyAttack Timer: " + heavyAttackTimer + " || heavyAttackReady?: " + heavyAttackReady);
     }
+
+    //AI Performs light Attack. Has a chance to attack with left or right hook
     private void PerformLightAttack()
     {
         int randomAttack = UnityEngine.Random.Range(0, 2);
@@ -111,6 +57,8 @@ public class AttackState : AIState
             rightHook = true;
         }
     }
+
+    //AI Decides between performing a light Attack or a CHANCE to block
     private void PerformAction(float blockChanceInPercent)
     {
         int blockChance = UnityEngine.Random.Range(1, 101);
@@ -119,21 +67,101 @@ public class AttackState : AIState
             leftHook = false;
             rightHook = false;
             blocking = true;
-
         }
         else
         {
             PerformLightAttack();
             blocking = false;
         }
-        Debug.Log(blockChance);
-    }
-    private void MoveEnemyForward(AIAgent agent, float distance)
-    {
-        // Move the enemy forward by a specified distance
-        Vector3 newPosition = agent.transform.position + agent.transform.forward * distance;
-        agent.navMeshAgent.SetDestination(newPosition);
     }
 
+
+    //Reset the AlreadyAttack flag to prepare for attacking again. Can either perform a Heavy Attack or an action between light attack or block
+    private void ResetAttackIfNeeded(AIAgent agent)
+    {
+        agent.alreadyAttacked = false;
+        attackIntervalTimer -= Time.deltaTime;
+
+        if (attackIntervalTimer <= 0.0f)
+        {
+            if (heavyAttackReady)
+            {
+                PrepareHeavyAttack(agent);
+            }
+            else
+            {
+                ChooseAttackType(agent);
+            }
+            attackIntervalTimer = agent.config.timeBetweenAttacks;
+        }
+    }
+
+    //AI performs heavy attack
+    private void PrepareHeavyAttack(AIAgent agent)
+    {
+        heavyAttackTimer = agent.config.heavyAttackCooldownMaxTime;
+        agent.attackLeft = false;
+        agent.attackRight = false;
+        agent.heavyAttack = true;
+    }
+
+    //AI decides to perform between [left hook, right hook, or block]
+    private void ChooseAttackType(AIAgent agent)
+    {
+        PerformAction(agent.config.blockChanceInPercent);
+
+        if (leftHook)
+        {
+            agent.attackLeft = true;
+            agent.attackRight = false;
+            agent.heavyAttack = false;
+        }
+        else if (rightHook)
+        {
+            agent.attackLeft = false;
+            agent.attackRight = true;
+            agent.heavyAttack = false;
+        }
+        else if (blocking)
+        {
+            agent.attackLeft = false;
+            agent.attackRight = false;
+            agent.heavyAttack = false;
+            agent.stateMachine.ChangeState(AIStateID.BlockingState);
+        }
+    }
+
+    //Update the cooldown of heavy attack
+    private void UpdateHeavyAttackTimer()
+    {
+        heavyAttackTimer -= Time.deltaTime;
+        heavyAttackReady = heavyAttackTimer <= 0f;
+    }
+    //Check whether the AI can attack or not
+    private void CheckTimeToAttack(AIAgent agent)
+    {
+        attackIntervalTimer -= Time.deltaTime;
+
+        if (attackIntervalTimer <= 0.0f)
+        {
+            agent.alreadyAttacked = true;
+        }
+    }
+
+    //Game even subscription
+    void OnEnable()
+    {
+        GameEventHandler.onPlayerDeath += StopAttacking;
+    }
+
+    void OnDisable()
+    {
+        GameEventHandler.onPlayerDeath -= StopAttacking;
+    }
+
+    void StopAttacking()
+    {
+
+    }
 }
 
