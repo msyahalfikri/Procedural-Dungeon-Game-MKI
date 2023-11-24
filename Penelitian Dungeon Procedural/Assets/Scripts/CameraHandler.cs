@@ -16,9 +16,9 @@ namespace DungeonLiberation
 
         public static CameraHandler singleton;
 
-        public float lookSpeed = 0.1f;
-        public float followSpeed = 0.1f;
-        public float pivotSpeed = 0.03f;
+        public float lookSpeed = 0.05f;
+        public float followSpeed = 2f;
+        public float pivotSpeed = 0.1f;
 
         private float targetPosition;
         private float defaultPosition;

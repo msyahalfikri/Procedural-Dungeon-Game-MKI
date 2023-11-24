@@ -1,11 +1,17 @@
 fileFormatVersion: 2
-guid: 99280496f30b78a41b4a91fa8fd145c2
+guid: 9c4f1a72703b9cf40b6ea4f3ec0cb87a
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable:
   - first:
-      74: -3100369314251171874
-    second: Idle
+      74: 7478122292733868173
+    second: landing
+  - first:
+      74: -2702400367771620057
+    second: InAir
+  - first:
+      74: -9098803823909532060
+    second: JumpLand
   externalObjects: {}
   materials:
     materialImportMode: 1
@@ -36,18 +42,18 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Idle
-      takeName: Idle
+      name: landing
+      takeName: JumpStart
       internalID: 0
-      firstFrame: 1
-      lastFrame: 149
+      firstFrame: 53
+      lastFrame: 74
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 1
+      loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 1
       loopBlendPositionY: 1
@@ -63,7 +69,43 @@ ModelImporter:
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 1
+      additiveReferencePoseFrame: 20
+    - serializedVersion: 16
+      name: JumpLand
+      takeName: JumpStart
+      internalID: 0
+      firstFrame: 55
+      lastFrame: 74
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 1
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events:
+      - time: 0.1615599
+        functionName: OnLand
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 20
     isReadable: 0
   meshes:
     lODScreenPercentages: []

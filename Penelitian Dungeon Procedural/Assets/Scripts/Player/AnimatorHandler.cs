@@ -6,9 +6,10 @@ namespace DungeonLiberation
 {
     public class AnimatorHandler : MonoBehaviour
     {
+        PlayerManager playerManager;
+        InputHandler inputHandler;
+        PlayerLocomotion playerLocomotion;
         public Animator anim;
-        public InputHandler inputHandler;
-        public PlayerLocomotion playerLocomotion;
 
         int vertical;
         int horizontal;
@@ -16,6 +17,7 @@ namespace DungeonLiberation
 
         public void Initialize()
         {
+            playerManager = GetComponentInParent<PlayerManager>();
             anim = GetComponent<Animator>();
             inputHandler = GetComponentInParent<InputHandler>();
             playerLocomotion = GetComponentInParent<PlayerLocomotion>();
@@ -24,7 +26,7 @@ namespace DungeonLiberation
             horizontal = Animator.StringToHash("Horizontal");
         }
 
-        public void UpdateAnimatorValues(float verticalMovement, float horizontalMovement)
+        public void UpdateAnimatorValues(float verticalMovement, float horizontalMovement, bool isSprinting)
         {
             #region vertical
             float v = 0;
@@ -76,6 +78,12 @@ namespace DungeonLiberation
             }
             #endregion
 
+            if (isSprinting)
+            {
+                v = 2;
+                h = horizontalMovement;
+            }
+
             anim.SetFloat(vertical, v, 0.1f, Time.deltaTime);
             anim.SetFloat(horizontal, h, 0.1f, Time.deltaTime);
         }
@@ -99,7 +107,7 @@ namespace DungeonLiberation
 
         public void OnAnimatorMove()
         {
-            if (inputHandler.isInteracting == false)
+            if (playerManager.isInteracting == false)
             {
                 return;
             }
