@@ -34,8 +34,13 @@ public class PlayerHealth : MonoBehaviour
             if (currentHealth <= 0.0f)
             {
                 GameEventHandler.PlayerDied();
-                playerIsDead = true;
+                PlayerIsDead();
             }
         }
+    }
+    public void PlayerIsDead()
+    {
+        playerIsDead = true;
+        combatController.animator.SetBool("IsDead", playerIsDead);
     }
 }

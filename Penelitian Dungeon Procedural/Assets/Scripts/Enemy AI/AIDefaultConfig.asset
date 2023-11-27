@@ -16,15 +16,13 @@ MonoBehaviour:
   agentRunSpeed: 3.5
   ChaseTimerMaxTime: 1
   maxDistance: 1
-  maxSightDistance: 5
   walkPointRange: 40
   idleWaitTime: 3
   deathAnimationWaitTime: 5
-  timeBetweenAttacks: 3
+  timeBetweenAttacks: 1
   heavyAttackCooldownMaxTime: 12
-  observingRange: 15
-  attackRange: 15
-  blockTimer: 10
+  normalAttackDamage: 20
+  heavyAttackDamage: 30
+  blockTimer: 4
   blockChanceInPercent: 30
   roarAnimationMaxTime: 3
-  forwardAttackDistance: 3
