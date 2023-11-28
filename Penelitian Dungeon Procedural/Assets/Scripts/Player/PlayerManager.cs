@@ -53,7 +53,8 @@ namespace DungeonLiberation
         {
             inputHandler.rollFlag = false;
             inputHandler.sprintFlag = false;
-            isSprinting = inputHandler.b_Input;
+            inputHandler.skill_input = false;
+            inputHandler.ulti_input = false;
 
             if (isAirborne)
             {

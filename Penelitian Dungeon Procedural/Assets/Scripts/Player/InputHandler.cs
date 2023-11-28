@@ -13,16 +13,26 @@ namespace DungeonLiberation
         public float mouseX;
         public float mouseY;
 
-        public bool b_Input;
+        public bool dash_input;
+        public bool skill_input;
+        public bool ulti_input;
 
         public bool rollFlag;
         public bool sprintFlag;
         public float rollInputTimer;
 
         PlayerControls inputActions;
+        PlayerAttacker playerAttacker;
+        PlayerInventory playerInventory;
 
         Vector2 movementInput;
         Vector2 cameraInput;
+
+        private void Awake()
+        {
+            playerAttacker = GetComponent<PlayerAttacker>();
+            playerInventory = GetComponent<PlayerInventory>();
+        }
 
         public void OnEnable()
         {
@@ -45,6 +55,7 @@ namespace DungeonLiberation
         {
             MoveInput(delta);
             HandleRollInput(delta);
+            HandleAttackInput(delta);
         }
         
         private void MoveInput(float delta)
@@ -58,9 +69,9 @@ namespace DungeonLiberation
 
         private void HandleRollInput(float delta)
         {
-            b_Input = inputActions.PlayerActions.Roll.IsPressed();
+            dash_input = inputActions.PlayerActions.Roll.IsPressed();
 
-            if (b_Input)
+            if (dash_input)
             {
                 rollInputTimer += delta;
                 sprintFlag = true;
@@ -77,5 +88,20 @@ namespace DungeonLiberation
             }
         }
 
+        private void HandleAttackInput(float delta)
+        {
+            inputActions.PlayerActions.Skill.performed += i => skill_input = true;
+            inputActions.PlayerActions.Ultimate.performed += i => ulti_input = true;
+
+            if (skill_input)
+            {
+                playerAttacker.HandleLightAttack(playerInventory.rightWeapon);
+            }
+
+            if (ulti_input)
+            {
+                playerAttacker.HandleHeavyAttack(playerInventory.rightWeapon);
+            }
+        }
     }
 }
