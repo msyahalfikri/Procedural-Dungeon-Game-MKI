@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c192b598b7edaf645ac79dbd8f4cfe78, type: 3}
   m_Name: Mushroom
   m_EditorClassIdentifier: 
-  prefab: {fileID: 0}
+  prefab: {fileID: 8742159718522803064, guid: 4ea56bc16f2165740aa2b6c77973ca3f, type: 3}
   type: 0
   description: 
   restoreHealthValue: 20
