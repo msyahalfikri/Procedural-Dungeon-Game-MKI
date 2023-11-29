@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c67b0d3c21436274ca04c29cbdbd1164, type: 3}
   m_Name: Diamonds
   m_EditorClassIdentifier: 
-  prefab: {fileID: 0}
-  type: 0
-  description: 
+  prefab: {fileID: 6889515957483543977, guid: 8061984539d06934eac3f4a2e2e67c3b, type: 3}
+  type: 2
+  description: bright shiny diamon
