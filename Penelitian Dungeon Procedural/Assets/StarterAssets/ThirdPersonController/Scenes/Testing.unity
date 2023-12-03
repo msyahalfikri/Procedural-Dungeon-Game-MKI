@@ -409,7 +409,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 759.18475, y: 16.3945}
+  m_AnchoredPosition: {x: 759.18475, y: 16.394531}
   m_SizeDelta: {x: -1518.3694, y: -383.2488}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &868547883
@@ -1173,6 +1173,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Diamonds (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 6699635343036381847, guid: 90b9d5766670abc48a37c317d579108c, type: 3}
+      propertyPath: item
+      value: 
+      objectReference: {fileID: 11400000, guid: 8d4dc9c15ed05734d84dadf8761ec0e3, type: 2}
     - target: {fileID: 7681588883693603207, guid: 90b9d5766670abc48a37c317d579108c, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.72
@@ -1367,7 +1371,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92859b6843f860e4f8c398bf181b4fdc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventory: {fileID: 11400000, guid: b29114a9bfa36d845b8586b1659be6b1, type: 2}
+  inventory: {fileID: 11400000, guid: e6ebe421c3dafdf46abc572834d2d7f0, type: 2}
 --- !u!1 &1764214107
 GameObject:
   m_ObjectHideFlags: 0
