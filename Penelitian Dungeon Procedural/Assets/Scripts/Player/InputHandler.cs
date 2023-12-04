@@ -19,11 +19,13 @@ namespace DungeonLiberation
 
         public bool rollFlag;
         public bool sprintFlag;
+        public bool comboFlag;
         public float rollInputTimer;
 
         PlayerControls inputActions;
         PlayerAttacker playerAttacker;
         PlayerInventory playerInventory;
+        PlayerManager playerManager;
 
         Vector2 movementInput;
         Vector2 cameraInput;
@@ -32,6 +34,7 @@ namespace DungeonLiberation
         {
             playerAttacker = GetComponent<PlayerAttacker>();
             playerInventory = GetComponent<PlayerInventory>();
+            playerManager = GetComponent<PlayerManager>();
         }
 
         public void OnEnable()
@@ -57,7 +60,6 @@ namespace DungeonLiberation
             HandleRollInput(delta);
             HandleAttackInput(delta);
         }
-        
         private void MoveInput(float delta)
         {
             horizontal = movementInput.x;
@@ -66,7 +68,6 @@ namespace DungeonLiberation
             mouseX = cameraInput.x;
             mouseY = cameraInput.y;
         }
-
         private void HandleRollInput(float delta)
         {
             dash_input = inputActions.PlayerActions.Roll.IsPressed();
@@ -87,7 +88,6 @@ namespace DungeonLiberation
                 rollInputTimer = 0;
             }
         }
-
         private void HandleAttackInput(float delta)
         {
             inputActions.PlayerActions.Skill.performed += i => skill_input = true;
@@ -95,7 +95,25 @@ namespace DungeonLiberation
 
             if (skill_input)
             {
-                playerAttacker.HandleLightAttack(playerInventory.rightWeapon);
+                if (playerManager.canDoCombo)
+                {
+                    comboFlag = true;
+                    playerAttacker.HandleWeaponCombo(playerInventory.rightWeapon);
+                    comboFlag = false;
+                }
+                else
+                {
+                    if (playerManager.isInteracting)
+                    {
+                        return;
+                    }
+
+                    if (playerManager.canDoCombo)
+                    {
+                        return;
+                    }
+                    playerAttacker.HandleLightAttack(playerInventory.rightWeapon);
+                }
             }
 
             if (ulti_input)

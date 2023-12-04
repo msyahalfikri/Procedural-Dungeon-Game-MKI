@@ -18,7 +18,7 @@ namespace DungeonLiberation
         public bool isSprinting;
         public bool isAirborne;
         public bool isGrounded;
-
+        public bool canDoCombo;
         void Start()
         {
             inputHandler = GetComponent<InputHandler>();
@@ -36,6 +36,7 @@ namespace DungeonLiberation
         {
             float delta = Time.deltaTime;
             isInteracting = anim.GetBool("isInteracting");
+            canDoCombo = anim.GetBool("canDoCombo");
 
             inputHandler.TickInput(delta);
             playerLocomotion.HandleMovement(delta);

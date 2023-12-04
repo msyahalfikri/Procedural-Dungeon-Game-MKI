@@ -436,6 +436,7 @@ MonoBehaviour:
   ulti_input: 0
   rollFlag: 0
   sprintFlag: 0
+  comboFlag: 0
   rollInputTimer: 0
 --- !u!54 &557971894
 Rigidbody:
@@ -503,6 +504,7 @@ MonoBehaviour:
   isSprinting: 0
   isAirborne: 0
   isGrounded: 0
+  canDoCombo: 0
 --- !u!114 &557971897
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -529,6 +531,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 046dfcd6a59824341b02e2271a82522e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lastAttack: 
 --- !u!114 &557971899
 MonoBehaviour:
   m_ObjectHideFlags: 0
