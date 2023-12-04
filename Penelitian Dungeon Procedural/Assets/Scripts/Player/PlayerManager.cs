@@ -25,6 +25,11 @@ namespace DungeonLiberation
             anim = GetComponentInChildren<Animator>();
             playerLocomotion = GetComponent<PlayerLocomotion>();
             cameraHandler = CameraHandler.singleton;
+
+            if (cameraHandler != null )
+            {
+                cameraHandler = FindAnyObjectByType<CameraHandler>();
+            }
         }
 
         void Update()
