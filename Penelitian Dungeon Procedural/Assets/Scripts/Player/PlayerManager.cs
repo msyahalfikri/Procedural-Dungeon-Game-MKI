@@ -18,19 +18,25 @@ namespace DungeonLiberation
         public bool isSprinting;
         public bool isAirborne;
         public bool isGrounded;
-
+        public bool canDoCombo;
         void Start()
         {
             inputHandler = GetComponent<InputHandler>();
             anim = GetComponentInChildren<Animator>();
             playerLocomotion = GetComponent<PlayerLocomotion>();
             cameraHandler = CameraHandler.singleton;
+
+            if (cameraHandler != null )
+            {
+                cameraHandler = FindAnyObjectByType<CameraHandler>();
+            }
         }
 
         void Update()
         {
             float delta = Time.deltaTime;
             isInteracting = anim.GetBool("isInteracting");
+            canDoCombo = anim.GetBool("canDoCombo");
 
             inputHandler.TickInput(delta);
             playerLocomotion.HandleMovement(delta);
