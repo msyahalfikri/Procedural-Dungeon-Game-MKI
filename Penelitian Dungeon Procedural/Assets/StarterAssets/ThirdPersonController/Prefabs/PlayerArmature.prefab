@@ -1879,7 +1879,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   isBlocking: 0
-  isAttacking: 0
   isExhausted: 0
 --- !u!114 &2283120665022842698
 MonoBehaviour:
@@ -1898,6 +1897,7 @@ MonoBehaviour:
   currentHealth: 0
   combatController: {fileID: 0}
   TakingDamage: 0
+  playerIsDead: 0
 --- !u!136 &5961221021991294083
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1933,7 +1933,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.483
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -2055,8 +2055,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxStamina: 100
   currentStamina: 0
-  staminaDecay: 15
-  staminaRegen: 10
+  staminaDecay: 10
+  staminaRegen: 15
   staminaRegenDelay: 2
   staminaIsFull: 0
 --- !u!1 &4419340719311264948
