@@ -21,8 +21,8 @@ MonoBehaviour:
   deathAnimationWaitTime: 5
   timeBetweenAttacks: 1
   heavyAttackCooldownMaxTime: 12
-  normalAttackDamage: 20
-  heavyAttackDamage: 30
+  normalAttackDamage: 5
+  heavyAttackDamage: 10
   blockTimer: 4
-  blockChanceInPercent: 30
+  blockChanceInPercent: 0
   roarAnimationMaxTime: 3

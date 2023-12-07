@@ -1,14 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
+using Unity.Collections;
 using UnityEngine;
 
 public class AIEmotionSimulator : MonoBehaviour
 {
     //References & Triggers
-    FuzzyLogicController fuzzyController;
     AIAgent agent;
     AIHealth aiHealth;
     PlayerHealth playerHealth;
+
+    [SerializeField, ReadOnly]
+    private AIEmotionTypes currentEmotion;
 
     //weight/sensitivity for emotions
     public float angerSensitivity = 1.0f;
@@ -47,7 +48,11 @@ public class AIEmotionSimulator : MonoBehaviour
     float ruleMedDetermination;
     float ruleHighDetermination;
 
-    public AIEmotionTypes currentEmotions;
+    float weightedFearVal;
+    float weightedAngerVal;
+    float weightedDeterminationVal;
+
+
 
     private void Awake()
     {
@@ -63,10 +68,11 @@ public class AIEmotionSimulator : MonoBehaviour
 
         InterpretAndUpdateEmotion();
 
-        Debug.Log("Fear: " + DefuzzifyToFearCrispValue() +
-        "|| Distance: " + Vector3.Distance(agent.transform.position, agent.playerTransform.transform.position) + "|| Health: " + aiHealth.currentHealth + "|| CurrentEmotion: " + currentEmotions);
+        // Debug.Log("Fear: " + DefuzzifyToFearCrispValue() +
+        // "|| Distance: " + Vector3.Distance(agent.transform.position, agent.playerTransform.transform.position) + "|| Health: " + aiHealth.currentHealth + "|| CurrentEmotion: " + currentEmotions);
         // Debug.Log("Fuzzy health: [" + ruleHighAnger + ", " + ruleMedAnger + ", " + ruleLowAnger + "] || Health: " + aiHealth.currentHealth);
         // Debug.Log(DefuzzifyToAngerCrispValue() + "|| Health: " + aiHealth.currentHealth);
+        Debug.Log("Anger: " + weightedAngerVal + "|| Fear: " + weightedFearVal + "|| Determination: " + weightedDeterminationVal + "|| CurrentEmotion: " + currentEmotion);
     }
 
     //Gaussian Membership function
@@ -144,7 +150,7 @@ public class AIEmotionSimulator : MonoBehaviour
         playerLowHealthMembership = TriangularMembership(health, lowLimit, lowLimit, mediumLimit);
         playerMediumHealthMembership = TriangularMembership(health, lowLimit, mediumLimit, highLimit);
         playerHighHealthMembership = TriangularMembership(health, mediumLimit, highLimit, highLimit + 30f); // Adjust upper limit
-        // Debug.Log("HP: " + health + "|| LowMem: " + lowHealthMembership + " || MedMem: " + mediumHealthMembership + "|| HighMem: " + highHealthMembership);
+        // Debug.Log("HP: " + health + "|| LowMem: " + playerLowHealthMembership + " || MedMem: " + playerMediumHealthMembership + "|| HighMem: " + playerHighHealthMembership);
     }
 
 
@@ -276,23 +282,55 @@ public class AIEmotionSimulator : MonoBehaviour
 
     void InterpretAndUpdateEmotion()
     {
-        float weightedFearVal = GetWeightedFearValue();
-        float weightedAngerVal = GetWeightedAngerValue();
-        float weightedDeterminationVal = GetWeightedDeterminationValue();
+        weightedFearVal = GetWeightedFearValue();
+        weightedAngerVal = GetWeightedAngerValue();
+        weightedDeterminationVal = GetWeightedDeterminationValue();
 
         //Decides emotion based on the highest value 
-
-        // if (weightedFearVal <= 49)
-        // {
-        //     currentEmotions = AIEmotionTypes.Calm;
-        // }
-        // else if (weightedFearVal >= 50 && crispFearVal <= 74)
-        // {
-        //     currentEmotions = AIEmotionTypes.Apprehensive;
-        // }
-        // else if (weightedFearVal >= 75)
-        // {
-        //     currentEmotions = AIEmotionTypes.Terrified;
-        // }
+        if (weightedFearVal > weightedAngerVal)
+        {
+            if (weightedFearVal <= 49)
+            {
+                currentEmotion = AIEmotionTypes.Calm;
+            }
+            else if (weightedFearVal >= 50 && weightedFearVal <= 74)
+            {
+                currentEmotion = AIEmotionTypes.Apprehensive;
+            }
+            else if (weightedFearVal >= 75)
+            {
+                currentEmotion = AIEmotionTypes.Terrified;
+            }
+        }
+        else if (weightedAngerVal > weightedDeterminationVal)
+        {
+            if (weightedAngerVal <= 49)
+            {
+                currentEmotion = AIEmotionTypes.Calm;
+            }
+            else if (weightedAngerVal >= 50 && weightedAngerVal <= 74)
+            {
+                currentEmotion = AIEmotionTypes.Annoyed;
+            }
+            else if (weightedAngerVal >= 75)
+            {
+                currentEmotion = AIEmotionTypes.Furious;
+            }
+        }
+        else
+        {
+            if (weightedDeterminationVal <= 49)
+            {
+                currentEmotion = AIEmotionTypes.Calm;
+            }
+            else if (weightedDeterminationVal >= 50 && weightedDeterminationVal <= 74)
+            {
+                currentEmotion = AIEmotionTypes.Firm;
+            }
+            else if (weightedDeterminationVal >= 75)
+            {
+                currentEmotion = AIEmotionTypes.Determined;
+            }
+        }
     }
 }

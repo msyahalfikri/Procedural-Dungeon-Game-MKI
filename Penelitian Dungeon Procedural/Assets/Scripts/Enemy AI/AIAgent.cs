@@ -61,6 +61,7 @@ public class AIAgent : MonoBehaviour
         stateMachine.RegisterState(new BlockingState());
         stateMachine.RegisterState(new RoarState());
         stateMachine.RegisterState(new CheeringState());
+        stateMachine.RegisterState(new FleeState());
 
         //Initialize Initial State
         stateMachine.ChangeState(initialState);

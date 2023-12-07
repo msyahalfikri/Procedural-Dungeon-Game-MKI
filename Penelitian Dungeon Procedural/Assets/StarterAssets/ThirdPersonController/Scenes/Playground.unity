@@ -2657,10 +2657,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d111cbea762a98d4fbdd5769914ced19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  angerSensitivity: 1
-  fearSensitivity: 0.5
+  currentEmotion: 0
+  angerSensitivity: 0.5
+  fearSensitivity: 1
   determinationSensitivity: 1
-  currentEmotions: 0
 --- !u!1 &1133659358
 GameObject:
   m_ObjectHideFlags: 0
