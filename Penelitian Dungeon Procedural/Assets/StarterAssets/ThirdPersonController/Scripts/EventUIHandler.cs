@@ -19,18 +19,7 @@ public class EventUIHandler : MonoBehaviour
 
     }
 
-    //Game event subscription
-    void OnEnable()
-    {
-        GameEventHandler.onPlayerDeath += SetGameOverScreen;
-    }
-
-    void OnDisable()
-    {
-        GameEventHandler.onPlayerDeath -= SetGameOverScreen;
-    }
-
-    public void SetGameOverScreen()
+    public void SetGameOverScreen(bool playerIsDead)
     {
         GameOverUI.SetActive(true);
         FadeInGameOver(gameOverBackground, 3.0f);
@@ -48,5 +37,16 @@ public class EventUIHandler : MonoBehaviour
             imageAlpha.a = Mathf.Clamp01(elapsedTime / fadeDuration);
             imageToChange.color = imageAlpha;
         }
+    }
+
+    //Game event subscription
+    void OnEnable()
+    {
+        GameEventHandler.onPlayerDeath += SetGameOverScreen;
+    }
+
+    void OnDisable()
+    {
+        GameEventHandler.onPlayerDeath -= SetGameOverScreen;
     }
 }

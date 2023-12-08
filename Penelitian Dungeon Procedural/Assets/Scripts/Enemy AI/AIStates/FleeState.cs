@@ -4,23 +4,37 @@ using UnityEngine;
 
 public class FleeState : AIState
 {
-    public float retreatThreshold = 30f; // Health threshold to trigger retreat
-    public float retreatSpeed = 8f; // Speed when retreating
-    public float safeDistance = 50f; // Safe distance from the player
-    public Transform retreatPoint; // The point or position to retreat to
-
+    public float retreatSpeed = 6f; // Speed when retreating
+    public float retreatDistance = 20f;
     private bool isRetreating = false;
+    private Vector3 retreatDestination;
     public AIStateID GetID()
     {
         return AIStateID.FleeState;
     }
     public void Enter(AIAgent agent)
     {
-
+        agent.navMeshAgent.isStopped = false;
+        agent.navMeshAgent.speed = retreatSpeed;
+        isRetreating = true;
     }
     public void Update(AIAgent agent)
     {
+        if (isRetreating)
+        {
+            Vector3 direction = agent.transform.position - agent.playerTransform.transform.position;
+            direction.Normalize();
 
+            retreatDestination = agent.transform.position + direction * retreatDistance;
+            agent.navMeshAgent.SetDestination(retreatDestination);
+        }
+
+        if (agent.navMeshAgent.remainingDistance <= agent.navMeshAgent.stoppingDistance)
+        {
+            isRetreating = false;
+        }
+
+        Debug.Log("IsRetrating: " + isRetreating + "|| RetreatDestination: " + retreatDestination);
     }
 
 
@@ -28,7 +42,5 @@ public class FleeState : AIState
     {
 
     }
-
-
 
 }

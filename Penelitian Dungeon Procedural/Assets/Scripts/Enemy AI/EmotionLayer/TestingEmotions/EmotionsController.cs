@@ -4,7 +4,13 @@ using UnityEngine;
 
 public class EmotionController : MonoBehaviour
 {
-    // Start is called before the first frame update
+
+    AIAgent agent;
+
+    private void Awake()
+    {
+        agent = GetComponent<AIAgent>();
+    }
     void Start()
     {
 

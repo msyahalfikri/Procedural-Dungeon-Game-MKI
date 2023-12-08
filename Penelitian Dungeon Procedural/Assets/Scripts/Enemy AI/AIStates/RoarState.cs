@@ -31,7 +31,6 @@ public class RoarState : AIState
             {
                 agent.stateMachine.ChangeState(AIStateID.AttackState);
             }
-
         }
 
     }

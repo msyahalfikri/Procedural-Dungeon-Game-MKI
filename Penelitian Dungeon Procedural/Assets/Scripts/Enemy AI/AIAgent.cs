@@ -29,6 +29,7 @@ public class AIAgent : MonoBehaviour
     [HideInInspector] public bool TakingDamage;
     [HideInInspector] public bool isRoaring;
     [HideInInspector] public bool isCheering;
+    [HideInInspector] public bool isPlayerDead;
 
 
 
@@ -36,6 +37,7 @@ public class AIAgent : MonoBehaviour
 
     private void Awake()
     {
+        isPlayerDead = false;
         ragdoll = GetComponentInChildren<AIRagdoll>();
         mesh = GetComponentInChildren<SkinnedMeshRenderer>();
         navMeshAgent = GetComponent<NavMeshAgent>();
@@ -69,7 +71,7 @@ public class AIAgent : MonoBehaviour
     private void Update()
     {
         stateMachine.Update();
-        // Debug.Log(stateMachine.currentState);
+        Debug.Log(stateMachine.currentState);
     }
     public void DestroyThisEnemy()
     {
@@ -97,8 +99,9 @@ public class AIAgent : MonoBehaviour
         GameEventHandler.onPlayerDeath -= StopAttacking;
     }
 
-    void StopAttacking()
+    void StopAttacking(bool isPlayerDead)
     {
-        stateMachine.ChangeState(AIStateID.CheeringState);
+        stateMachine.ChangeState(AIStateID.IdleState);
+        this.isPlayerDead = isPlayerDead;
     }
 }
