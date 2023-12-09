@@ -16,6 +16,10 @@ namespace DungeonLiberation
         public bool dash_input;
         public bool skill_input;
         public bool ulti_input;
+        public bool slot1_input;
+        public bool slot2_input;
+        public bool slot3_input;
+        public bool slot4_input;
 
         public bool rollFlag;
         public bool sprintFlag;
@@ -59,6 +63,7 @@ namespace DungeonLiberation
             MoveInput(delta);
             HandleRollInput(delta);
             HandleAttackInput(delta);
+            HandleQuickSlotInput();
         }
         private void MoveInput(float delta)
         {
@@ -119,6 +124,21 @@ namespace DungeonLiberation
             if (ulti_input)
             {
                 playerAttacker.HandleHeavyAttack(playerInventory.rightWeapon);
+            }
+        }
+
+        private void HandleQuickSlotInput()
+        {
+            inputActions.PlayerQuickSlots.Slot1.performed += i => slot1_input = true;
+            inputActions.PlayerQuickSlots.Slot2.performed += i => slot2_input = true;
+
+            if (slot1_input)
+            {
+                playerInventory.ChangeRightWeapon();
+            }
+            else if (slot2_input)
+            {
+                playerInventory.ChangeLeftWeapon();
             }
         }
     }

@@ -14,9 +14,12 @@ namespace DungeonLiberation
 
         Animator animator;
 
+        QuickSlotsUI quickSlotsUI;
+
         private void Awake()
         {
             animator = GetComponent<Animator>();
+            quickSlotsUI = FindObjectOfType<QuickSlotsUI>();
 
             WeaponHolderSlot[] weaponHolderSlots = GetComponentsInChildren<WeaponHolderSlot>();
             foreach (WeaponHolderSlot weaponSlot in weaponHolderSlots)
@@ -38,7 +41,9 @@ namespace DungeonLiberation
             {
                 leftHandSlot.LoadWeaponModel(weaponItem);
                 LoadLeftWeaponDamageCollider();
+                quickSlotsUI.UpdateWeaponQuickSlotsUI(true, weaponItem);
 
+                #region Handle Animations
                 if (weaponItem != null)
                 {
                     animator.CrossFade(weaponItem.left_hand_idle, 0.2f);
@@ -47,12 +52,15 @@ namespace DungeonLiberation
                 {
                     animator.CrossFade("Left Arm Empty", 0.2f);
                 }
+                #endregion
             }
             else
             {
                 rightHandSlot.LoadWeaponModel(weaponItem);
                 LoadRightWeaponDamageCollider();
+                quickSlotsUI.UpdateWeaponQuickSlotsUI(false, weaponItem);
 
+                #region Handle Animations
                 if (weaponItem != null)
                 {
                     animator.CrossFade(weaponItem.right_hand_idle, 0.2f);
@@ -61,6 +69,7 @@ namespace DungeonLiberation
                 {
                     animator.CrossFade("Right Arm Empty", 0.2f);
                 }
+                #endregion
             }
         }
 
