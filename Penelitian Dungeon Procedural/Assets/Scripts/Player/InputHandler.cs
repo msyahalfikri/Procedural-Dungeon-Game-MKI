@@ -20,6 +20,7 @@ namespace DungeonLiberation
         public bool slot2_input;
         public bool slot3_input;
         public bool slot4_input;
+        public bool interact_input;
 
         public bool rollFlag;
         public bool sprintFlag;
@@ -64,6 +65,7 @@ namespace DungeonLiberation
             HandleRollInput(delta);
             HandleAttackInput(delta);
             HandleQuickSlotInput();
+            HandleInteractInput();
         }
         private void MoveInput(float delta)
         {
@@ -140,6 +142,12 @@ namespace DungeonLiberation
             {
                 playerInventory.ChangeLeftWeapon();
             }
+        }
+
+        private void HandleInteractInput()
+        {
+            inputActions.PlayerActions.Interact.performed += i => interact_input = true;
+
         }
     }
 }

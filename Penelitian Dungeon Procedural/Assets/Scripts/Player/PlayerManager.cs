@@ -42,6 +42,8 @@ namespace DungeonLiberation
             playerLocomotion.HandleMovement(delta);
             playerLocomotion.HandleRollingAndSprinting(delta);
             playerLocomotion.HandleFalling(delta, playerLocomotion.moveDirection);
+
+            CheckForInteractables();
         }
         
         private void FixedUpdate()
@@ -65,10 +67,38 @@ namespace DungeonLiberation
             inputHandler.slot2_input = false;
             inputHandler.slot3_input = false;
             inputHandler.slot4_input = false;
+            inputHandler.interact_input = false;
 
             if (isAirborne)
             {
                 playerLocomotion.inAirTimer += Time.deltaTime;
+            }
+        }
+
+        public void CheckForInteractables()
+        {
+            RaycastHit hit;
+            Vector3 rayOrigin = transform.position;
+            rayOrigin.y = rayOrigin.y + 2f;
+
+            if (Physics.SphereCast(transform.position, 0.3f, transform.forward, out hit, 1f, cameraHandler.ignoreLayers) || Physics.SphereCast(rayOrigin, 0.3f, Vector3.down, out hit, 2.5f, cameraHandler.ignoreLayers))
+            {
+                if (hit.collider.tag == "Interactable")
+                {
+                    Interactables interactableObject = hit.collider.GetComponent<Interactables>();
+
+                    if (interactableObject != null)
+                    {
+                        string interactableText = interactableObject.interactableText;
+
+                        //setup ui text
+
+                        if (inputHandler.interact_input)
+                        {
+                            hit.collider.GetComponent<Interactables>().Interact(this);
+                        }
+                    }
+                }
             }
         }
     }
