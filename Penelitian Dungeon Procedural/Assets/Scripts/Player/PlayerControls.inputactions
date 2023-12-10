@@ -123,6 +123,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Interact",
+                    "type": "Button",
+                    "id": "4aec936a-3125-436a-bcfa-555921ce9c83",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -150,17 +159,6 @@
                 },
                 {
                     "name": "",
-                    "id": "4682b979-ddcd-464e-b761-a86e687c786b",
-                    "path": "<Mouse>/leftButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Skill",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "b8f60965-3c76-4e84-b7f5-b62c8cecc2a6",
                     "path": "<Keyboard>/q",
                     "interactions": "",
@@ -172,12 +170,100 @@
                 },
                 {
                     "name": "",
-                    "id": "9a9c253f-ff39-45fb-891d-6812d2fa2c68",
-                    "path": "<Mouse>/rightButton",
+                    "id": "bedfc89f-a4c3-4592-861a-302d13e70731",
+                    "path": "<Keyboard>/f",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Ultimate",
+                    "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Player Quick Slots",
+            "id": "042124bd-e239-447d-b04f-ee262891fe29",
+            "actions": [
+                {
+                    "name": "Slot 1",
+                    "type": "Button",
+                    "id": "c0eb9f55-ed6c-4ca9-a956-0f20230e45cc",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Slot 2",
+                    "type": "Button",
+                    "id": "827f3d67-be80-40aa-a46b-73dcaaaf8620",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Slot 3",
+                    "type": "Button",
+                    "id": "f5d33e89-df1a-4d9f-aa16-a192d0ba41e0",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Slot 4",
+                    "type": "Button",
+                    "id": "1c3ecf66-295c-4fab-9bc3-5624490c3e3b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "a8468d03-c6d6-4816-8e60-3ba952c89bbc",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Slot 1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "270891a0-e99a-49df-a574-e4a366ddcd30",
+                    "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Slot 2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ebe65b23-967e-4cb2-a178-0f5d56286590",
+                    "path": "<Keyboard>/3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Slot 3",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a858ec85-5286-4ea4-85f1-dff9327cb0d2",
+                    "path": "<Keyboard>/4",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Slot 4",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
