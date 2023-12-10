@@ -19,6 +19,7 @@ public class AttackState : AIState
         agent.alreadyAttacked = false;
         attackIntervalTimer = agent.config.timeBetweenAttacks;
         heavyAttackTimer = agent.config.heavyAttackCooldownMaxTime;
+        agent.bodyIK.enabled = true;
     }
 
     public void Exit(AIAgent agent)

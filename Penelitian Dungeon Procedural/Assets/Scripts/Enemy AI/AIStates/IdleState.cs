@@ -14,7 +14,7 @@ public class IdleState : AIState
     {
         agent.navMeshAgent.isStopped = true;
         agent.bodyIK.enabled = false;
-        waitTime = agent.config.idleWaitTime;
+        waitTime = Random.Range(agent.config.minIdleWaitTime, agent.config.maxIdleWaitTime);
     }
     public void Update(AIAgent agent)
     {

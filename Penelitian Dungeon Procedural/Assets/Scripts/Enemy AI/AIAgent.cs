@@ -30,6 +30,7 @@ public class AIAgent : MonoBehaviour
     [HideInInspector] public bool isRoaring;
     [HideInInspector] public bool isCheering;
     [HideInInspector] public bool isPlayerDead;
+    [HideInInspector] public bool BlockNow;
 
 
 
@@ -37,7 +38,6 @@ public class AIAgent : MonoBehaviour
 
     private void Awake()
     {
-        isPlayerDead = false;
         ragdoll = GetComponentInChildren<AIRagdoll>();
         mesh = GetComponentInChildren<SkinnedMeshRenderer>();
         navMeshAgent = GetComponent<NavMeshAgent>();
@@ -51,9 +51,13 @@ public class AIAgent : MonoBehaviour
     }
     private void Start()
     {
+        isPlayerDead = false;
+        BlockNow = false;
+
         stateMachine = new AIStateMachine(this);
 
         //Register All States
+        //Registered States for FSM Only Enemy
         stateMachine.RegisterState(new TestingState());
         stateMachine.RegisterState(new ChaseState());
         stateMachine.RegisterState(new IdleState());
@@ -62,8 +66,17 @@ public class AIAgent : MonoBehaviour
         stateMachine.RegisterState(new AttackState());
         stateMachine.RegisterState(new BlockingState());
         stateMachine.RegisterState(new RoarState());
-        stateMachine.RegisterState(new CheeringState());
         stateMachine.RegisterState(new FleeState());
+
+        //Registered States for EBA Enemy
+        stateMachine.RegisterState(new EBA_ChaseState());
+        stateMachine.RegisterState(new EBA_IdleState());
+        stateMachine.RegisterState(new EBA_DeathState());
+        stateMachine.RegisterState(new EBA_PatrolState());
+        stateMachine.RegisterState(new EBA_AttackState());
+        stateMachine.RegisterState(new EBA_BlockingState());
+        stateMachine.RegisterState(new EBA_RoarState());
+        stateMachine.RegisterState(new EBA_FleeState());
 
         //Initialize Initial State
         stateMachine.ChangeState(initialState);
@@ -71,7 +84,7 @@ public class AIAgent : MonoBehaviour
     private void Update()
     {
         stateMachine.Update();
-        Debug.Log(stateMachine.currentState);
+        // Debug.Log(stateMachine.currentState);
     }
     public void DestroyThisEnemy()
     {

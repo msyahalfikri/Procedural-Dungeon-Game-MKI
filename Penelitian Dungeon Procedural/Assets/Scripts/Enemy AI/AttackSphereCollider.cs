@@ -21,6 +21,10 @@ public class AttackSphereCollider : MonoBehaviour
                 Debug.Log("Player in Attack Range");
                 agent.stateMachine.ChangeState(AIStateID.AttackState);
             }
+            else if (agent.stateMachine.currentState == AIStateID.EBA_ChasePlayer)
+            {
+                agent.stateMachine.ChangeState(AIStateID.EBA_AttackState);
+            }
 
         }
 
@@ -32,10 +36,13 @@ public class AttackSphereCollider : MonoBehaviour
             agent.isInAttackRange = false;
             if (agent.stateMachine.currentState == AIStateID.AttackState || agent.stateMachine.currentState == AIStateID.BlockingState)
             {
-                Debug.Log("Player not in Attack Range");
                 agent.stateMachine.ChangeState(AIStateID.ChasePlayer);
             }
-
+            else if (agent.stateMachine.currentState == AIStateID.EBA_AttackState || agent.stateMachine.currentState == AIStateID.EBA_BlockingState)
+            {
+                agent.stateMachine.ChangeState(AIStateID.EBA_ChasePlayer);
+            }
+            Debug.Log("Player not in Attack Range");
         }
 
     }

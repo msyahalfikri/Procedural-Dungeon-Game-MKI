@@ -40,7 +40,11 @@ namespace DungeonLiberation
 
             targetTransform = FindAnyObjectByType<PlayerManager>().transform;
         }
-
+        private void Start()
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
         public void FollowTarget(float delta)
         {
             Vector3 targetPosition = Vector3.SmoothDamp(myTransform.position, targetTransform.position, ref cameraFollowVelocity, delta / followSpeed);

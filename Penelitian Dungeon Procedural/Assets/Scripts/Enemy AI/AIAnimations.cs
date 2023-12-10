@@ -33,14 +33,29 @@ public class AIAnimations : MonoBehaviour
         animator.SetBool("IsDying", agent.isDying);
         animator.SetBool("AlreadyAttacked", agent.alreadyAttacked);
         animator.SetBool("IsBlocking", agent.isBlocking);
+
+        if (agent.BlockNow)
+        {
+            animator.SetLayerWeight(1, 1f);
+            StartCoroutine(BlockPoseHold());
+        }
+        else
+        {
+            animator.SetLayerWeight(1, 0f);
+        }
+
         if (agent.TakingDamage)
         {
             animator.SetTrigger("TakeDamage");
             agent.TakingDamage = false;
         }
         animator.SetBool("IsRoaring", agent.isRoaring);
+
+        IEnumerator BlockPoseHold()
+        {
+            yield return new WaitForSeconds(0.5f);
+            agent.BlockNow = false;
+        }
     }
-
-
 }
 

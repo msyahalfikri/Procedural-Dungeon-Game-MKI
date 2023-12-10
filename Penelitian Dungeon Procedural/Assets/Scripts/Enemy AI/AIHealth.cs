@@ -24,15 +24,22 @@ public class AIHealth : MonoBehaviour
     {
         if (agent.stateMachine.currentState != AIStateID.BlockingState)
         {
-            currentHealth -= amount;
-            healthBar.SetHealthBarPercentage(currentHealth / maxHealth);
-            agent.TakingDamage = true;
-            if (currentHealth <= 0.0f)
+            if (agent.stateMachine.currentState != AIStateID.EBA_BlockingState)
             {
-                Die();
+                currentHealth -= amount;
+                healthBar.SetHealthBarPercentage(currentHealth / maxHealth);
+                agent.TakingDamage = true;
+                if (currentHealth <= 0.0f)
+                {
+                    Die();
+                }
             }
         }
 
+        if (agent.stateMachine.currentState == AIStateID.BlockingState || agent.stateMachine.currentState == AIStateID.EBA_BlockingState)
+        {
+            agent.BlockNow = true;
+        }
     }
     public void Die()
     {

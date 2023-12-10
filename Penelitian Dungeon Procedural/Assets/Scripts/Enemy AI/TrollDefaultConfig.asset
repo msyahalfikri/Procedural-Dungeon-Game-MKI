@@ -12,17 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab8a7710fdb4abc41a6c5bb6c95136b2, type: 3}
   m_Name: TrollDefaultConfig
   m_EditorClassIdentifier: 
-  agentWalkSpeed: 2
-  agentRunSpeed: 3.5
+  agentWalkSpeed: 4
+  agentRunSpeed: 6
   ChaseTimerMaxTime: 1
   maxDistance: 1
-  walkPointRange: 40
-  idleWaitTime: 3
+  walkPointRange: 150
+  minIdleWaitTime: 3
+  maxIdleWaitTime: 6
   deathAnimationWaitTime: 5
-  timeBetweenAttacks: 2
+  timeBetweenAttacks: 3.5
   heavyAttackCooldownMaxTime: 12
-  normalAttackDamage: 5
-  heavyAttackDamage: 10
-  blockTimer: 4
-  blockChanceInPercent: 0
+  normalAttackDamage: 15
+  heavyAttackDamage: 20
+  blockTimer: 6
+  blockChanceInPercent: 20
   roarAnimationMaxTime: 3
+  retreatSpeed: 6
+  retreatDistance: 20

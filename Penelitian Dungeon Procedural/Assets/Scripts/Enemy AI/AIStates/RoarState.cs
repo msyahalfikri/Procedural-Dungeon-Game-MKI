@@ -14,7 +14,6 @@ public class RoarState : AIState
     {
         agent.isRoaring = true;
         agent.navMeshAgent.isStopped = true;
-        agent.bodyIK.enabled = true;
         roarAnimationTimer = agent.config.roarAnimationMaxTime;
     }
     public void Update(AIAgent agent)

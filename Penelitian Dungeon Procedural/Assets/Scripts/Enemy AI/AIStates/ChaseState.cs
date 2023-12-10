@@ -15,7 +15,7 @@ public class ChaseState : AIState
     {
         agent.navMeshAgent.isStopped = false;
         agent.navMeshAgent.speed = agent.config.agentRunSpeed;
-        agent.bodyIK.enabled = true;
+        agent.bodyIK.enabled = false;
     }
     public void Update(AIAgent agent)
     {

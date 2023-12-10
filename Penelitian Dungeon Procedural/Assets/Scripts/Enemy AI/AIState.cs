@@ -4,6 +4,7 @@ using UnityEngine;
 
 public enum AIStateID
 {
+    //States for FSM Only AI Enemy
     TestingState,
     ChasePlayer,
     IdleState,
@@ -13,7 +14,16 @@ public enum AIStateID
     PatrolState,
     FleeState,
     RoarState,
-    CheeringState
+
+    //States for Emotion-Based Agent AI Enemy
+    EBA_ChasePlayer,
+    EBA_IdleState,
+    EBA_AttackState,
+    EBA_BlockingState,
+    EBA_DeathState,
+    EBA_PatrolState,
+    EBA_FleeState,
+    EBA_RoarState
 }
 public interface AIState
 {
