@@ -15,6 +15,7 @@ public class CombatController : MonoBehaviour
     [HideInInspector] public Animator animator;
     public GameObject sword;
     public GameObject blockSword;
+    public ThirdPersonController thirdPersonController;
 
     // combat combo animation
     public float cooldownTime = 2f;
@@ -32,6 +33,7 @@ public class CombatController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        thirdPersonController = GetComponent<ThirdPersonController>();
         input = GetComponent<StarterAssetsInputs>();
         sword = GameObject.FindGameObjectWithTag("Weapon");
         blockSword = GameObject.FindGameObjectWithTag("Shield");
@@ -59,7 +61,7 @@ public class CombatController : MonoBehaviour
         }
 
 
-        if (input.block && !input.attack)
+        if (input.block && !input.attack && thirdPersonController.Grounded)
         {
             if (isExhausted)
             {
@@ -91,38 +93,42 @@ public class CombatController : MonoBehaviour
 
     private void CombatUpdate()
     {
-        if (animator.GetCurrentAnimatorStateInfo(1).normalizedTime > 0.7f && animator.GetCurrentAnimatorStateInfo(1).IsName("Attack1"))
+        if (thirdPersonController.Grounded)
         {
-            animator.SetBool("Attack1", false);
-        }
 
-        if (animator.GetCurrentAnimatorStateInfo(1).normalizedTime > 0.7f && animator.GetCurrentAnimatorStateInfo(1).IsName("Attack2"))
-        {
-            animator.SetBool("Attack2", false);
-        }
-
-        if (animator.GetCurrentAnimatorStateInfo(1).normalizedTime > 1.2f && animator.GetCurrentAnimatorStateInfo(1).IsName("Attack3"))
-        {
-            animator.SetBool("Attack3", false);
-            numberOfClicks = 0;
-        }
-
-        if (Time.time - lastClickedTime > maxComboDelay)
-        {
-            numberOfClicks = 0;
-            animator.SetBool("Attack1", false);
-            animator.SetBool("Attack2", false);
-            animator.SetBool("Attack3", false);
-            animator.SetBool("IsAttacking", false);
-            sword.SetActive(false);
-        }
-
-        if (Time.time > nextFireTime)
-        {
-            if (input.attack && !input.block)
+            if (animator.GetCurrentAnimatorStateInfo(1).normalizedTime > 0.7f && animator.GetCurrentAnimatorStateInfo(1).IsName("Attack1"))
             {
-                animator.SetBool("IsAttacking", true);
-                OnClick();
+                animator.SetBool("Attack1", false);
+            }
+
+            if (animator.GetCurrentAnimatorStateInfo(1).normalizedTime > 0.7f && animator.GetCurrentAnimatorStateInfo(1).IsName("Attack2"))
+            {
+                animator.SetBool("Attack2", false);
+            }
+
+            if (animator.GetCurrentAnimatorStateInfo(1).normalizedTime > 1.2f && animator.GetCurrentAnimatorStateInfo(1).IsName("Attack3"))
+            {
+                animator.SetBool("Attack3", false);
+                numberOfClicks = 0;
+            }
+
+            if (Time.time - lastClickedTime > maxComboDelay)
+            {
+                numberOfClicks = 0;
+                animator.SetBool("Attack1", false);
+                animator.SetBool("Attack2", false);
+                animator.SetBool("Attack3", false);
+                animator.SetBool("IsAttacking", false);
+                sword.SetActive(false);
+            }
+
+            if (Time.time > nextFireTime)
+            {
+                if (input.attack && !input.block)
+                {
+                    animator.SetBool("IsAttacking", true);
+                    OnClick();
+                }
             }
         }
     }
