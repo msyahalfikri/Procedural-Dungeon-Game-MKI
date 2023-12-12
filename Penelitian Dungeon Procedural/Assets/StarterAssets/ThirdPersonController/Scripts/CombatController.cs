@@ -16,19 +16,19 @@ public class CombatController : MonoBehaviour
     public GameObject sword;
     public GameObject blockSword;
     public ThirdPersonController thirdPersonController;
-
+    private GameObject[] enemies;
+    private Transform targetEnemy;
     // combat combo animation
-    public float cooldownTime = 2f;
     private float nextFireTime = 0f;
     private static int numberOfClicks = 0;
     float lastClickedTime = 0;
     float maxComboDelay = 1f;
 
     // combat system
-    public float attackRange = 0.5f;
-    public LayerMask enemyLayers;
+    public float attackRange = 5f;
     public bool isBlocking = false;
     public bool isExhausted = false;
+    public bool isAttacking = false;
 
     // Start is called before the first frame update
     void Start()
@@ -46,6 +46,7 @@ public class CombatController : MonoBehaviour
 
         Block();
         CombatUpdate();
+        FaceNearestEnemy();
     }
 
     private void Block()
@@ -95,21 +96,23 @@ public class CombatController : MonoBehaviour
     {
         if (thirdPersonController.Grounded)
         {
-
             if (animator.GetCurrentAnimatorStateInfo(1).normalizedTime > 0.7f && animator.GetCurrentAnimatorStateInfo(1).IsName("Attack1"))
             {
                 animator.SetBool("Attack1", false);
+                isAttacking = false;
             }
 
             if (animator.GetCurrentAnimatorStateInfo(1).normalizedTime > 0.7f && animator.GetCurrentAnimatorStateInfo(1).IsName("Attack2"))
             {
                 animator.SetBool("Attack2", false);
+                isAttacking = false;
             }
 
             if (animator.GetCurrentAnimatorStateInfo(1).normalizedTime > 1.2f && animator.GetCurrentAnimatorStateInfo(1).IsName("Attack3"))
             {
                 animator.SetBool("Attack3", false);
                 numberOfClicks = 0;
+                isAttacking = false;
             }
 
             if (Time.time - lastClickedTime > maxComboDelay)
@@ -126,8 +129,10 @@ public class CombatController : MonoBehaviour
             {
                 if (input.attack && !input.block)
                 {
+                    isAttacking = true;
                     animator.SetBool("IsAttacking", true);
                     OnClick();
+
                 }
             }
         }
@@ -142,7 +147,6 @@ public class CombatController : MonoBehaviour
         {
             sword.SetActive(true);
             animator.SetBool("Attack1", true);
-            Attack();
         }
 
         numberOfClicks = Mathf.Clamp(numberOfClicks, 0, 3);
@@ -160,8 +164,32 @@ public class CombatController : MonoBehaviour
         }
     }
 
-    private void Attack()
+    private void FaceNearestEnemy()
     {
+        // Find all game objects tagged as enemies
+        enemies = GameObject.FindGameObjectsWithTag("Enemy");
+
+        // Find the nearest enemy
+        float closestDistance = Mathf.Infinity;
+        foreach (GameObject enemy in enemies)
+        {
+            float distanceToEnemy = Vector3.Distance(transform.position, enemy.transform.position);
+            if (distanceToEnemy < closestDistance)
+            {
+                closestDistance = distanceToEnemy;
+                targetEnemy = enemy.transform;
+            }
+        }
+
+        // Face the nearest enemy
+        if (targetEnemy != null && closestDistance <= attackRange)
+        {
+            Debug.Log("face the player");
+            Vector3 direction = targetEnemy.position - transform.position;
+            direction.y = 0f; // If you don't want the player to tilt up/down
+            Quaternion lookRotation = Quaternion.LookRotation(direction);
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
+        }
     }
     public void StartDealDamage()
     {

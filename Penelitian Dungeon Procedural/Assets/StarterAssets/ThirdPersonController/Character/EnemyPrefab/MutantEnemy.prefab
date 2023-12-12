@@ -642,7 +642,7 @@ Transform:
   m_GameObject: {fileID: 2539943884856021856}
   serializedVersion: 2
   m_LocalRotation: {x: -0.000037545127, y: 0.08664068, z: -0.000017890983, w: 0.99623966}
-  m_LocalPosition: {x: -0.001, y: 1.538, z: -0.017}
+  m_LocalPosition: {x: -0.001, y: 1.695, z: -0.017}
   m_LocalScale: {x: 53.39842, y: 53.398407, z: 53.39842}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1184,7 +1184,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 10.767177, y: 10.767177, z: 10.767177}
+  m_LocalScale: {x: 18.231382, y: 18.231382, z: 18.231382}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6545803667385842563}
@@ -1299,7 +1299,6 @@ GameObject:
   - component: {fileID: 806121513702898458}
   - component: {fileID: 2310152481090554642}
   - component: {fileID: 7521475079342724294}
-  - component: {fileID: 2955409283203386492}
   - component: {fileID: 5626096396827582205}
   - component: {fileID: 7024646034317436710}
   - component: {fileID: 5574507943382481552}
@@ -1307,6 +1306,7 @@ GameObject:
   - component: {fileID: 8406365715311312491}
   - component: {fileID: 3116481762849713890}
   - component: {fileID: 8718369417258951641}
+  - component: {fileID: 209467068139145183}
   m_Layer: 7
   m_Name: MutantEnemy
   m_TagString: Enemy
@@ -1322,7 +1322,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4490248071770543586}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.9994093, z: -0, w: -0.034366265}
+  m_LocalRotation: {x: -0, y: -0.99940926, z: 0, w: -0.03436736}
   m_LocalPosition: {x: 13.99347, y: 0.00000023841858, z: 4.4878683}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1441,18 +1441,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 257
   playerIsInSight: 0
---- !u!114 &2955409283203386492
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4490248071770543586}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c1fddbe397bb28640aea6e5202756804, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &5626096396827582205
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1471,12 +1459,14 @@ MonoBehaviour:
   playerTransform: {fileID: 0}
   ragdoll: {fileID: 0}
   healthBar: {fileID: 0}
+  healthBarAndEmotion: {fileID: 0}
   bodyIK: {fileID: 0}
   mesh: {fileID: 0}
   sightSensor: {fileID: 0}
   chaseRangeSphere: {fileID: 0}
   enemyDamageDealer: {fileID: 0}
   animator: {fileID: 0}
+  emotionSimulator: {fileID: 0}
   isDying: 0
   attackLeft: 0
   attackRight: 0
@@ -1494,6 +1484,7 @@ MonoBehaviour:
   isCheering: 0
   isPlayerDead: 0
   BlockNow: 0
+  isEmotionBasedAgent: 0
   PlayerLayer:
     serializedVersion: 2
     m_Bits: 8
@@ -1514,6 +1505,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   healthBar: {fileID: 0}
+  healthBarAndEmotion: {fileID: 0}
   currentHealth: 0
 --- !u!82 &5574507943382481552
 AudioSource:
@@ -1535,8 +1527,8 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
+  MinDistance: 3.7
+  MaxDistance: 8.98
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -1571,7 +1563,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -1646,7 +1638,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 0.64, y: 1.7, z: 0.82}
-  m_Center: {x: 0, y: 0.91, z: 0}
+  m_Center: {x: 0, y: 1.05, z: 0}
 --- !u!114 &3116481762849713890
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1660,9 +1652,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentEmotion: 0
-  angerSensitivity: 0.5
-  fearSensitivity: 1
-  determinationSensitivity: 0.6
+  angerSensitivity: 1
+  fearSensitivity: 0.2
+  determinationSensitivity: 0.2
 --- !u!114 &8718369417258951641
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1673,6 +1665,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: abd7510a808901942ad3ee70c067dce8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &209467068139145183
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4490248071770543586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1fddbe397bb28640aea6e5202756804, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &4593195756031272215
@@ -1703,7 +1707,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 73.04766, y: 73.04766, z: 73.04766}
+  m_LocalScale: {x: 89.834015, y: 89.834015, z: 89.834015}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6545803667385842563}
@@ -1957,7 +1961,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5432773181311122848}
-  - component: {fileID: 8446052731189658561}
+  - component: {fileID: 4699553341278110284}
   m_Layer: 7
   m_Name: UIhealthBar
   m_TagString: Untagged
@@ -1974,7 +1978,7 @@ RectTransform:
   m_GameObject: {fileID: 5360367732079469839}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -0.000012239}
-  m_LocalScale: {x: 0.41878334, y: 0.6091394, z: 0.6091394}
+  m_LocalScale: {x: 0.4187203, y: 0.60904765, z: 0.60904765}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3735110514532418441}
@@ -1988,7 +1992,7 @@ RectTransform:
   m_AnchoredPosition: {x: 274, y: 83.16}
   m_SizeDelta: {x: 761.259, y: 82.3819}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &8446052731189658561
+--- !u!114 &4699553341278110284
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1997,15 +2001,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 5360367732079469839}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7526f99aa50edbf44ab872f991fbbc0a, type: 3}
+  m_Script: {fileID: 11500000, guid: 86ef18f0b4b5cc64aba1d15826534c87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 2384631426794689956}
-  offset: {x: 0, y: 0.75, z: 0}
+  offset: {x: 0, y: 0, z: 0}
   backgroundImage: {fileID: 1699097495850831827}
   foregroundImage: {fileID: 8491813570996137995}
+  emotionUI: {fileID: 4776624237805224807}
+  emotionsUITypes:
+  - {fileID: 21300000, guid: 51537d61f76b57c429039fdc960e23af, type: 3}
+  - {fileID: 21300000, guid: d1b157227953f9547bd0d8329c305be5, type: 3}
+  - {fileID: 21300000, guid: c51f7289beada6341bc1033365ecd437, type: 3}
+  - {fileID: 21300000, guid: 302fbea378e8e7749b8bfba71e5ff591, type: 3}
+  - {fileID: 21300000, guid: d345cb36f2dace349bfca2298f087a88, type: 3}
+  - {fileID: 21300000, guid: 7aa2dd5e66f1d7a4291a7eb411234964, type: 3}
+  - {fileID: 21300000, guid: d153a579001bdf9498f4f64983aef69b, type: 3}
   enemyNameUI: {fileID: 3900954451283882081}
-  enemyName: Troll
+  enemyName: Mutant
 --- !u!1 &5493438268852066737
 GameObject:
   m_ObjectHideFlags: 0
@@ -2130,7 +2143,7 @@ RectTransform:
   m_GameObject: {fileID: 6266144837264770495}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0.0000058955}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.2, y: 1.2, z: 1.2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5432773181311122848}

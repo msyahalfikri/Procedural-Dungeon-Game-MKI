@@ -30,7 +30,14 @@ public class EBA_AttackState : AIState
     public void Update(AIAgent agent)
     {
         UpdateHeavyAttackTimer();
-
+        if (agent.emotionSimulator.currentEmotion == AIEmotionTypes.Furious || agent.emotionSimulator.currentEmotion == AIEmotionTypes.Determined)
+        {
+            heavyAttackTimer = 0.5f;
+        }
+        else
+        {
+            heavyAttackTimer = agent.config.heavyAttackCooldownMaxTime;
+        }
         if (agent.alreadyAttacked)
         {
             ResetAttackIfNeeded(agent);
@@ -93,14 +100,30 @@ public class EBA_AttackState : AIState
             {
                 ChooseAttackType(agent);
             }
-            attackIntervalTimer = agent.config.timeBetweenAttacks;
+            if (agent.emotionSimulator.currentEmotion == AIEmotionTypes.Furious || agent.emotionSimulator.currentEmotion == AIEmotionTypes.Determined)
+            {
+                attackIntervalTimer = 0.5f;
+
+            }
+            else
+            {
+                attackIntervalTimer = agent.config.timeBetweenAttacks;
+            }
         }
     }
 
     //AI performs heavy attack
     private void PrepareHeavyAttack(AIAgent agent)
     {
-        heavyAttackTimer = agent.config.heavyAttackCooldownMaxTime;
+
+        if (agent.emotionSimulator.currentEmotion == AIEmotionTypes.Furious || agent.emotionSimulator.currentEmotion == AIEmotionTypes.Determined)
+        {
+            heavyAttackTimer = 3f;
+        }
+        else
+        {
+            heavyAttackTimer = agent.config.heavyAttackCooldownMaxTime;
+        }
         agent.attackLeft = false;
         agent.attackRight = false;
         agent.heavyAttack = true;
@@ -109,7 +132,21 @@ public class EBA_AttackState : AIState
     //AI decides to perform between [left hook, right hook, or block]
     private void ChooseAttackType(AIAgent agent)
     {
-        PerformAction(agent.config.blockChanceInPercent);
+        float blockChance;
+        if (agent.emotionSimulator.currentEmotion == AIEmotionTypes.Determined)
+        {
+            blockChance = 25f;
+        }
+        else if (agent.emotionSimulator.currentEmotion == AIEmotionTypes.Furious)
+        {
+            blockChance = 5f;
+        }
+        else
+        {
+            blockChance = agent.config.blockChanceInPercent;
+        }
+
+        PerformAction(blockChance);
 
         if (leftHook)
         {

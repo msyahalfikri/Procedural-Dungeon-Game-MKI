@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -12,12 +13,14 @@ public class AIAgent : MonoBehaviour
     public GameObject playerTransform;
     [HideInInspector] public AIRagdoll ragdoll;
     [HideInInspector] public UIHealthBar healthBar;
+    [HideInInspector] public UIHealthBarAndEmotion healthBarAndEmotion;
     [HideInInspector] public BodyIK bodyIK;
     [HideInInspector] public SkinnedMeshRenderer mesh;
     [HideInInspector] public AISensor sightSensor;
     [HideInInspector] public ChaseRangeSphere chaseRangeSphere;
     [HideInInspector] public EnemyDamageDealer enemyDamageDealer;
     [HideInInspector] public Animator animator;
+    [HideInInspector] public AIEmotionSimulator emotionSimulator;
     [HideInInspector] public bool isDying;
     [HideInInspector] public bool attackLeft, attackRight, heavyAttack;
     [HideInInspector] public bool alreadyAttacked;
@@ -31,6 +34,8 @@ public class AIAgent : MonoBehaviour
     [HideInInspector] public bool isCheering;
     [HideInInspector] public bool isPlayerDead;
     [HideInInspector] public bool BlockNow;
+    public bool isEmotionBasedAgent;
+
 
 
 
@@ -41,16 +46,28 @@ public class AIAgent : MonoBehaviour
         ragdoll = GetComponentInChildren<AIRagdoll>();
         mesh = GetComponentInChildren<SkinnedMeshRenderer>();
         navMeshAgent = GetComponent<NavMeshAgent>();
-        healthBar = GetComponentInChildren<UIHealthBar>();
         playerTransform = GameObject.FindGameObjectWithTag("Player");
         bodyIK = GetComponent<BodyIK>();
         sightSensor = GetComponent<AISensor>();
         chaseRangeSphere = GetComponentInChildren<ChaseRangeSphere>();
         animator = GetComponent<Animator>();
         enemyDamageDealer = GetComponentInChildren<EnemyDamageDealer>();
+        emotionSimulator = GetComponent<AIEmotionSimulator>();
+
+        healthBar = GetComponentInChildren<UIHealthBar>();
+        healthBarAndEmotion = GetComponentInChildren<UIHealthBarAndEmotion>();
     }
     private void Start()
     {
+        if (emotionSimulator == null)
+        {
+            isEmotionBasedAgent = false;
+        }
+        else
+        {
+            isEmotionBasedAgent = true;
+        }
+
         isPlayerDead = false;
         BlockNow = false;
 

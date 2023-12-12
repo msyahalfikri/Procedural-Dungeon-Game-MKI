@@ -5,19 +5,29 @@ using UnityEngine.AI;
 
 public class AIAnimations : MonoBehaviour
 {
-    private NavMeshAgent navMeshAgent;
     private Animator animator;
     private AIAgent agent;
     private void Awake()
     {
-        navMeshAgent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         agent = GetComponent<AIAgent>();
     }
     private void Update()
     {
+        if (agent.isEmotionBasedAgent)
+        {
+            if (agent.emotionSimulator.currentEmotion == AIEmotionTypes.Furious || agent.emotionSimulator.currentEmotion == AIEmotionTypes.Determined)
+            {
+                animator.SetFloat("AnimSpeed", 1.2f);
+            }
+            else
+            {
+                animator.SetFloat("AnimSpeed", 1f);
+            }
+        }
+
         //Movement
-        animator.SetFloat("Speed", navMeshAgent.velocity.magnitude);
+        animator.SetFloat("Speed", agent.navMeshAgent.velocity.magnitude);
         animator.SetBool("HasTurned", agent.hasTurned);
         if (agent.hasTurned)
         {

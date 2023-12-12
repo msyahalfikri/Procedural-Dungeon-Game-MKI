@@ -15,6 +15,7 @@ public class EBA_FleeState : AIState
         agent.navMeshAgent.isStopped = false;
         agent.navMeshAgent.speed = agent.config.retreatSpeed;
         isRetreating = true;
+        agent.bodyIK.enabled = false;
     }
     public void Update(AIAgent agent)
     {
@@ -32,7 +33,7 @@ public class EBA_FleeState : AIState
             isRetreating = false;
         }
 
-        Debug.Log("IsRetrating: " + isRetreating + "|| RetreatDestination: " + retreatDestination);
+        // Debug.Log("IsRetrating: " + isRetreating + "|| RetreatDestination: " + retreatDestination);
     }
 
 

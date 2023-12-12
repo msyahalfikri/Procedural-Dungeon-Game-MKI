@@ -6,6 +6,7 @@ public class AIHealth : MonoBehaviour
 {
     public float maxHealth;
     public UIHealthBar healthBar;
+    public UIHealthBarAndEmotion healthBarAndEmotion;
     [HideInInspector] public float currentHealth;
     AIAgent agent;
     // Start is called before the first frame update
@@ -14,6 +15,11 @@ public class AIHealth : MonoBehaviour
         agent = GetComponent<AIAgent>();
         currentHealth = maxHealth;
         healthBar = GetComponentInChildren<UIHealthBar>();
+
+        if (healthBar == null)
+        {
+            healthBarAndEmotion = GetComponentInChildren<UIHealthBarAndEmotion>();
+        }
     }
 
     // Update is called once per frame
@@ -27,7 +33,15 @@ public class AIHealth : MonoBehaviour
             if (agent.stateMachine.currentState != AIStateID.EBA_BlockingState)
             {
                 currentHealth -= amount;
-                healthBar.SetHealthBarPercentage(currentHealth / maxHealth);
+                if (healthBar == null)
+                {
+                    healthBarAndEmotion.SetHealthBarPercentage(currentHealth / maxHealth);
+                }
+                else
+                {
+                    healthBar.SetHealthBarPercentage(currentHealth / maxHealth);
+                }
+
                 agent.TakingDamage = true;
                 if (currentHealth <= 0.0f)
                 {
@@ -43,7 +57,16 @@ public class AIHealth : MonoBehaviour
     }
     public void Die()
     {
-        DeathState deathState = agent.stateMachine.GetState(AIStateID.DeathState) as DeathState;
-        agent.stateMachine.ChangeState(AIStateID.DeathState);
+        if (agent.isEmotionBasedAgent)
+        {
+            EBA_DeathState EBA_deathState = agent.stateMachine.GetState(AIStateID.EBA_DeathState) as EBA_DeathState;
+            agent.stateMachine.ChangeState(AIStateID.EBA_DeathState);
+        }
+        else
+        {
+            DeathState deathState = agent.stateMachine.GetState(AIStateID.DeathState) as DeathState;
+            agent.stateMachine.ChangeState(AIStateID.DeathState);
+        }
+
     }
 }

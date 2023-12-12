@@ -904,6 +904,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   healthBar: {fileID: 0}
+  healthBarAndEmotion: {fileID: 0}
   currentHealth: 0
 --- !u!114 &188033425
 MonoBehaviour:
@@ -923,12 +924,14 @@ MonoBehaviour:
   playerTransform: {fileID: 0}
   ragdoll: {fileID: 0}
   healthBar: {fileID: 0}
+  healthBarAndEmotion: {fileID: 0}
   bodyIK: {fileID: 0}
   mesh: {fileID: 0}
   sightSensor: {fileID: 0}
   chaseRangeSphere: {fileID: 0}
   enemyDamageDealer: {fileID: 0}
   animator: {fileID: 0}
+  emotionSimulator: {fileID: 0}
   isDying: 0
   attackLeft: 0
   attackRight: 0
@@ -946,6 +949,7 @@ MonoBehaviour:
   isCheering: 0
   isPlayerDead: 0
   BlockNow: 0
+  isEmotionBasedAgent: 0
   PlayerLayer:
     serializedVersion: 2
     m_Bits: 8
@@ -1905,22 +1909,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerArmature
       objectReference: {fileID: 0}
-    - target: {fileID: 4416926081852918490, guid: 64dce48905ffd9b4293e595fa6941544, type: 3}
-      propertyPath: MoveSpeed
-      value: 3.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4416926081852918490, guid: 64dce48905ffd9b4293e595fa6941544, type: 3}
-      propertyPath: SprintSpeed
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4416926081852918490, guid: 64dce48905ffd9b4293e595fa6941544, type: 3}
-      propertyPath: SpeedChangeRate
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 6982812146204527121, guid: 64dce48905ffd9b4293e595fa6941544, type: 3}
-      propertyPath: m_ApplyRootMotion
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2444,65 +2432,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1064958200547783006, guid: 5bad645596603804ba4c4c2a21bb407c, type: 3}
-      propertyPath: MaxDistance
-      value: 35.29
-      objectReference: {fileID: 0}
-    - target: {fileID: 1064958200547783006, guid: 5bad645596603804ba4c4c2a21bb407c, type: 3}
-      propertyPath: MinDistance
-      value: 14.96
-      objectReference: {fileID: 0}
-    - target: {fileID: 2521845186128581994, guid: 5bad645596603804ba4c4c2a21bb407c, type: 3}
-      propertyPath: angle
-      value: 89
-      objectReference: {fileID: 0}
-    - target: {fileID: 2521845186128581994, guid: 5bad645596603804ba4c4c2a21bb407c, type: 3}
-      propertyPath: radius
-      value: 18.87
-      objectReference: {fileID: 0}
-    - target: {fileID: 4721075494902834711, guid: 5bad645596603804ba4c4c2a21bb407c, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.39511362
-      objectReference: {fileID: 0}
-    - target: {fileID: 4721075494902834711, guid: 5bad645596603804ba4c4c2a21bb407c, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.39511362
-      objectReference: {fileID: 0}
-    - target: {fileID: 4721075494902834711, guid: 5bad645596603804ba4c4c2a21bb407c, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.39511362
-      objectReference: {fileID: 0}
-    - target: {fileID: 4908908437807876399, guid: 5bad645596603804ba4c4c2a21bb407c, type: 3}
-      propertyPath: m_Acceleration
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4908908437807876399, guid: 5bad645596603804ba4c4c2a21bb407c, type: 3}
-      propertyPath: m_AngularSpeed
-      value: 900
-      objectReference: {fileID: 0}
-    - target: {fileID: 4908908437807876399, guid: 5bad645596603804ba4c4c2a21bb407c, type: 3}
-      propertyPath: m_StoppingDistance
-      value: 14
-      objectReference: {fileID: 0}
     - target: {fileID: 6322125491285581887, guid: 5bad645596603804ba4c4c2a21bb407c, type: 3}
       propertyPath: m_Name
       value: TrollEnemy_Ragdoll
-      objectReference: {fileID: 0}
-    - target: {fileID: 6322125491285581887, guid: 5bad645596603804ba4c4c2a21bb407c, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7559680897101636273, guid: 5bad645596603804ba4c4c2a21bb407c, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 85.58336
-      objectReference: {fileID: 0}
-    - target: {fileID: 7559680897101636273, guid: 5bad645596603804ba4c4c2a21bb407c, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 85.58336
-      objectReference: {fileID: 0}
-    - target: {fileID: 7559680897101636273, guid: 5bad645596603804ba4c4c2a21bb407c, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 85.58336
       objectReference: {fileID: 0}
     - target: {fileID: 7559680897101636273, guid: 5bad645596603804ba4c4c2a21bb407c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3211,45 +3143,13 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1621960294506375914, guid: 266a7555e7bbf434d8018e94ec07e7c2, type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2310152481090554642, guid: 266a7555e7bbf434d8018e94ec07e7c2, type: 3}
-      propertyPath: angleLimit
-      value: 60
-      objectReference: {fileID: 0}
-    - target: {fileID: 3944303672064640655, guid: 266a7555e7bbf434d8018e94ec07e7c2, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4490248071770543586, guid: 266a7555e7bbf434d8018e94ec07e7c2, type: 3}
       propertyPath: m_Name
       value: MutantEnemy
       objectReference: {fileID: 0}
-    - target: {fileID: 4490248071770543586, guid: 266a7555e7bbf434d8018e94ec07e7c2, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5574507943382481552, guid: 266a7555e7bbf434d8018e94ec07e7c2, type: 3}
-      propertyPath: MaxDistance
-      value: 8.98
-      objectReference: {fileID: 0}
-    - target: {fileID: 5574507943382481552, guid: 266a7555e7bbf434d8018e94ec07e7c2, type: 3}
-      propertyPath: MinDistance
-      value: 3.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 5574507943382481552, guid: 266a7555e7bbf434d8018e94ec07e7c2, type: 3}
-      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6247071595736940722, guid: 266a7555e7bbf434d8018e94ec07e7c2, type: 3}
-      propertyPath: m_AngularSpeed
-      value: 720
-      objectReference: {fileID: 0}
     - target: {fileID: 6545803667385842563, guid: 266a7555e7bbf434d8018e94ec07e7c2, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 232.38
+      value: 236.62
       objectReference: {fileID: 0}
     - target: {fileID: 6545803667385842563, guid: 266a7555e7bbf434d8018e94ec07e7c2, type: 3}
       propertyPath: m_LocalPosition.y
@@ -3257,7 +3157,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6545803667385842563, guid: 266a7555e7bbf434d8018e94ec07e7c2, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 288.4
+      value: 298.26
       objectReference: {fileID: 0}
     - target: {fileID: 6545803667385842563, guid: 266a7555e7bbf434d8018e94ec07e7c2, type: 3}
       propertyPath: m_LocalRotation.w
@@ -3286,22 +3186,6 @@ PrefabInstance:
     - target: {fileID: 6545803667385842563, guid: 266a7555e7bbf434d8018e94ec07e7c2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7335795191623177990, guid: 266a7555e7bbf434d8018e94ec07e7c2, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 89.834015
-      objectReference: {fileID: 0}
-    - target: {fileID: 7335795191623177990, guid: 266a7555e7bbf434d8018e94ec07e7c2, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 89.834015
-      objectReference: {fileID: 0}
-    - target: {fileID: 7335795191623177990, guid: 266a7555e7bbf434d8018e94ec07e7c2, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 89.834015
-      objectReference: {fileID: 0}
-    - target: {fileID: 8406365715311312491, guid: 266a7555e7bbf434d8018e94ec07e7c2, type: 3}
-      propertyPath: m_Center.y
-      value: 1.05
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

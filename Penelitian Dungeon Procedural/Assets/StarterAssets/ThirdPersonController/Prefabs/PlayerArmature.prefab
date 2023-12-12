@@ -1077,6 +1077,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitRegistered: 0
+  AttackBlocked: 0
   weaponLength: 2
   weaponDamage: 10
 --- !u!1 &3266411622757557566
@@ -1686,10 +1687,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26e54e5a728a9234ab24fcf1460ed8a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveSpeed: 2
-  SprintSpeed: 5.335
+  MoveSpeed: 3.5
+  SprintSpeed: 6
   RotationSmoothTime: 0.12
-  SpeedChangeRate: 10
+  SpeedChangeRate: 3
   LandingAudioClip: {fileID: 8300000, guid: ff697d3070687ce4583faa0561a145a2, type: 3}
   FootstepAudioClips:
   - {fileID: 8300000, guid: 72f526a6a9890f643a88e85a61c86c8a, type: 3}
@@ -1873,13 +1874,11 @@ MonoBehaviour:
   animator: {fileID: 0}
   sword: {fileID: 0}
   blockSword: {fileID: 0}
-  cooldownTime: 2
+  thirdPersonController: {fileID: 0}
   attackRange: 0.5
-  enemyLayers:
-    serializedVersion: 2
-    m_Bits: 128
   isBlocking: 0
   isExhausted: 0
+  isAttacking: 0
 --- !u!114 &2283120665022842698
 MonoBehaviour:
   m_ObjectHideFlags: 0

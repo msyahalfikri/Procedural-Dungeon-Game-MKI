@@ -20,12 +20,12 @@ MonoBehaviour:
   minIdleWaitTime: 3
   maxIdleWaitTime: 3
   deathAnimationWaitTime: 5
-  timeBetweenAttacks: 1.5
+  timeBetweenAttacks: 2
   heavyAttackCooldownMaxTime: 5
   normalAttackDamage: 5
   heavyAttackDamage: 10
-  blockTimer: 4
-  blockChanceInPercent: 30
+  blockTimer: 3
+  blockChanceInPercent: 15
   roarAnimationMaxTime: 2.5
   retreatSpeed: 6
   retreatDistance: 50

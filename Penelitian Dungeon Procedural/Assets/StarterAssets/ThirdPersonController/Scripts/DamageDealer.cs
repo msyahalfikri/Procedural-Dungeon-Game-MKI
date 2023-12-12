@@ -6,6 +6,7 @@ public class DamageDealer : MonoBehaviour
 {
     bool canDealDamage;
     public bool hitRegistered;
+    public bool AttackBlocked;
     List<GameObject> hasDealtDamage;
 
     [SerializeField] float weaponLength;
@@ -28,9 +29,10 @@ public class DamageDealer : MonoBehaviour
             if (Physics.Raycast(transform.position, -transform.up, out hit, weaponLength, layerMask))
             {
                 hitRegistered = true;
-                if (hit.transform.TryGetComponent(out AIHealth enemy) && !hasDealtDamage.Contains(hit.transform.gameObject))
+                if (hit.transform.TryGetComponent(out AIHealth enemyHealth) && !hasDealtDamage.Contains(hit.transform.gameObject) && hit.transform.TryGetComponent(out AIAgent enemyAgent))
                 {
-                    enemy.TakeDamage(weaponDamage);
+                    AttackBlocked = enemyAgent.isBlocking;
+                    enemyHealth.TakeDamage(weaponDamage);
                     hasDealtDamage.Add(hit.transform.gameObject);
                 }
             }

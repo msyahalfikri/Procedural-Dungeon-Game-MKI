@@ -20,14 +20,18 @@ public class PlayerSounds : MonoBehaviour
     }
     public void PlaySlashSound()
     {
-        int random;
-        if (playerDamageDealer.hitRegistered)
+        int random = 0;
+        if (playerDamageDealer.hitRegistered == true && playerDamageDealer.AttackBlocked == false)
         {
-            random = UnityEngine.Random.Range(0, 3);
+            random = UnityEngine.Random.Range(1, 3);
         }
-        else
+        else if (playerDamageDealer.hitRegistered == false)
         {
             random = UnityEngine.Random.Range(3, 10);
+        }
+        else if (playerDamageDealer.hitRegistered == true && playerDamageDealer.AttackBlocked == true)
+        {
+            random = 0;
         }
         audioSource.clip = audioClips[random];
         // If the enemy is walking and the walking sound is not already playing, play the sound

@@ -13,7 +13,7 @@ public class EBA_DeathState : AIState
     public void Enter(AIAgent agent)
     {
         animationWaitTime = agent.config.deathAnimationWaitTime;
-        agent.healthBar.gameObject.SetActive(false);
+        agent.healthBarAndEmotion.gameObject.SetActive(false);
         agent.bodyIK.enabled = false;
         agent.isDying = true;
     }
