@@ -20,6 +20,11 @@ public class PatrolState : AIState
 
     public void Update(AIAgent agent)
     {
+        if (agent.isTakingDamage)
+        {
+            agent.stateMachine.ChangeState(AIStateID.RoarState);
+        }
+
         // Patrolling
         if (!walkPointSet)
         {

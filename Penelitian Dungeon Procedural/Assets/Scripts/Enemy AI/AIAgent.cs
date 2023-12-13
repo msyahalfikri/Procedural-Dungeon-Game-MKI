@@ -29,11 +29,11 @@ public class AIAgent : MonoBehaviour
     [HideInInspector] public bool isInChaseRange;
     [HideInInspector] public bool turnedLeft, turnedRight, hasTurned;
     [HideInInspector] public bool isBlocking;
-    [HideInInspector] public bool TakingDamage;
+    [HideInInspector] public bool isTakingDamage;
     [HideInInspector] public bool isRoaring;
     [HideInInspector] public bool isCheering;
     [HideInInspector] public bool isPlayerDead;
-    [HideInInspector] public bool BlockNow;
+    [HideInInspector] public bool blockNow;
     public bool isEmotionBasedAgent;
 
 
@@ -69,7 +69,7 @@ public class AIAgent : MonoBehaviour
         }
 
         isPlayerDead = false;
-        BlockNow = false;
+        blockNow = false;
 
         stateMachine = new AIStateMachine(this);
 

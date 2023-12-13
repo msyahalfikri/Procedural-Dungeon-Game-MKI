@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class AIHealth : MonoBehaviour
@@ -25,6 +26,10 @@ public class AIHealth : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (agent.isTakingDamage)
+        {
+            StartCoroutine(resetTakingDamage());
+        }
     }
     public void TakeDamage(float amount)
     {
@@ -42,17 +47,18 @@ public class AIHealth : MonoBehaviour
                     healthBar.SetHealthBarPercentage(currentHealth / maxHealth);
                 }
 
-                agent.TakingDamage = true;
+                agent.isTakingDamage = true;
                 if (currentHealth <= 0.0f)
                 {
                     Die();
                 }
             }
+
         }
 
         if (agent.stateMachine.currentState == AIStateID.BlockingState || agent.stateMachine.currentState == AIStateID.EBA_BlockingState)
         {
-            agent.BlockNow = true;
+            agent.blockNow = true;
         }
     }
     public void Die()
@@ -68,5 +74,11 @@ public class AIHealth : MonoBehaviour
             agent.stateMachine.ChangeState(AIStateID.DeathState);
         }
 
+    }
+
+    IEnumerator resetTakingDamage()
+    {
+        yield return new WaitForEndOfFrame();
+        agent.isTakingDamage = false;
     }
 }

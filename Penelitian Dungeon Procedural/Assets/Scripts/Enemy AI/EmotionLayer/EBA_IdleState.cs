@@ -18,6 +18,11 @@ public class EBA_IdleState : AIState
     }
     public void Update(AIAgent agent)
     {
+        if (agent.isTakingDamage == true)
+        {
+            agent.stateMachine.ChangeState(AIStateID.EBA_RoarState);
+        }
+
         if (agent.sightSensor.playerIsInSight && agent.isPlayerDead == false)
         {
             agent.stateMachine.ChangeState(AIStateID.EBA_RoarState);

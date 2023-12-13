@@ -20,6 +20,10 @@ public class EBA_PatrolState : AIState
 
     public void Update(AIAgent agent)
     {
+        if (agent.isTakingDamage == true)
+        {
+            agent.stateMachine.ChangeState(AIStateID.EBA_RoarState);
+        }
         // Patrolling
         if (!walkPointSet)
         {

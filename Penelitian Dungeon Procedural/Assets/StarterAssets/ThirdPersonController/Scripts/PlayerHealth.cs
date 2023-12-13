@@ -11,7 +11,6 @@ public class PlayerHealth : MonoBehaviour
     [HideInInspector] public CombatController combatController;
     public bool TakingDamage;
     public bool playerIsDead = false;
-    public event EventHandler onPlayerDeath;
     // Start is called before the first frame update
     void Awake()
     {

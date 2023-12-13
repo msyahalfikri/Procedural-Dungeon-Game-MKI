@@ -72,9 +72,10 @@ public class AIEmotionSimulator : MonoBehaviour
         InterpretAndUpdateEmotion();
 
         // Debug.Log("Fear: " + DefuzzifyToFearCrispValue() +
-        // "|| Distance: " + Vector3.Distance(agent.transform.position, agent.playerTransform.transform.position) + "|| Health: " + aiHealth.currentHealth + "|| CurrentEmotion: " + currentEmotions);
+        // "|| Distance: " + Vector3.Distance(agent.transform.position, agent.playerTransform.transform.position) + "|| Health: " + aiHealth.currentHealth + "|| CurrentEmotion: " + currentEmotion);
         // Debug.Log("Fuzzy health: [" + ruleHighAnger + ", " + ruleMedAnger + ", " + ruleLowAnger + "] || Health: " + aiHealth.currentHealth);
         // Debug.Log(DefuzzifyToAngerCrispValue() + "|| Health: " + aiHealth.currentHealth);
+        // Debug.Log(DefuzzifyToDeterminationCrispValue() + "|| Health: " + playerHealth.currentHealth);
         Debug.Log("Anger: " + weightedAngerVal + "|| Fear: " + weightedFearVal + "|| Determination: " + weightedDeterminationVal + "|| CurrentEmotion: " + currentEmotion);
     }
 
@@ -119,14 +120,13 @@ public class AIEmotionSimulator : MonoBehaviour
     void CalculateDistanceMembership(float distance)
     {
         float closeMean = 5f;
-        float mediumMean = 12.5f;
+        float mediumMean = 15f;
         float farMean = 25f;
-        float standardDeviation = 10f; // Adjust this for the width of the curve
+        float standardDeviation = 3f; // Adjust this for the width of the curve
 
         playerCloseMembership = GaussianMembership(distance, closeMean, standardDeviation);
         playerMediumMembership = GaussianMembership(distance, mediumMean, standardDeviation);
         playerFarMembership = GaussianMembership(distance, farMean, standardDeviation);
-
         // Debug.Log("Distance: " + distance + "|| Close: " + playerCloseMembership + " || Medium: " + playerMediumMembership + "|| far: " + playerFarMembership);
     }
 
@@ -139,7 +139,7 @@ public class AIEmotionSimulator : MonoBehaviour
 
         enemyLowHealthMembership = TriangularMembership(health, lowLimit, lowLimit, mediumLimit);
         enemyMediumHealthMembership = TriangularMembership(health, lowLimit, mediumLimit, highLimit);
-        enemyHighHealthMembership = TriangularMembership(health, mediumLimit, highLimit, highLimit + 30f); // Adjust upper limit
+        enemyHighHealthMembership = TriangularMembership(health, mediumLimit, highLimit, highLimit); // Adjust upper limit
         // Debug.Log("HP: " + health + "|| LowMem: " + enemyLowHealthMembership + " || MedMem: " + enemyMediumHealthMembership + "|| HighMem: " + enemyHighHealthMembership);
     }
 
@@ -152,7 +152,7 @@ public class AIEmotionSimulator : MonoBehaviour
 
         playerLowHealthMembership = TriangularMembership(health, lowLimit, lowLimit, mediumLimit);
         playerMediumHealthMembership = TriangularMembership(health, lowLimit, mediumLimit, highLimit);
-        playerHighHealthMembership = TriangularMembership(health, mediumLimit, highLimit, highLimit + 30f); // Adjust upper limit
+        playerHighHealthMembership = TriangularMembership(health, mediumLimit, highLimit, highLimit); // Adjust upper limit
         // Debug.Log("HP: " + health + "|| LowMem: " + playerLowHealthMembership + " || MedMem: " + playerMediumHealthMembership + "|| HighMem: " + playerHighHealthMembership);
     }
 
@@ -201,16 +201,16 @@ public class AIEmotionSimulator : MonoBehaviour
     public void InferenceEngineDetermineEmotion(float healthLevel, float maxHealth)
     {
         CalculatePlayerHealthMembership(healthLevel, maxHealth);
-        float determinationValue = 0f;
+        float fearValue = 0f;
 
         // Rule 1: If Player has "Low" health THEN Determination is "High"
-        ruleHighDetermination = Mathf.Max(determinationValue, playerLowHealthMembership);
+        ruleHighDetermination = Mathf.Max(fearValue, playerLowHealthMembership);
 
         // Rule 2: If Player has "Medium" health THEN Determination is "Medium"
-        ruleMedDetermination = Mathf.Max(determinationValue, playerMediumHealthMembership);
+        ruleMedDetermination = Mathf.Max(fearValue, playerMediumHealthMembership);
 
         // Rule 3: If Player has "High" health THEN Determination is "Low"
-        ruleLowDetermination = Mathf.Max(determinationValue, playerHighHealthMembership);
+        ruleLowDetermination = Mathf.Max(fearValue, playerHighHealthMembership);
     }
 
     //--------Defuzzification using Centroid Method---------

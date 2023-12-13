@@ -18,6 +18,11 @@ public class IdleState : AIState
     }
     public void Update(AIAgent agent)
     {
+        if (agent.isTakingDamage)
+        {
+            agent.stateMachine.ChangeState(AIStateID.RoarState);
+        }
+
         if (agent.sightSensor.playerIsInSight && agent.isPlayerDead == false)
         {
             agent.stateMachine.ChangeState(AIStateID.RoarState);

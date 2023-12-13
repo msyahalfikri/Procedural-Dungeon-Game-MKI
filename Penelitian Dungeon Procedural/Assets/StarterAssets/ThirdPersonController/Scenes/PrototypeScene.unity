@@ -944,11 +944,11 @@ MonoBehaviour:
   turnedRight: 0
   hasTurned: 0
   isBlocking: 0
-  TakingDamage: 0
+  isTakingDamage: 0
   isRoaring: 0
   isCheering: 0
   isPlayerDead: 0
-  BlockNow: 0
+  blockNow: 0
   isEmotionBasedAgent: 0
   PlayerLayer:
     serializedVersion: 2

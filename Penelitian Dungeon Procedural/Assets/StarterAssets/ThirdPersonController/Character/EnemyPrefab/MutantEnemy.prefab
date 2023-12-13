@@ -1479,11 +1479,11 @@ MonoBehaviour:
   turnedRight: 0
   hasTurned: 0
   isBlocking: 0
-  TakingDamage: 0
+  isTakingDamage: 0
   isRoaring: 0
   isCheering: 0
   isPlayerDead: 0
-  BlockNow: 0
+  blockNow: 0
   isEmotionBasedAgent: 0
   PlayerLayer:
     serializedVersion: 2
@@ -1652,9 +1652,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentEmotion: 0
-  angerSensitivity: 1
-  fearSensitivity: 0.2
-  determinationSensitivity: 0.2
+  angerSensitivity: 0
+  fearSensitivity: 0
+  determinationSensitivity: 1
 --- !u!114 &8718369417258951641
 MonoBehaviour:
   m_ObjectHideFlags: 0

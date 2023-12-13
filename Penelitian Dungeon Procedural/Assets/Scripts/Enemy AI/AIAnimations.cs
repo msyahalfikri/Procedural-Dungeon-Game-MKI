@@ -44,7 +44,7 @@ public class AIAnimations : MonoBehaviour
         animator.SetBool("AlreadyAttacked", agent.alreadyAttacked);
         animator.SetBool("IsBlocking", agent.isBlocking);
 
-        if (agent.BlockNow)
+        if (agent.blockNow)
         {
             animator.SetLayerWeight(1, 1f);
             StartCoroutine(BlockPoseHold());
@@ -54,17 +54,16 @@ public class AIAnimations : MonoBehaviour
             animator.SetLayerWeight(1, 0f);
         }
 
-        if (agent.TakingDamage)
+        if (agent.isTakingDamage)
         {
             animator.SetTrigger("TakeDamage");
-            agent.TakingDamage = false;
         }
         animator.SetBool("IsRoaring", agent.isRoaring);
 
         IEnumerator BlockPoseHold()
         {
             yield return new WaitForSeconds(0.5f);
-            agent.BlockNow = false;
+            agent.blockNow = false;
         }
     }
 }
