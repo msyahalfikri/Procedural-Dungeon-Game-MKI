@@ -12,6 +12,10 @@ namespace DungeonLiberation
         CameraHandler cameraHandler;
         PlayerLocomotion playerLocomotion;
 
+        InteractableUI interactableUI;
+        public GameObject interactableUIGameObject;
+        public GameObject itemInteractableGameObject;
+
         public bool isInteracting;
 
         [Header("Player Flags")]
@@ -24,6 +28,8 @@ namespace DungeonLiberation
             inputHandler = GetComponent<InputHandler>();
             anim = GetComponentInChildren<Animator>();
             playerLocomotion = GetComponent<PlayerLocomotion>();
+            interactableUI = FindObjectOfType<InteractableUI>();
+
             cameraHandler = CameraHandler.singleton;
 
             if (cameraHandler != null )
@@ -37,11 +43,13 @@ namespace DungeonLiberation
             float delta = Time.deltaTime;
             isInteracting = anim.GetBool("isInteracting");
             canDoCombo = anim.GetBool("canDoCombo");
+            anim.SetBool("isInAir", isAirborne);
 
             inputHandler.TickInput(delta);
             playerLocomotion.HandleMovement(delta);
             playerLocomotion.HandleRollingAndSprinting(delta);
             playerLocomotion.HandleFalling(delta, playerLocomotion.moveDirection);
+            playerLocomotion.HandleJumping();
 
             CheckForInteractables();
         }
@@ -63,11 +71,13 @@ namespace DungeonLiberation
             inputHandler.sprintFlag = false;
             inputHandler.skill_input = false;
             inputHandler.ulti_input = false;
+            inputHandler.jump_input = false;
+            inputHandler.interact_input = false;
+            inputHandler.inventory_input = false;
             inputHandler.slot1_input = false;
             inputHandler.slot2_input = false;
             inputHandler.slot3_input = false;
             inputHandler.slot4_input = false;
-            inputHandler.interact_input = false;
 
             if (isAirborne)
             {
@@ -79,9 +89,9 @@ namespace DungeonLiberation
         {
             RaycastHit hit;
             Vector3 rayOrigin = transform.position;
-            rayOrigin.y = rayOrigin.y + 2f;
+            rayOrigin.y += 2f;
 
-            if (Physics.SphereCast(transform.position, 0.3f, transform.forward, out hit, 1f, cameraHandler.ignoreLayers) || Physics.SphereCast(rayOrigin, 0.3f, Vector3.down, out hit, 2.5f, cameraHandler.ignoreLayers))
+            if (Physics.SphereCast(transform.position, 0.1f, transform.forward, out hit, 1f) || Physics.SphereCast(rayOrigin, 0.3f, Vector3.down, out hit, 2.5f))
             {
                 if (hit.collider.tag == "Interactable")
                 {
@@ -90,14 +100,26 @@ namespace DungeonLiberation
                     if (interactableObject != null)
                     {
                         string interactableText = interactableObject.interactableText;
-
-                        //setup ui text
+                        interactableUI.interactableText.text = interactableText;
+                        interactableUIGameObject.SetActive(true);
 
                         if (inputHandler.interact_input)
                         {
                             hit.collider.GetComponent<Interactables>().Interact(this);
                         }
                     }
+                }
+            }
+            else
+            {
+                if (interactableUIGameObject != null)
+                {
+                    interactableUIGameObject.SetActive(false);
+                }
+
+                if (itemInteractableGameObject != null && inputHandler.interact_input)
+                {
+                    itemInteractableGameObject.SetActive(false);
                 }
             }
         }

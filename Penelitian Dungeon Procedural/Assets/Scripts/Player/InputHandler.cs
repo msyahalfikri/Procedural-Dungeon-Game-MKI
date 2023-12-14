@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace DungeonLiberation
 {
@@ -16,21 +17,26 @@ namespace DungeonLiberation
         public bool dash_input;
         public bool skill_input;
         public bool ulti_input;
+        public bool jump_input;
+        public bool interact_input;
+        public bool inventory_input;
+
         public bool slot1_input;
         public bool slot2_input;
         public bool slot3_input;
         public bool slot4_input;
-        public bool interact_input;
 
         public bool rollFlag;
         public bool sprintFlag;
         public bool comboFlag;
+        public bool inventoryFlag;
         public float rollInputTimer;
 
         PlayerControls inputActions;
         PlayerAttacker playerAttacker;
         PlayerInventory playerInventory;
         PlayerManager playerManager;
+        UIManager uiManager;
 
         Vector2 movementInput;
         Vector2 cameraInput;
@@ -40,6 +46,7 @@ namespace DungeonLiberation
             playerAttacker = GetComponent<PlayerAttacker>();
             playerInventory = GetComponent<PlayerInventory>();
             playerManager = GetComponent<PlayerManager>();
+            uiManager = FindObjectOfType<UIManager>();
         }
 
         public void OnEnable()
@@ -66,6 +73,8 @@ namespace DungeonLiberation
             HandleAttackInput(delta);
             HandleQuickSlotInput();
             HandleInteractInput();
+            HandleJumpInput();
+            HandleInventoryInput();
         }
         private void MoveInput(float delta)
         {
@@ -128,7 +137,6 @@ namespace DungeonLiberation
                 playerAttacker.HandleHeavyAttack(playerInventory.rightWeapon);
             }
         }
-
         private void HandleQuickSlotInput()
         {
             inputActions.PlayerQuickSlots.Slot1.performed += i => slot1_input = true;
@@ -143,11 +151,33 @@ namespace DungeonLiberation
                 playerInventory.ChangeLeftWeapon();
             }
         }
-
         private void HandleInteractInput()
         {
             inputActions.PlayerActions.Interact.performed += i => interact_input = true;
 
+        }
+        private void HandleJumpInput()
+        {
+            inputActions.PlayerActions.Jump.performed += i => jump_input = true;
+        }
+        private void HandleInventoryInput()
+        {
+            inputActions.PlayerActions.Inventory.performed += i => inventory_input = true;
+
+            if (inventory_input)
+            {
+                inventoryFlag = !inventoryFlag;
+
+                if (inventoryFlag)
+                {
+                    uiManager.OpenSelectWindow();
+                }
+
+                if (!inventoryFlag)
+                {
+                    uiManager.CloseSelectWindow();
+                }
+            }
         }
     }
 }
