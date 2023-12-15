@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace DungeonLiberation
 {
@@ -29,6 +30,9 @@ namespace DungeonLiberation
             playerLocomotion.rigidbody.velocity = Vector3.zero; //stop moving while pickup
             animatorHandler.PlayTargetAnimation("Pick Up Item", true); //play looting animation
             playerInventory.weaponsInventory.Add(weapon);
+            playerManager.itemInteractableGameObject.GetComponentInChildren<Text>().text = weapon.itemName;
+            playerManager.itemInteractableGameObject.GetComponentInChildren<RawImage>().texture = weapon.itemIcon.texture;
+            playerManager.itemInteractableGameObject.SetActive(true);
 
             Destroy(gameObject);
         }
