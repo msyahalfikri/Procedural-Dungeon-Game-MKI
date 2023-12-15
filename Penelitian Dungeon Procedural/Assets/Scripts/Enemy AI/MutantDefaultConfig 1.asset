@@ -23,7 +23,7 @@ MonoBehaviour:
   timeBetweenAttacks: 2
   heavyAttackCooldownMaxTime: 5
   normalAttackDamage: 5
-  heavyAttackDamage: 5
+  heavyAttackDamage: 10
   blockTimer: 3
   blockChanceInPercent: 15
   roarAnimationMaxTime: 2.5

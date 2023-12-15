@@ -23,7 +23,7 @@ public class EmotionsToActionController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if ((agent.stateMachine.currentState == AIStateID.EBA_AttackState || agent.stateMachine.currentState == AIStateID.EBA_BlockingState) && emotionSimulator.currentEmotion == AIEmotionTypes.Terrified)
+        if ((agent.stateMachine.currentState == AIStateID.EBA_AttackState && emotionSimulator.currentEmotion == AIEmotionTypes.Terrified) || (agent.stateMachine.currentState == AIStateID.EBA_BlockingState && emotionSimulator.currentEmotion == AIEmotionTypes.Terrified))
         {
             agent.stateMachine.ChangeState(AIStateID.EBA_FleeState);
         }

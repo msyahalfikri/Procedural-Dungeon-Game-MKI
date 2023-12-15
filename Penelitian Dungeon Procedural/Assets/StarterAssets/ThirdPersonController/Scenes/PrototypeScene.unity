@@ -1905,6 +1905,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4232238060508736748, guid: 64dce48905ffd9b4293e595fa6941544, type: 3}
+      propertyPath: weaponDamage
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 4416926081852918481, guid: 64dce48905ffd9b4293e595fa6941544, type: 3}
       propertyPath: m_Name
       value: PlayerArmature
@@ -3143,6 +3147,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3116481762849713890, guid: 266a7555e7bbf434d8018e94ec07e7c2, type: 3}
+      propertyPath: fearSensitivity
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3116481762849713890, guid: 266a7555e7bbf434d8018e94ec07e7c2, type: 3}
+      propertyPath: angerSensitivity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3116481762849713890, guid: 266a7555e7bbf434d8018e94ec07e7c2, type: 3}
+      propertyPath: determinationSensitivity
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 4490248071770543586, guid: 266a7555e7bbf434d8018e94ec07e7c2, type: 3}
       propertyPath: m_Name
       value: MutantEnemy
