@@ -56,6 +56,14 @@ namespace DungeonLiberation
                 inputActions = new PlayerControls();
                 inputActions.PlayerMovement.Movement.performed += inputActions => movementInput = inputActions.ReadValue<Vector2>();
                 inputActions.PlayerMovement.Camera.performed += i => cameraInput = i.ReadValue<Vector2>();
+
+                inputActions.PlayerActions.Skill.performed += i => skill_input = true;
+                inputActions.PlayerActions.Ultimate.performed += i => ulti_input = true;
+                inputActions.PlayerQuickSlots.Slot1.performed += i => slot1_input = true;
+                inputActions.PlayerQuickSlots.Slot2.performed += i => slot2_input = true;
+                inputActions.PlayerActions.Interact.performed += i => interact_input = true;
+                inputActions.PlayerActions.Jump.performed += i => jump_input = true;
+                inputActions.PlayerActions.Inventory.performed += i => inventory_input = true;
             }
 
             inputActions.Enable();
@@ -72,8 +80,6 @@ namespace DungeonLiberation
             HandleRollInput(delta);
             HandleAttackInput(delta);
             HandleQuickSlotInput();
-            HandleInteractInput();
-            HandleJumpInput();
             HandleInventoryInput();
         }
         private void MoveInput(float delta)
@@ -87,15 +93,15 @@ namespace DungeonLiberation
         private void HandleRollInput(float delta)
         {
             dash_input = inputActions.PlayerActions.Roll.IsPressed();
+            sprintFlag = dash_input;
 
             if (dash_input)
             {
                 rollInputTimer += delta;
-                sprintFlag = true;
             }
             else
             {
-                if (rollInputTimer > 0 && rollInputTimer < 0.5f)
+                if (rollInputTimer > 0 && rollInputTimer < 0.3f)
                 {
                     sprintFlag = false;
                     rollFlag = true;
@@ -106,9 +112,6 @@ namespace DungeonLiberation
         }
         private void HandleAttackInput(float delta)
         {
-            inputActions.PlayerActions.Skill.performed += i => skill_input = true;
-            inputActions.PlayerActions.Ultimate.performed += i => ulti_input = true;
-
             if (skill_input)
             {
                 if (playerManager.canDoCombo)
@@ -139,9 +142,6 @@ namespace DungeonLiberation
         }
         private void HandleQuickSlotInput()
         {
-            inputActions.PlayerQuickSlots.Slot1.performed += i => slot1_input = true;
-            inputActions.PlayerQuickSlots.Slot2.performed += i => slot2_input = true;
-
             if (slot1_input)
             {
                 playerInventory.ChangeRightWeapon();
@@ -151,19 +151,8 @@ namespace DungeonLiberation
                 playerInventory.ChangeLeftWeapon();
             }
         }
-        private void HandleInteractInput()
-        {
-            inputActions.PlayerActions.Interact.performed += i => interact_input = true;
-
-        }
-        private void HandleJumpInput()
-        {
-            inputActions.PlayerActions.Jump.performed += i => jump_input = true;
-        }
         private void HandleInventoryInput()
         {
-            inputActions.PlayerActions.Inventory.performed += i => inventory_input = true;
-
             if (inventory_input)
             {
                 inventoryFlag = !inventoryFlag;
@@ -171,11 +160,16 @@ namespace DungeonLiberation
                 if (inventoryFlag)
                 {
                     uiManager.OpenSelectWindow();
+                    Cursor.visible = true;
+                    uiManager.UpdateUI();
+                    uiManager.hudWindow.SetActive(false);
                 }
 
                 if (!inventoryFlag)
                 {
                     uiManager.CloseSelectWindow();
+                    uiManager.CloseAllInventoryWindows();
+                    uiManager.hudWindow.SetActive(true);
                 }
             }
         }
