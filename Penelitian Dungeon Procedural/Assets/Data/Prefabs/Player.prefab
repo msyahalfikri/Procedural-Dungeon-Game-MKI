@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5625710366742204646
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2177431482602161961}
+  m_Layer: 10
+  m_Name: Lock On Transform
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2177431482602161961
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5625710366742204646}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3521475291055809292}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6904011030364105569
 GameObject:
   m_ObjectHideFlags: 0
@@ -38,6 +69,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8116891084328419256}
+  - {fileID: 2177431482602161961}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &42241074891145560
@@ -87,7 +119,7 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!114 &7115146046980248879
@@ -110,6 +142,9 @@ MonoBehaviour:
   dash_input: 0
   skill_input: 0
   ulti_input: 0
+  jump_input: 0
+  interact_input: 0
+  inventory_input: 0
   slot1_input: 0
   slot2_input: 0
   slot3_input: 0
@@ -117,6 +152,7 @@ MonoBehaviour:
   rollFlag: 0
   sprintFlag: 0
   comboFlag: 0
+  inventoryFlag: 0
   rollInputTimer: 0
 --- !u!114 &2410491851011699992
 MonoBehaviour:
@@ -143,7 +179,7 @@ MonoBehaviour:
   walkSpeed: 1
   sprintSpeed: 8
   rotationSpeed: 15
-  fallSpeed: 80
+  fallSpeed: 500
 --- !u!114 &2573679174180619238
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -156,6 +192,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96f555113b35c98419b5b19f181f63aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lockOnTransform: {fileID: 2177431482602161961}
+  interactableUIGameObject: {fileID: 0}
+  itemInteractableGameObject: {fileID: 0}
   isInteracting: 0
   isSprinting: 0
   isAirborne: 0
@@ -179,11 +218,14 @@ MonoBehaviour:
   weaponsInRightHandSlots:
   - {fileID: 11400000, guid: 00540e159447671448b32685f6041c9d, type: 2}
   - {fileID: 11400000, guid: 77a551eb3d87bc349b3b62fbff750024, type: 2}
+  - {fileID: 11400000, guid: 8da512e2742682c42bac2c67c9161296, type: 2}
   weaponsInLeftHandSlots:
   - {fileID: 11400000, guid: 00540e159447671448b32685f6041c9d, type: 2}
   - {fileID: 11400000, guid: 77a551eb3d87bc349b3b62fbff750024, type: 2}
+  - {fileID: 11400000, guid: 8da512e2742682c42bac2c67c9161296, type: 2}
   currentRightWeaponIndex: 0
   currentLeftWeaponIndex: 0
+  weaponsInventory: []
 --- !u!114 &758156751717872969
 MonoBehaviour:
   m_ObjectHideFlags: 0

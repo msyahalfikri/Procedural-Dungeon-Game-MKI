@@ -20,6 +20,10 @@ namespace DungeonLiberation
         public bool jump_input;
         public bool interact_input;
         public bool inventory_input;
+        public bool lockOn_input;
+
+        public bool lockLeftTarget_input;
+        public bool lockRightTarget_input;
 
         public bool slot1_input;
         public bool slot2_input;
@@ -29,6 +33,7 @@ namespace DungeonLiberation
         public bool rollFlag;
         public bool sprintFlag;
         public bool comboFlag;
+        public bool lockOnFlag;
         public bool inventoryFlag;
         public float rollInputTimer;
 
@@ -36,6 +41,7 @@ namespace DungeonLiberation
         PlayerAttacker playerAttacker;
         PlayerInventory playerInventory;
         PlayerManager playerManager;
+        CameraHandler cameraHandler;
         UIManager uiManager;
 
         Vector2 movementInput;
@@ -47,6 +53,7 @@ namespace DungeonLiberation
             playerInventory = GetComponent<PlayerInventory>();
             playerManager = GetComponent<PlayerManager>();
             uiManager = FindObjectOfType<UIManager>();
+            cameraHandler = FindObjectOfType<CameraHandler>();
         }
 
         public void OnEnable()
@@ -64,6 +71,9 @@ namespace DungeonLiberation
                 inputActions.PlayerActions.Interact.performed += i => interact_input = true;
                 inputActions.PlayerActions.Jump.performed += i => jump_input = true;
                 inputActions.PlayerActions.Inventory.performed += i => inventory_input = true;
+                inputActions.PlayerActions.LockOn.performed += i => lockOn_input = true;
+                inputActions.PlayerMovement.LockOnTargetLeft.performed += i => lockLeftTarget_input = true;
+                inputActions.PlayerMovement.LockOnTargetRight.performed += i => lockRightTarget_input = true;
             }
 
             inputActions.Enable();
@@ -81,7 +91,9 @@ namespace DungeonLiberation
             HandleAttackInput(delta);
             HandleQuickSlotInput();
             HandleInventoryInput();
+            HandleLockOnInput();
         }
+
         private void MoveInput(float delta)
         {
             horizontal = movementInput.x;
@@ -90,6 +102,7 @@ namespace DungeonLiberation
             mouseX = cameraInput.x;
             mouseY = cameraInput.y;
         }
+
         private void HandleRollInput(float delta)
         {
             dash_input = inputActions.PlayerActions.Roll.IsPressed();
@@ -110,6 +123,7 @@ namespace DungeonLiberation
                 rollInputTimer = 0;
             }
         }
+
         private void HandleAttackInput(float delta)
         {
             if (skill_input)
@@ -140,6 +154,7 @@ namespace DungeonLiberation
                 playerAttacker.HandleHeavyAttack(playerInventory.rightWeapon);
             }
         }
+
         private void HandleQuickSlotInput()
         {
             if (slot1_input)
@@ -151,6 +166,7 @@ namespace DungeonLiberation
                 playerInventory.ChangeLeftWeapon();
             }
         }
+
         private void HandleInventoryInput()
         {
             if (inventory_input)
@@ -170,6 +186,50 @@ namespace DungeonLiberation
                     uiManager.CloseSelectWindow();
                     uiManager.CloseAllInventoryWindows();
                     uiManager.hudWindow.SetActive(true);
+                }
+            }
+        }
+
+        private void HandleLockOnInput()
+        {
+            if (lockOn_input && lockOnFlag == false)
+            {
+                cameraHandler.ClearLockOnTargets();
+                lockOn_input = false;
+                cameraHandler.HandleLockOn();
+
+                if (cameraHandler.nearestLockOnTarget != null)
+                {
+                    cameraHandler.currentLockOnTarget = cameraHandler.nearestLockOnTarget;
+                    lockOnFlag = true;
+                }
+            }
+            else if (lockOn_input && lockOnFlag)
+            {
+                lockOn_input = false;
+                lockOnFlag = false;
+                cameraHandler.ClearLockOnTargets();
+            }
+
+            if (lockOnFlag && lockLeftTarget_input)
+            {
+                lockLeftTarget_input = false;
+                cameraHandler.HandleLockOn();
+
+                if (cameraHandler.leftLockOnTarget != null)
+                {
+                    cameraHandler.currentLockOnTarget = cameraHandler.leftLockOnTarget;
+                }
+            }
+
+            if (lockOnFlag && lockRightTarget_input)
+            {
+                lockRightTarget_input = false;
+                cameraHandler.HandleLockOn();
+
+                if (cameraHandler.rightLockOnTarget != null)
+                {
+                    cameraHandler.currentLockOnTarget = cameraHandler.rightLockOnTarget;
                 }
             }
         }
