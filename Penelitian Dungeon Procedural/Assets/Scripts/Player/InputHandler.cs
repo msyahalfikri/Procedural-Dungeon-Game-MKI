@@ -86,7 +86,7 @@ namespace DungeonLiberation
 
         public void TickInput(float delta)
         {
-            MoveInput(delta);
+            HandleMoveInput(delta);
             HandleRollInput(delta);
             HandleAttackInput(delta);
             HandleQuickSlotInput();
@@ -94,7 +94,7 @@ namespace DungeonLiberation
             HandleLockOnInput();
         }
 
-        private void MoveInput(float delta)
+        private void HandleMoveInput(float delta)
         {
             horizontal = movementInput.x;
             vertical = movementInput.y;
@@ -232,6 +232,8 @@ namespace DungeonLiberation
                     cameraHandler.currentLockOnTarget = cameraHandler.rightLockOnTarget;
                 }
             }
+
+            cameraHandler.SetCameraHeight();
         }
     }
 }

@@ -13,11 +13,10 @@ namespace DungeonLiberation
         public bool leftHandSlot02Selected;
         public bool leftHandSlot03Selected;
 
-        HandEquipmentSlotUI[] handEquipmentSlotUI;
+        public HandEquipmentSlotUI[] handEquipmentSlotUI;
 
         private void Start()
         {
-            handEquipmentSlotUI = GetComponentsInChildren<HandEquipmentSlotUI>();
         }
 
         public void LoadWeaponOnEquipmentScreen(PlayerInventory playerInventory)

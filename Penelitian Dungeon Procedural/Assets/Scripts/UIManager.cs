@@ -7,12 +7,21 @@ namespace DungeonLiberation
     public class UIManager : MonoBehaviour
     {
         public PlayerInventory playerInventory;
-        EquipmentWindowUI equipmentWindowUI;
+        public EquipmentWindowUI equipmentWindowUI;
 
         [Header("UI Windows")]
         public GameObject selectWindow;
         public GameObject hudWindow;
+        public GameObject equipmentScreenWindow;
         public GameObject weaponInventoryWindow;
+
+        [Header("Equipment Window Slot Selected")]
+        public bool rightHandSlot01Selected;
+        public bool rightHandSlot02Selected;
+        public bool rightHandSlot03Selected;
+        public bool leftHandSlot01Selected;
+        public bool leftHandSlot02Selected;
+        public bool leftHandSlot03Selected;
 
         [Header("Weapon Inventory")]
         public GameObject weaponInventorySlotPrefab;
@@ -21,7 +30,6 @@ namespace DungeonLiberation
 
         private void Awake()
         {
-            equipmentWindowUI = FindObjectOfType<EquipmentWindowUI>();
         }
 
         private void Start()
@@ -56,13 +64,27 @@ namespace DungeonLiberation
         {
             selectWindow.SetActive(true);
         }
+
         public void CloseSelectWindow()
         {
             selectWindow.SetActive(false);
         }
+
         public void CloseAllInventoryWindows()
         {
+            ResetAllSelectedSlots();
             weaponInventoryWindow.SetActive(false);
+            equipmentScreenWindow.SetActive(false);
+        }
+
+        public void ResetAllSelectedSlots()
+        {
+            rightHandSlot01Selected = false;
+            rightHandSlot02Selected = false;
+            rightHandSlot03Selected = false;
+            leftHandSlot01Selected = false;
+            leftHandSlot02Selected = false;
+            leftHandSlot03Selected = false;
         }
     }
 }
