@@ -13,10 +13,8 @@ namespace DungeonLiberation
 
         public bool rightHandSlot01;
         public bool rightHandSlot02;
-        public bool rightHandSlot03;
         public bool leftHandSlot01;
         public bool leftHandSlot02;
-        public bool leftHandSlot03;
 
         private void Awake()
         {
@@ -49,10 +47,6 @@ namespace DungeonLiberation
             {
                 uiManager.rightHandSlot02Selected = true;
             }
-            else if (rightHandSlot03)
-            {
-                uiManager.rightHandSlot03Selected = true;
-            }
             else if (leftHandSlot01)
             {
                 uiManager.leftHandSlot01Selected = true;
@@ -60,10 +54,6 @@ namespace DungeonLiberation
             else if (leftHandSlot02)
             {
                 uiManager.leftHandSlot02Selected = true;
-            }
-            else if (leftHandSlot03)
-            {
-                uiManager.leftHandSlot03Selected = true;
             }
         }
     }

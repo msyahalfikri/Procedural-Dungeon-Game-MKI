@@ -44,18 +44,11 @@ namespace DungeonLiberation
                 playerInventory.weaponsInventory.Add(playerInventory.weaponsInRightHandSlots[0]);
                 playerInventory.weaponsInRightHandSlots[0] = item;
                 playerInventory.weaponsInventory.Remove(item);
-                playerInventory.rightWeapon = playerInventory.weaponsInRightHandSlots[playerInventory.currentRightWeaponIndex];
             }
             else if (uiManager.rightHandSlot02Selected)
             {
                 playerInventory.weaponsInventory.Add(playerInventory.weaponsInRightHandSlots[1]);
                 playerInventory.weaponsInRightHandSlots[1] = item;
-                playerInventory.weaponsInventory.Remove(item);
-            }
-            else if (uiManager.rightHandSlot03Selected)
-            {
-                playerInventory.weaponsInventory.Add(playerInventory.weaponsInRightHandSlots[2]);
-                playerInventory.weaponsInRightHandSlots[2] = item;
                 playerInventory.weaponsInventory.Remove(item);
             }
             else if (uiManager.leftHandSlot01Selected)
@@ -68,12 +61,6 @@ namespace DungeonLiberation
             {
                 playerInventory.weaponsInventory.Add(playerInventory.weaponsInLeftHandSlots[1]);
                 playerInventory.weaponsInLeftHandSlots[1] = item;
-                playerInventory.weaponsInventory.Remove(item);
-            }
-            else if (uiManager.leftHandSlot03Selected)
-            {
-                playerInventory.weaponsInventory.Add(playerInventory.weaponsInLeftHandSlots[2]);
-                playerInventory.weaponsInLeftHandSlots[2] = item;
                 playerInventory.weaponsInventory.Remove(item);
             }
             else
