@@ -7,11 +7,11 @@ using Unity.VisualScripting;
 
 public class EventUIHandler : MonoBehaviour
 {
-    public GameObject GameOverUI;
-    public Image gameOverBackground;
-    public GameObject gameOverForeground;
-    public TextMeshProUGUI gameOverText;
-    public CanvasGroup restartAndMainMenuButtons;
+    public GameObject gameOverBackground;
+    public CanvasGroup gameOverCanvasGroup;
+    // public GameObject gameOverForeground;
+    // public TextMeshProUGUI gameOverText;
+    // public CanvasGroup restartAndMainMenuButtons;
 
 
     private void Start()
@@ -21,21 +21,23 @@ public class EventUIHandler : MonoBehaviour
 
     public void SetGameOverScreen(bool playerIsDead)
     {
-        GameOverUI.SetActive(true);
-        FadeInGameOver(gameOverBackground, 3.0f);
+        gameOverBackground.SetActive(true);
+        StartCoroutine(FadeInGameOver(gameOverCanvasGroup, 2.0f));
     }
 
-    IEnumerator FadeInGameOver(Image imageToChange, float fadeDuration)
+    IEnumerator FadeInGameOver(CanvasGroup canvasToChange, float fadeDuration)
     {
         yield return new WaitForSeconds(2.0f);
-        float elapsedTime = 0f;
-        Color imageAlpha = imageToChange.color;
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
 
+        float elapsedTime = 0f;
         while (elapsedTime < fadeDuration)
         {
             elapsedTime += Time.deltaTime;
-            imageAlpha.a = Mathf.Clamp01(elapsedTime / fadeDuration);
-            imageToChange.color = imageAlpha;
+            float alpha = Mathf.Clamp01(elapsedTime / fadeDuration);
+            canvasToChange.alpha = alpha;
+            yield return null; // Wait for the next frame
         }
     }
 

@@ -40,6 +40,6 @@ public class PlayerHealth : MonoBehaviour
     public void PlayerIsDead()
     {
         playerIsDead = true;
-        combatController.animator.SetBool("IsDead", playerIsDead);
+        combatController.animator.SetBool("PlayerIsDead", playerIsDead);
     }
 }

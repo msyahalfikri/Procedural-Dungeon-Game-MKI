@@ -31,6 +31,12 @@ public class AIEmotionSimulator : MonoBehaviour
     float playerMediumHealthMembership;
     float playerHighHealthMembership;
 
+    //Fuzzy Values: Player's Heath Point
+    float enemyLowAngerMembership;
+    float enemyMediumAngerMembership;
+    float enemyHighAngerMembership;
+
+
     //Inference Rules for: Fear Emotion
     float ruleLowFear1;
     float ruleLowFear2;
@@ -69,6 +75,7 @@ public class AIEmotionSimulator : MonoBehaviour
         CalculatePlayerHealthMembership(playerHealth.currentHealth, playerHealth.maxHealth);
         CalculateDistanceMembership(Vector3.Distance(agent.transform.position, agent.playerTransform.transform.position));
 
+
         InferenceEngineFearEmotion();
         InferenceEngineAngerEmotion();
         InferenceEngineDetermineEmotion();
@@ -78,7 +85,7 @@ public class AIEmotionSimulator : MonoBehaviour
         // Debug.Log("Fear: " + DefuzzifyToFearCrispValue() +
         // "|| Distance: " + Vector3.Distance(agent.transform.position, agent.playerTransform.transform.position) + "|| Health: " + aiHealth.currentHealth + "|| CurrentEmotion: " + currentEmotion);
         // Debug.Log("Fuzzy health: [" + ruleHighAnger + ", " + ruleMedAnger + ", " + ruleLowAnger + "] || Health: " + aiHealth.currentHealth);
-        Debug.Log(DefuzzifyToAngerCrispValue() + "|| Health: " + aiHealth.currentHealth + " ||Max: " + aiHealth.maxHealth);
+        // Debug.Log(DefuzzifyToAngerCrispValue() + "|| Health: " + aiHealth.currentHealth + " ||Max: " + aiHealth.maxHealth);
         // Debug.Log(DefuzzifyToDeterminationCrispValue() + "|| Health: " + playerHealth.currentHealth);
         // Debug.Log("Anger: " + weightedAngerVal + "|| Fear: " + weightedFearVal + "|| Determination: " + weightedDeterminationVal + "|| CurrentEmotion: " + currentEmotion);
     }
@@ -137,9 +144,10 @@ public class AIEmotionSimulator : MonoBehaviour
     // Fuzzification for Enemy's Health
     void CalculateEnemyHealthMembership(float health, float maxHealth)
     {
+        float adjustment = 0.0001f;
         float lowLimit = 0f;
-        float mediumLimit = maxHealth / 2;
-        float highLimit = maxHealth;
+        float mediumLimit = maxHealth / 2 - adjustment;
+        float highLimit = maxHealth + adjustment;
 
         enemyLowHealthMembership = TriangularMembership(health, lowLimit, lowLimit, mediumLimit);
         enemyMediumHealthMembership = TriangularMembership(health, lowLimit, mediumLimit, highLimit);
@@ -150,16 +158,16 @@ public class AIEmotionSimulator : MonoBehaviour
     // Fuzzification for Player's Health
     void CalculatePlayerHealthMembership(float health, float maxHealth)
     {
+        float adjustment = 0.0001f;
         float lowLimit = 0f;
-        float mediumLimit = 50f;
-        float highLimit = 100f;
+        float mediumLimit = maxHealth / 2f - adjustment;
+        float highLimit = maxHealth + adjustment;
 
-        playerLowHealthMembership = TriangularMembership(health, lowLimit, lowLimit, mediumLimit + 0.1f);
-        playerMediumHealthMembership = TriangularMembership(health, lowLimit, mediumLimit, highLimit + 0.1f);
-        playerHighHealthMembership = TriangularMembership(health, mediumLimit, highLimit, highLimit + 0.1f); // Adjust upper limit
+        playerLowHealthMembership = TriangularMembership(health, lowLimit, lowLimit, mediumLimit);
+        playerMediumHealthMembership = TriangularMembership(health, lowLimit, mediumLimit, highLimit);
+        playerHighHealthMembership = TriangularMembership(health, mediumLimit, highLimit, highLimit); // Adjust upper limit
         // Debug.Log("HP: " + health + "|| LowMem: " + playerLowHealthMembership + " || MedMem: " + playerMediumHealthMembership + "|| HighMem: " + playerHighHealthMembership);
     }
-
 
     //Inference Engine: Fear Emotion
     public void InferenceEngineFearEmotion()
@@ -188,26 +196,26 @@ public class AIEmotionSimulator : MonoBehaviour
     {
 
         // Rule 1: If Enemy has "Low" health THEN Anger is "High"
-        ruleHighAnger = Mathf.Max(enemyMediumHealthMembership, enemyLowHealthMembership);
+        ruleHighAnger = enemyLowHealthMembership;
 
         // Rule 2: If Enemy has "Medium" health THEN Anger is "Medium"
         ruleMedAnger = enemyMediumHealthMembership;
 
         // Rule 3: If Enemy has "High" health THEN Anger is "Low"
-        ruleLowAnger = Mathf.Max(enemyMediumHealthMembership, enemyHighHealthMembership);
+        ruleLowAnger = enemyHighHealthMembership;
     }
 
     //Inference Engine: Determination Emotion
     public void InferenceEngineDetermineEmotion()
     {
         // Rule 1: If Player has "Low" health THEN Determination is "High"
-        ruleHighDetermination = Mathf.Max(playerMediumHealthMembership, playerLowHealthMembership);
+        ruleHighDetermination = playerLowHealthMembership;
 
         // Rule 2: If Player has "Medium" health THEN Determination is "Medium"
         ruleMedDetermination = playerMediumHealthMembership;
 
         // Rule 3: If Player has "High" health THEN Determination is "Low"
-        ruleLowDetermination = Mathf.Max(playerMediumHealthMembership, playerHighHealthMembership);
+        ruleLowDetermination = playerHighHealthMembership;
     }
 
     //--------Defuzzification using Centroid Method---------
@@ -230,7 +238,7 @@ public class AIEmotionSimulator : MonoBehaviour
     //Defuzzification: Anger Emotion
     float DefuzzifyToAngerCrispValue()
     {
-        float lowAngerCentroidValue = 0f;
+        float lowAngerCentroidValue = 10f;
         float mediumAngerCentroidValue = 50f;
         float highAngerCentroidValue = 100f;
 

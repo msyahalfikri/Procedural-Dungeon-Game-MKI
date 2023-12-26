@@ -101,7 +101,7 @@ public class AIAgent : MonoBehaviour
     private void Update()
     {
         stateMachine.Update();
-        Debug.Log(stateMachine.currentState);
+        // Debug.Log(stateMachine.currentState);
     }
     public void DestroyThisEnemy()
     {
