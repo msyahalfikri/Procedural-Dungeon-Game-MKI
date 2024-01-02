@@ -7,8 +7,10 @@ namespace DungeonLiberation
     public class WeaponHolderSlot : MonoBehaviour
     {
         public Transform parrentOverride;
+        public WeaponItem currentWeapon;
         public bool isLeftHandSlot;
         public bool isRightHandSlot;
+        public bool isBackSlot;
 
         public GameObject currentWeaponModel;
 
