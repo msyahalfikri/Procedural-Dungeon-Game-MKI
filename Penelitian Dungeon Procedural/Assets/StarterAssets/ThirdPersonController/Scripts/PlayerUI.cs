@@ -12,6 +12,7 @@ public class PlayerUI : MonoBehaviour
     [HideInInspector] public CombatController combatController;
     [HideInInspector] public PlayerHealth playerHealth;
     [HideInInspector] public PlayerStamina playerStamina;
+    public GameObject portalInteractUI;
     [HideInInspector] float healthBarInitialWidth, staminaBarInitialWidth;
 
     GameObject playerHealthBarParentGameObject, PlayerStaminaBarParentGameObject;
@@ -34,6 +35,10 @@ public class PlayerUI : MonoBehaviour
     {
 
     }
+    private void Update()
+    {
+        ShowPortalInteractionUI();
+    }
 
     public void SetHealthBarPercentage(float currentHealth, float maxHealth)
     {
@@ -46,5 +51,9 @@ public class PlayerUI : MonoBehaviour
     {
         float width = staminaBarInitialWidth * (currentStamina / maxStamina);
         staminaBarForegroundImage.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, width);
+    }
+    void ShowPortalInteractionUI()
+    {
+        portalInteractUI.SetActive(combatController.inPortalRadius);
     }
 }

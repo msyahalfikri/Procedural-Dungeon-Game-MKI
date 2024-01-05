@@ -5,14 +5,13 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class ChaseRangeSphere : MonoBehaviour
 {
-    [HideInInspector] public Vector3 lastKnownPlayerPosition;
     AIAgent agent;
     AIEmotionSimulator emotionSimulator;
 
     private void Start()
     {
         agent = GetComponentInParent<AIAgent>();
-        emotionSimulator = GetComponent<AIEmotionSimulator>();
+        emotionSimulator = GetComponentInParent<AIEmotionSimulator>();
     }
 
     private void OnTriggerEnter(Collider other)

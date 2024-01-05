@@ -1616,8 +1616,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioClips:
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 8300000, guid: 1e6a356159cebdb498d472c2c7a22ac6, type: 3}
+  - {fileID: 8300000, guid: 8589f69339436b14fba21002deb5115c, type: 3}
 --- !u!65 &8406365715311312491
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1653,8 +1653,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentEmotion: 0
   angerSensitivity: 0
-  fearSensitivity: 0
-  determinationSensitivity: 1
+  fearSensitivity: 1
+  determinationSensitivity: 0
 --- !u!114 &8718369417258951641
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1745,7 +1745,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f8d503b56da6b84d886725c390f3581, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lastKnownPlayerPosition: {x: 0, y: 0, z: 0}
 --- !u!1 &4669173900359044673
 GameObject:
   m_ObjectHideFlags: 0

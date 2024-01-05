@@ -30,6 +30,11 @@ public class CombatController : MonoBehaviour
     public bool isExhausted = false;
     public bool isAttacking = false;
 
+    //EndGame System
+    public bool inPortalRadius = false;
+    public bool portalInteracted = false;
+    public bool endGame = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -47,6 +52,7 @@ public class CombatController : MonoBehaviour
         Block();
         CombatUpdate();
         FaceNearestEnemy();
+        InteractUpdate();
     }
 
     private void Block()
@@ -135,6 +141,19 @@ public class CombatController : MonoBehaviour
 
                 }
             }
+        }
+    }
+    void InteractUpdate()
+    {
+        if (inPortalRadius)
+        {
+            portalInteracted = input.interact;
+        }
+
+        if (portalInteracted)
+        {
+            Debug.Log("Portal is Interacted");
+            GameEventHandler.PortalIsInteracted();
         }
     }
 

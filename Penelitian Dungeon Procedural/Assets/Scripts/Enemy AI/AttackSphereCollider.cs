@@ -15,17 +15,19 @@ public class AttackSphereCollider : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            agent.isInAttackRange = true;
-            if (agent.stateMachine.currentState == AIStateID.ChasePlayer)
+            if (!agent.isPlayerDead)
             {
-                Debug.Log("Player in Attack Range");
-                agent.stateMachine.ChangeState(AIStateID.AttackState);
+                agent.isInAttackRange = true;
+                if (agent.stateMachine.currentState == AIStateID.ChasePlayer)
+                {
+                    Debug.Log("Player in Attack Range");
+                    agent.stateMachine.ChangeState(AIStateID.AttackState);
+                }
+                else if (agent.stateMachine.currentState == AIStateID.EBA_ChasePlayer)
+                {
+                    agent.stateMachine.ChangeState(AIStateID.EBA_AttackState);
+                }
             }
-            else if (agent.stateMachine.currentState == AIStateID.EBA_ChasePlayer)
-            {
-                agent.stateMachine.ChangeState(AIStateID.EBA_AttackState);
-            }
-
         }
 
     }

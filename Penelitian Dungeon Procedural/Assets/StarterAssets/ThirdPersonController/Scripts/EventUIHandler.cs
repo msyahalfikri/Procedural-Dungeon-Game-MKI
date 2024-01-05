@@ -7,8 +7,10 @@ using Unity.VisualScripting;
 
 public class EventUIHandler : MonoBehaviour
 {
-    public GameObject gameOverBackground;
+    public GameObject gameOverUIGameObject;
+    public GameObject thanksForPlayingUIGameObject;
     public CanvasGroup gameOverCanvasGroup;
+    public CanvasGroup thanksForPlayingCanvasGroup;
     // public GameObject gameOverForeground;
     // public TextMeshProUGUI gameOverText;
     // public CanvasGroup restartAndMainMenuButtons;
@@ -21,11 +23,16 @@ public class EventUIHandler : MonoBehaviour
 
     public void SetGameOverScreen(bool playerIsDead)
     {
-        gameOverBackground.SetActive(true);
-        StartCoroutine(FadeInGameOver(gameOverCanvasGroup, 2.0f));
+        gameOverUIGameObject.SetActive(true);
+        StartCoroutine(FadeInCanvasGroup(gameOverCanvasGroup, 2.0f));
+    }
+    public void SetThanksForPlayingScreen(bool gameFinished)
+    {
+        thanksForPlayingUIGameObject.SetActive(true);
+        StartCoroutine(FadeInCanvasGroup(thanksForPlayingCanvasGroup, 2.0f));
     }
 
-    IEnumerator FadeInGameOver(CanvasGroup canvasToChange, float fadeDuration)
+    IEnumerator FadeInCanvasGroup(CanvasGroup canvasToChange, float fadeDuration)
     {
         yield return new WaitForSeconds(2.0f);
         Cursor.visible = true;
@@ -45,10 +52,12 @@ public class EventUIHandler : MonoBehaviour
     void OnEnable()
     {
         GameEventHandler.onPlayerDeath += SetGameOverScreen;
+        GameEventHandler.onPortalInteracted += SetThanksForPlayingScreen;
     }
 
     void OnDisable()
     {
         GameEventHandler.onPlayerDeath -= SetGameOverScreen;
+        GameEventHandler.onPortalInteracted -= SetThanksForPlayingScreen;
     }
 }

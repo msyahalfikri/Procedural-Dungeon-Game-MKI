@@ -13,6 +13,7 @@ namespace StarterAssets
 		public bool jump;
 		public bool sprint;
 		public bool attack;
+		public bool interact;
 		public bool block;
 
 		[Header("Movement Settings")]
@@ -30,7 +31,7 @@ namespace StarterAssets
 
 		public void OnLook(InputValue value)
 		{
-			if(cursorInputForLook)
+			if (cursorInputForLook)
 			{
 				LookInput(value.Get<Vector2>());
 			}
@@ -46,22 +47,27 @@ namespace StarterAssets
 			SprintInput(value.isPressed);
 		}
 
-        public void OnAttack(InputValue value)
-        {
-            AttackInput(value.isPressed);
-        }
-		
+		public void OnAttack(InputValue value)
+		{
+			AttackInput(value.isPressed);
+		}
+
 		public void OnBlock(InputValue value)
-        {
-            BlockInput(value.isPressed);
-        }
+		{
+			BlockInput(value.isPressed);
+		}
+
+		public void OnInteract(InputValue value)
+		{
+			InteractInput(value.isPressed);
+		}
 #endif
 
 
-        public void MoveInput(Vector2 newMoveDirection)
+		public void MoveInput(Vector2 newMoveDirection)
 		{
 			move = newMoveDirection;
-		} 
+		}
 
 		public void LookInput(Vector2 newLookDirection)
 		{
@@ -78,17 +84,21 @@ namespace StarterAssets
 			sprint = newSprintState;
 		}
 
-        public void AttackInput(bool newAttackState)
-        {
-            attack = newAttackState;
-        }
-		
-		public void BlockInput(bool newBlockState)
-        {
-            block = newBlockState;
-        }
+		public void AttackInput(bool newAttackState)
+		{
+			attack = newAttackState;
+		}
+		public void InteractInput(bool newInteractState)
+		{
+			interact = newInteractState;
+		}
 
-        private void OnApplicationFocus(bool hasFocus)
+		public void BlockInput(bool newBlockState)
+		{
+			block = newBlockState;
+		}
+
+		private void OnApplicationFocus(bool hasFocus)
 		{
 			SetCursorState(cursorLocked);
 		}
@@ -98,5 +108,5 @@ namespace StarterAssets
 			Cursor.lockState = newState ? CursorLockMode.Locked : CursorLockMode.None;
 		}
 	}
-	
+
 }
