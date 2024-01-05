@@ -18,6 +18,7 @@ namespace DungeonLiberation
         public bool skill_input;
         public bool ulti_input;
         public bool jump_input;
+        public bool weapon_input;
         public bool interact_input;
         public bool inventory_input;
         public bool lockOn_input;
@@ -31,6 +32,7 @@ namespace DungeonLiberation
         public bool slot4_input;
 
         public bool rollFlag;
+        public bool twoHandFlag;
         public bool sprintFlag;
         public bool comboFlag;
         public bool lockOnFlag;
@@ -43,6 +45,7 @@ namespace DungeonLiberation
         PlayerManager playerManager;
         CameraHandler cameraHandler;
         UIManager uiManager;
+        WeaponSlotManager weaponSlotManager;
 
         Vector2 movementInput;
         Vector2 cameraInput;
@@ -52,6 +55,7 @@ namespace DungeonLiberation
             playerAttacker = GetComponent<PlayerAttacker>();
             playerInventory = GetComponent<PlayerInventory>();
             playerManager = GetComponent<PlayerManager>();
+            weaponSlotManager = GetComponentInChildren<WeaponSlotManager>();
             uiManager = FindObjectOfType<UIManager>();
             cameraHandler = FindObjectOfType<CameraHandler>();
         }
@@ -66,6 +70,7 @@ namespace DungeonLiberation
 
                 inputActions.PlayerActions.Skill.performed += i => skill_input = true;
                 inputActions.PlayerActions.Ultimate.performed += i => ulti_input = true;
+                inputActions.PlayerActions.Weapon.performed += i => weapon_input = true;
                 inputActions.PlayerQuickSlots.Slot1.performed += i => slot1_input = true;
                 inputActions.PlayerQuickSlots.Slot2.performed += i => slot2_input = true;
                 inputActions.PlayerActions.Interact.performed += i => interact_input = true;
@@ -92,6 +97,7 @@ namespace DungeonLiberation
             HandleQuickSlotInput();
             HandleInventoryInput();
             HandleLockOnInput();
+            HandleWeaponInput();
         }
 
         private void HandleMoveInput(float delta)
@@ -234,6 +240,25 @@ namespace DungeonLiberation
             }
 
             cameraHandler.SetCameraHeight();
+        }
+
+        private void HandleWeaponInput()
+        {
+            if (weapon_input)
+            {
+                weapon_input = false;
+                twoHandFlag = !twoHandFlag;
+
+                if (twoHandFlag) 
+                {
+                    weaponSlotManager.LoadWeaponOnSlot(playerInventory.rightWeapon, false);
+                }
+                else
+                {
+                    weaponSlotManager.LoadWeaponOnSlot(playerInventory.rightWeapon, false);
+                    weaponSlotManager.LoadWeaponOnSlot(playerInventory.leftWeapon, true);
+                }
+            }
         }
     }
 }
